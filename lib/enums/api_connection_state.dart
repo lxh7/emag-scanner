@@ -1,0 +1,1 @@
+enum ApiConnectionState { none, internet, full }

@@ -1,0 +1,287 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "EMAG Backoffice API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "\/api\/category": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "operationId": "listCategories",
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/CategoryDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/event": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "operationId": "listEvents",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/EventDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/event\/{eventId}": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "operationId": "getEvent",
+                "parameters": [
+                    {
+                        "name": "eventId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/EventDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/event\/{eventId}\/participant": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "operationId": "getParticipants",
+                "parameters": [
+                    {
+                        "name": "eventId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#\/components\/schemas\/ParticipantDTO"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/event\/{eventId}\/participant\/{participantId}": {
+            "patch": {
+                "tags": [
+                    "Event"
+                ],
+                "operationId": "patchParticipant",
+                "parameters": [
+                    {
+                        "name": "eventId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "participantId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/ScanTimeDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ScanTimeResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/health": {
+            "get": {
+                "tags": [
+                    "Health"
+                ],
+                "operationId": "health",
+                "responses": {
+                    "200": {
+                        "description": "Success."
+                    }
+                }
+            }
+        },
+        "\/api\/doc.json": {
+            "get": {
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CategoryDTO": {
+                "description": "EventDTO",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EventDTO": {
+                "description": "EventDTO",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "categoryId": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "start": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "end": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object"
+            },
+            "ParticipantDTO": {
+                "description": "ParticipantDTO",
+                "properties": {
+                    "eventId": {
+                        "type": "integer"
+                    },
+                    "participantId": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ScanTimeDTO": {
+                "description": "ScanTimeDTO",
+                "properties": {
+                    "scanTime": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object"
+            },
+            "ScanTimeResponseDTO": {
+                "description": "ScanTimeResponseDTO",
+                "properties": {
+                    "grant": {
+                        "type": "string"
+                    },
+                    "prevScanTime": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "OAuth2": {
+                "type": "oauth2",
+                "flows": {
+                    "clientCredentials": {
+                        "tokenUrl": "\/token",
+                        "scopes": {}
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "OAuth2": []
+        }
+    ]
+}
