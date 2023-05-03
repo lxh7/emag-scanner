@@ -1,0 +1,41 @@
+name: scan
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 0.0.1+1
+
+environment:
+  sdk: '>=2.19.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.0.5
+  enum_to_string: ^2.0.1
+  intl: ^0.18.0
+  flutter_svg: ^2.0.5
+  connectivity_plus: ^3.0.4
+  permission_handler: ^10.2.0
+  mobile_scanner: ^3.2.0
+  realm: ^1.0.3
+  vibration: ^1.7.5
+  settings_ui: ^2.0.2
+  shared_preferences: ^2.1.0
+  flutter_secure_storage: ^8.0.0
+  oauth2_client: ^3.0.0
+  openapi:
+    path: lib/backend_api
+  network_info_plus: ^3.0.5
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - ./assets/graphics/
