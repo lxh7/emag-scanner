@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MyDialog {
-  static AlertDialog notImplemented(BuildContext context, String message) {
+  static AlertDialog _dialog(
+      BuildContext context, String title, String message) {
     return AlertDialog(
       title: Text(
-        'Not implemented',
+        title,
         style: Theme.of(context).textTheme.titleMedium,
       ),
       content: Text(
@@ -19,5 +20,17 @@ class MyDialog {
             }),
       ],
     );
+  }
+
+  static AlertDialog notImplemented(BuildContext context, String message) {
+    return _dialog(context, 'Not implemented', message);
+  }
+
+  static AlertDialog info(BuildContext context, String message) {
+    return _dialog(context, 'Information', message);
+  }
+
+  static AlertDialog error(BuildContext context, String message) {
+    return _dialog(context, 'Error', message);
   }
 }

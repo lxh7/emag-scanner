@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '/app_settings.dart';
-import '/app_state.dart';
+import '/pages/scan.dart';
+import '/scanning/settings_scan_handler.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -19,8 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
   var titleScaleFactor = 0.8;
   @override
   Widget build(BuildContext context) {
-    var appSettings = AppSettings.instance;
-    var _ = context.watch<AppState>();
+    var appSettings = Provider.of<AppSettings>(context, listen: false);
 
     return SafeArea(
       child: Scaffold(
@@ -32,6 +32,23 @@ class _SettingsPageState extends State<SettingsPage> {
             },
           ),
           title: const Text('Settings'),
+          actions: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.qr_code),
+                tooltip: 'Scan settings',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (context) =>
+                            ScanPage(handler: SettingsScanHandler()),
+                        settings: RouteSettings(
+                          name: (ScanPage).toString() +
+                              (SettingsScanHandler).toString(),
+                        ),
+                      ));
+                }),
+          ],
         ),
         body: SettingsList(
           sections: [
@@ -156,6 +173,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                 ),
+                /*
                 SettingsTile(
                   title: Text(
                     'User ID',
@@ -214,14 +232,12 @@ class _SettingsPageState extends State<SettingsPage> {
                       }
                     },
                   ),
-                ),
+                ),*/
               ],
             ),
-           
           ], // sections
         ),
       ),
     );
   }
-
 }

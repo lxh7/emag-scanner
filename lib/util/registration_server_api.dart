@@ -5,18 +5,13 @@ import 'package:network_info_plus/network_info_plus.dart';
 
 class RegistrationServerApi {
   static const String sFindMessage = 'Where is the EMAG Registration service?';
-  static const String sServerResponseKey = 'It\'s me, the EMAG Registration service';
-  static RegistrationServerApi? _singleton;
+  static const String sServerResponseKey =
+      'It\'s me, the EMAG Registration service';
   static int udpPort = 7891;
   static int tcpPort = 7891;
   static InternetAddress? serverAddress;
 
-  factory RegistrationServerApi() {
-    _singleton ??= RegistrationServerApi._privateConstructor();
-    return _singleton!;
-  }
-
-  RegistrationServerApi._privateConstructor() {
+  RegistrationServerApi() {
     findServer();
   }
 

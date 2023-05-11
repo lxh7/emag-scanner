@@ -1,4 +1,4 @@
-# Config options for the dart-dio generator
+# Config options for the dart generator
 pubName: emag_api
 pubVersion: 0.0.1
 pubDescription: "EMAG API Client"

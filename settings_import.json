@@ -1,0 +1,10 @@
+{
+  "apiurl": "https://backoffice.emag23.nl",
+  "oauthauthurl": "https://backoffice.emag23.nl/authorize",
+  "oauthtokenurl": "https://backoffice.emag23.nl/token",
+  "oauthredirecturi": "https://backoffice.emag23.nl/bundles/nelmioapidoc/oauth2-redirect.html",
+  "oauthclientid": "test",
+  "oauthclientsecret": "test",
+  "userid": "test",
+  "password": ""
+}
