@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scan/app_settings.dart';
-import 'package:scan/app_state.dart';
-import 'package:scan/data/data_manager.dart';
-import 'package:scan/widgets/connection_widget.dart';
 
-import '../models/activity.dart';
-import '../models/activity_category.dart';
-import '../widgets/activity_tile.dart';
+import '/data/data_manager.dart';
+import '/models/activity.dart';
+import '/models/activity_category.dart';
+import '/widgets/activity_tile.dart';
+import '/widgets/connection_widget.dart';
 
 class ActivityLoadPage extends StatefulWidget {
   const ActivityLoadPage({super.key});
@@ -17,24 +15,24 @@ class ActivityLoadPage extends StatefulWidget {
 }
 
 class _ActivityLoadPageState extends State<ActivityLoadPage> {
-  List<ActivityCategory>? _categories;
   ActivityCategory? _category;
   List<Activity>? _activities;
 
   // methods/functions
 
-  void _downloadActivityParticipants(Activity activity) {
-    DataManager.addStoredActivity(activity, refreshParticipants: true);
-    AppSettings.instance.lastActivityId = activity.id;
-    AppState().activeActivity = activity;
-    Navigator.pop(context);
+  Future _downloadActivityParticipantsAsync(Activity activity) async {
+    var dataManager = context.read<DataManager>();
+    activity = await dataManager.refreshActivityAsync(activity) ?? activity;
+    dataManager.addStoredActivity(activity);
+    dataManager.selectedActivity = activity;
   }
 
   Future<List<Activity>> _loadActivities() async {
     if (_category == null) {
       return List<Activity>.empty();
     }
-    return await DataManager.getActivities(_category!);
+    var dataManager = context.read<DataManager>();
+    return await dataManager.getActivities(_category!);
   }
 
   // UI event handlers
@@ -49,7 +47,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
 
   @override
   Widget build(BuildContext context) {
-    /*_appState = */ context.watch<AppState>();
+    var dataManager = context.read<DataManager>(); 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -68,19 +66,17 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
               ConnectionWidget.get(),
               Text('Load activities', textAlign: TextAlign.center),
               Text('Filter by category'),
-              _categories == null
-                  ? FutureBuilder(
-                      future: DataManager.getCategories(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          _categories = snapshot.data;
-                          return _buildCategoryUI();
-                        } else {
-                          return _spinner();
-                        }
-                      },
-                    )
-                  : _buildCategoryUI(),
+              FutureBuilder(
+                future: dataManager.getCategories(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    List<ActivityCategory>? categories = snapshot.data;
+                    return _buildCategoryUI(categories);
+                  } else {
+                    return _spinner();
+                  }
+                },
+              ),
               if (_category != null) ...[
                 Text('Tap to load activity & participants'),
                 _activities == null
@@ -123,12 +119,12 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     );
   }
 
-  _buildCategoryUI() {
-    if (_categories?.isEmpty == true) {
+  _buildCategoryUI(List<ActivityCategory>? categories) {
+    if (categories?.isEmpty == true) {
       _category = null;
       return Text('No categories loaded from server');
     }
-    _category ??= _categories!.first;
+    _category ??= categories!.first;
     return DropdownButton<ActivityCategory>(
       value: _category,
       icon: const Icon(Icons.arrow_downward),
@@ -144,7 +140,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
           _category = value!;
         });
       },
-      items: _categories!
+      items: categories!
           .map<DropdownMenuItem<ActivityCategory>>((ActivityCategory value) {
         return DropdownMenuItem<ActivityCategory>(
           value: value,
@@ -164,7 +160,8 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
       children: _activities!
           .map((item) => ActivityTile(
                 activity: item,
-                tapAction: () => _downloadActivityParticipants(item),
+                tapAction: () => _downloadActivityParticipantsAsync(item)
+                    .then((value) => Navigator.pop(context)),
               ))
           .toList(),
     );

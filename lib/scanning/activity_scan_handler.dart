@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '/app_state.dart';
-import '/data/data_manager.dart';
 import '/enums/scan_result.dart';
 import '/models/scan_info.dart';
 import 'base_scan_handler.dart';
@@ -16,13 +14,18 @@ class ActivityScanHandler extends BaseScanHandler {
   }
 
   @override
+  String getSubTitle() {
+    return dataManager.selectedActivity?.name ?? '';
+  }
+
+  @override
   Future handleKey(String key) async {
     var info = ScanInfo(
-      AppState().activeActivity!.id,
+      dataManager.selectedActivity!.id,
       key,
       DateTime.now(),
     );
-    final result = await DataManager.checkAccess(info);
+    final result = await dataManager.checkAccess(info);
     previousScanTime = result.prevScanTime;
     // set message based on check
     var message = '';

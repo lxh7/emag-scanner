@@ -7,27 +7,24 @@ import '/models/scan_info.dart';
 import '/models/access_check_result.dart';
 
 class LocalDataStore {
-  static final LocalDataStore _singleton = LocalDataStore._internal();
-
   late LocalConfiguration _config;
   late Realm _realm;
 
-  factory LocalDataStore() {
-    return _singleton;
-  }
-
-  LocalDataStore._internal() {
+  LocalDataStore() {
     _config = Configuration.local([
       ActivityCategory.schema,
       Activity.schema,
       ActivityParticipant.schema,
     ]);
     _realm = Realm(_config);
-    /* on destroy?     
-  realm.close();
-  Realm.shutdown();
-  */
   }
+
+  // @override
+  // dispose() {
+  //   _realm.close();
+  //   Realm.shutdown();
+  //   super.dispose();
+  // }
 
   List<ActivityCategory> getCategories() {
     var categories = _realm.all<ActivityCategory>();
@@ -48,7 +45,11 @@ class LocalDataStore {
 
   Activity? getActivity(int activityId) {
     try {
-      return _realm.query<Activity>('id == \$0', [activityId]).first;
+      var data = _realm.query<Activity>('id == \$0', [activityId]);
+      if (data.isEmpty) {
+        return null;
+      }
+      return data.first;
     } on Exception {
       return null;
     }

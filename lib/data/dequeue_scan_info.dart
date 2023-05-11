@@ -1,32 +1,37 @@
 import 'dart:async';
 
-import '/app_state.dart';
 import '/data/backend_data_store.dart';
 import '/data/local_data_store.dart';
-import '/enums/api_connection_state.dart';
 
 class DequeueScanInfo {
-  Future run() async {
-    var appState = AppState();
-    var local = LocalDataStore();
-    var backend = BackendDataStore();
+  int _retryCount = 0;
+
+  late LocalDataStore _local;
+  late BackendDataStore _backend;
+
+  DequeueScanInfo(LocalDataStore local, BackendDataStore backend) {
+    _local = local;
+    _backend = backend;
+  }
+
+  Future<void> run() async {
     try {
-      var item = local.getScanInfo();
+      var item = _local.getScanInfo();
       while (item != null) {
-        if (appState.connectionState != ApiConnectionState.full) {
-          return; // stop dequeueing for now
-        }
         // send to backend
-        await backend.queryAccess(
+        await _backend.queryAccessAsync(
           item.activityId,
           item.personKey,
           item.scanTime,
         );
-        local.removeScanInfo(item);
+        _local.removeScanInfo(item);
       }
     } on Exception {
       // something went wrong, try again later
-      Timer(Duration(seconds: 10), run);
+      _retryCount++;
+      if (_retryCount <= 6) {
+        Timer(Duration(seconds: 10), run);
+      }
     }
   }
 }

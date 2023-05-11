@@ -1,4 +1,4 @@
-import 'package:scan/backend_api/lib/api.dart';
+import 'package:scan/apis/backend/lib/api.dart';
 
 import '/models/activity.dart';
 

@@ -1,6 +1,6 @@
 import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
-import 'package:scan/backend_api/lib/api.dart';
+import 'package:scan/apis/backend/lib/api.dart';
 
 import '/app_settings.dart';
 import '/enums/scan_result.dart';
@@ -10,29 +10,53 @@ import '/models/access_check_result.dart';
 import '/util/dto_helper.dart';
 
 class BackendDataStore {
-  // OAuth stuff
   static OAuth2Client? _oauthClient;
-  static AccessTokenResponse? _oauthToken;
-  // OpenApi stuff
-  static OAuth? _oauthAuthentication;
+  static AccessTokenResponse? _oauthAccessTokenResponse;
+  static OAuth? _oauth;
 
-  static BackendDataStore? _singleton;
+  late AppSettings _appSettings;
+
+  static final BackendDataStore _instance = BackendDataStore._initialize();
+
   factory BackendDataStore() {
-    _singleton ??= BackendDataStore._privateConstructor();
-    return _singleton!;
+    return _instance;
   }
 
-  BackendDataStore._privateConstructor() {
-    AppSettings.instance.addListener(_settingsChanged);
+  BackendDataStore._initialize() {
+    // nothing, at the moment
   }
 
-  Future canReach() async {
+  void configure(AppSettings settings) {
+    _appSettings = settings;
+    // reset all OAUTH stuff to ensure fresh login
+    defaultApiClient = ApiClient();
+    _oauthClient = null;
+    _oauthAccessTokenResponse = null;
+    _oauth = null;
+  }
+
+  Future<bool> canReachBackendAsync() async {
     ensureApiConfigured();
-    HealthApi().health();
+    try {
+      await HealthApi().health();
+      return true;
+    } catch (e) {
+      // cannot reach
+      return false;
+    }
   }
 
-  Future<List<ActivityCategory>> getCategories() async {
-    if (await _ensureLoggedIn()) {
+  Future<String?> getAccessToken() async {
+    if (await canReachBackendAsync()) {
+      await ensureLoggedInAsync();
+      return _oauthAccessTokenResponse?.accessToken;
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<ActivityCategory>> getCategoriesAsync() async {
+    if (await ensureLoggedInAsync()) {
       var api = CategoryApi();
 
       try {
@@ -52,8 +76,8 @@ class BackendDataStore {
     return List<ActivityCategory>.empty();
   }
 
-  Future<List<Activity>> getActivities(int? categoryId) async {
-    if (await _ensureLoggedIn()) {
+  Future<List<Activity>> getActivitiesAsync(int? categoryId) async {
+    if (await ensureLoggedInAsync()) {
       var api = EventApi();
 
       try {
@@ -74,8 +98,8 @@ class BackendDataStore {
     return List<Activity>.empty();
   }
 
-  Future<Activity?> getActivity(int activityId) async {
-    if (await _ensureLoggedIn()) {
+  Future<Activity?> getActivityAsync(int activityId) async {
+    if (await ensureLoggedInAsync()) {
       var api = EventApi();
       try {
         var eventDTO = await api.getEvent(activityId);
@@ -92,8 +116,8 @@ class BackendDataStore {
                     scanTime: null,
                   ))
               .toList());
-          return activity;
         }
+        return activity;
       } catch (e) {
         print('Exception when calling EventApi->listEvents: $e\n');
       }
@@ -101,8 +125,9 @@ class BackendDataStore {
     return null;
   }
 
-  Future<AccessCheckResult> queryAccess(int activityId, String personKey, DateTime scanTime) async {
-    if (await _ensureLoggedIn()) {
+  Future<AccessCheckResult> queryAccessAsync(
+      int activityId, String personKey, DateTime scanTime) async {
+    if (await ensureLoggedInAsync()) {
       var api = EventApi();
       var access = await api.patchParticipant(
         activityId,
@@ -131,64 +156,60 @@ class BackendDataStore {
         scanResult: ScanResult.error, message: 'Not logged in');
   }
 
-  void _settingsChanged() {
-    // some settings have changed, make sure we re-authenticate. Clear all authentication objects
-    defaultApiClient = ApiClient();
-    _oauthClient = null;
-    _oauthToken = null;
-    _oauthAuthentication = null;
-  }
-
-  Future<bool> _ensureLoggedIn() async {
+  Future<bool> ensureLoggedInAsync() async {
     // do we have a token, and is it still valid?
-    if (_oauthToken?.isExpired() == false) {
+    if (_oauthAccessTokenResponse?.isValid() == true &&
+        _oauthAccessTokenResponse?.refreshNeeded() == false) {
       return true;
     }
 
-    var settings = AppSettings.instance;
+    // we need a (new) token
     _oauthClient ??= OAuth2Client(
-        authorizeUrl: settings.oauthAuthorizationUrl,
-        tokenUrl: settings.oauthTokenUrl,
-        redirectUri: settings.oauthRedirectUri,
+        authorizeUrl: _appSettings.oauthAuthorizationUrl,
+        tokenUrl: _appSettings.oauthTokenUrl,
+        redirectUri: _appSettings.oauthRedirectUri,
         customUriScheme: '');
-    // if we already have a token (with refreshToken), check if it is expired and in that case refresh it...
-    if (_oauthToken?.refreshToken != null && !_oauthToken!.isExpired()) {
-      _oauthToken = await _oauthClient!.refreshToken(
-        _oauthToken!.refreshToken!,
-        clientId: settings.oauthClientId,
+    // if we already have a token (with refreshToken), check if it is (nearly) expired
+    // and in that case refresh it...
+    if (_oauthAccessTokenResponse?.refreshToken != null &&
+        !_oauthAccessTokenResponse!.refreshNeeded()) {
+      _oauthAccessTokenResponse = await _oauthClient!.refreshToken(
+        _oauthAccessTokenResponse!.refreshToken!,
+        clientId: _appSettings.oauthClientId,
       );
     } else {
       //Request a token using the Authorization Code flow...
-      _oauthToken = await _oauthClient!.getTokenWithClientCredentialsFlow(
-        clientId: settings.oauthClientId,
-        clientSecret: settings.oauthClientSecret,
+      _oauthAccessTokenResponse =
+          await _oauthClient!.getTokenWithClientCredentialsFlow(
+        clientId: _appSettings.oauthClientId,
+        clientSecret: _appSettings.oauthClientSecret,
         // scopes: ['scope1'],
       );
     }
 
     // Configure OpenApi access token for authorization: OAuth2, or update  the access token
-    var accessToken = _oauthToken!.accessToken ?? '';
+    var accessToken = _oauthAccessTokenResponse!.accessToken ?? '';
     if (accessToken == '') {
       return false;
     }
-    if (_oauthAuthentication == null) {
-      _oauthAuthentication = OAuth(accessToken: accessToken);
-    } else {
-      _oauthAuthentication!.accessToken = accessToken;
-    }
+    _oauth = OAuth(accessToken: accessToken);
 
-    ensureApiConfigured();
+    // force refresh of apiClient
+    defaultApiClient = ApiClient(
+      basePath: _appSettings.apiUrl,
+      authentication: _oauth,
+    );
     return true;
   }
 
   // public function, so that checking Health can be done elsewhere
-  static void ensureApiConfigured() {
+  void ensureApiConfigured() {
     // did we ever initiate our defaultApiClient?
     if (defaultApiClient.basePath == '' ||
         defaultApiClient.basePath == 'http://localhost') {
       defaultApiClient = ApiClient(
-        basePath: AppSettings.instance.apiUrl,
-        authentication: _oauthAuthentication,
+        basePath: _appSettings.apiUrl,
+        authentication: _oauth,
       );
     }
   }

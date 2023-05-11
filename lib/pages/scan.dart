@@ -2,12 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:scan/util/vibrator.dart';
-import 'package:scan/widgets/connection_widget.dart';
 
-import '/app_state.dart';
 import '/enums/scan_result.dart';
 import '/scanning/base_scan_handler.dart';
+import '/util/vibrator.dart';
+import '/widgets/connection_widget.dart';
 
 class ScanPage extends StatefulWidget {
   final BaseScanHandler handler;
@@ -80,7 +79,7 @@ class ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
     widget.handler.page = this;
-    var _ = context.watch<AppState>();
+    var subTitle = widget.handler.getSubTitle();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -88,7 +87,17 @@ class ScanPageState extends State<ScanPage> {
             icon: const Icon(Icons.chevron_left),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text( widget.handler.getTitle()),
+          title: Text(widget.handler.getTitle()),
+          centerTitle: subTitle != '',
+          bottom: subTitle != ''
+              ? PreferredSize(
+                  preferredSize: Size.zero,
+                  child: Text(
+                    subTitle,
+                    style: TextStyle(color: Colors.yellowAccent),
+                  ),
+                )
+              : null,
           actions: [
             IconButton(
               color: Colors.white,
@@ -128,7 +137,7 @@ class ScanPageState extends State<ScanPage> {
           fit: BoxFit.contain,
           controller: cameraController,
           onDetect: (capture) =>
-              widget.handler.handleBarCodes(capture.barcodes),
+              widget.handler.handleBarcodes(capture.barcodes),
         ),
         backgroundColor: getActionColor(context),
         bottomNavigationBar: ConnectionWidget.get(),

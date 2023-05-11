@@ -1,8 +1,8 @@
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:scan/pages/registration_setup.dart';
+import 'package:scan/scanning/registration_scan_handler.dart';
 
-import '/app_state.dart';
 import '/pages/activity_confirm.dart';
 import '/pages/settings.dart';
 import '/scanning/activity_scan_handler.dart';
@@ -12,7 +12,6 @@ import 'scan.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var _ = context.watch<AppState>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -72,7 +71,6 @@ class HomePage extends StatelessWidget {
           child: ListView(
             children: [
               ConnectionWidget.get(),
-              //to show internet connection message on isoffline = true.
               SvgPicture.asset('./assets/graphics/logo.svg'),
               ElevatedButton(
                 child: Text('Scan for access'),
@@ -94,11 +92,9 @@ class HomePage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (context) =>
-                          ScanPage(handler: ActivityScanHandler()),
+                      builder: (context) => RegistrationSetupPage(),
                       settings: RouteSettings(
-                        name: (ScanPage).toString() +
-                            (ActivityScanHandler).toString(),
+                        name: (RegistrationSetupPage).toString(),
                       ),
                     ),
                   );

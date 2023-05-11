@@ -7,24 +7,46 @@ class AppSettings extends ChangeNotifier {
   static const String keyApiUrl = 'ApiURL';
   static const String keyOauthAuthorizationUrl = "OauthAuthUrl";
   static const String keyOauthTokenUrl = "OauthTokenUrl";
-  static const String keyOauthRedirectUri='OuthRedirectUri';
+  static const String keyOauthRedirectUri = 'OuthRedirectUri';
   static const String keyOauthClientId = 'OauthClientId';
   static const String keyOauthClientSecret = 'OauthClientSecret';
   static const String keyUserId = 'UserId';
   static const String keyPassword = 'Password';
-  static const String keyLastActivityId = 'LastActivityId';
   static const String keyPrinter = 'Printer';
-
-  static AppSettings? _instance;
 
   late Future<SharedPreferences> _prefs;
   late SharedPreferences _storage;
   late FlutterSecureStorage _secureStorage;
 
+  static final AppSettings _instance = AppSettings._constructor();
+
+  factory AppSettings() {
+    return _instance;
+  }
+
+  AppSettings._constructor() {
+    WidgetsFlutterBinding.ensureInitialized();
+    _prefs = SharedPreferences.getInstance();
+    _oauthClientSecret = '';
+    _password = '';
+  }
+
+  Future initializeAsync() async {
+    _storage = await _prefs;
+    _secureStorage = FlutterSecureStorage(
+      // iOptions: const IOSOptions(),
+      aOptions: const AndroidOptions(encryptedSharedPreferences: true),
+      // lOptions: const LinuxOptions(),
+      // webOptions: const WebOptions(),
+      // mOptions: const MacOsOptions(),
+      // wOptions: const WindowsOptions(),
+    );
+    await _loadSecureStrings();
+  }
+
   // local storage of secret values (to overcome async complexity)
   late String _oauthClientSecret;
   late String _password;
-  
 
   String get apiUrl {
     return _getString(keyApiUrl);
@@ -100,58 +122,13 @@ class AppSettings extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get lastActivityId {
-    return _getInt(keyLastActivityId);
-  }
-
-  set lastActivityId(int value) {
-    _setInt(keyLastActivityId, value);
-  }
-    String get printer {
+  String get printer {
     return _getString(keyPrinter);
   }
 
   set printer(String value) {
     _setString(keyPrinter, value);
     notifyListeners();
-  }
-
-  /// Private constructor
-  AppSettings._create() {
-    WidgetsFlutterBinding.ensureInitialized();
-    _prefs = SharedPreferences.getInstance();
-    _oauthClientSecret = '';
-    _password = '';
-  }
-
-  /// Public factory
-  static Future<AppSettings> create() async {
-    if (_instance == null) {
-      // Call the private constructor
-      _instance = AppSettings._create();
-      // Do initialization that requires async
-      WidgetsFlutterBinding.ensureInitialized();
-      await _instance!._load();
-    }
-    // Return the fully initialized object
-    return _instance!;
-  }
-
-  static AppSettings get instance {
-    return _instance!;
-  }
-
-  Future<void> _load() async {
-    _storage = await _prefs;
-    _secureStorage = FlutterSecureStorage(
-      // iOptions: const IOSOptions(),
-      aOptions: const AndroidOptions(encryptedSharedPreferences: true),
-      // lOptions: const LinuxOptions(),
-      // webOptions: const WebOptions(),
-      // mOptions: const MacOsOptions(),
-      // wOptions: const WindowsOptions(),
-    );
-    await _loadSecureStrings();
   }
 
   String _getString(String key) {
@@ -195,5 +172,33 @@ class AppSettings extends ChangeNotifier {
   Future _loadSecureStrings() async {
     _oauthClientSecret = await _getSecureString(keyOauthClientSecret);
     _password = await _getSecureString(keyPassword);
+  }
+
+  int setValues(data) {
+    int total = 0;
+    total += _setValue(data, keyApiUrl, _setString);
+    total += _setValue(data, keyOauthAuthorizationUrl, _setString);
+    total += _setValue(data, keyOauthTokenUrl, _setString);
+    total += _setValue(data, keyOauthRedirectUri, _setString);
+    total += _setValue(data, keyOauthClientId, _setString);
+    total += _setValue(data, keyOauthClientSecret, _setSecureString);
+    total += _setValue(data, keyUserId, _setString);
+    total += _setValue(data, keyPassword, _setSecureString);
+    notifyListeners();
+    return total;
+  }
+
+  int _setValue(dynamic data, String key,
+      void Function(String key, String value) setterFunc) {
+    try {
+      final value = data[key.toLowerCase()] as String;
+      if (value != '') {
+        setterFunc(key, value);
+        return 1;
+      }
+    } catch (e) {
+      // key not supplied
+    }
+    return 0;
   }
 }

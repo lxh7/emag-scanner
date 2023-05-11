@@ -1,1 +1,1 @@
-enum ApiConnectionState { none, internet, full }
+enum ApiConnectionState { none, internet, backend, full }
