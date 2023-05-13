@@ -63,7 +63,7 @@ class ActivityScanHandler extends BaseScanHandler {
   Widget buildBottomSheet(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
-      color: scanPage.getActionColor(context),
+      color: scanPage.getActionColor(),
       height: 100,
       child: Column(children: [
         Center(child: Text(scanPage.scanMessage)),
