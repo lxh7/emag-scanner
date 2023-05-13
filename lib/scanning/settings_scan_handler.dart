@@ -12,11 +12,6 @@ class SettingsScanHandler extends BaseScanHandler {
   }
 
   @override
-  String getSubTitle() {
-    return '';
-  }
-
-  @override
   void handleBarcode(Barcode barcode) {
     if (barcode.rawValue == null) {
       MyDialog.error(scanPage.context, 'No data in barcode');

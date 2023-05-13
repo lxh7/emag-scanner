@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scan/pages/activity_select.dart';
 
 import '/data/data_manager.dart';
+import 'scan_page.dart';
+import 'activity_select_page.dart';
 import '/widgets/activity_tile.dart';
 import '/scanning/activity_scan_handler.dart';
-import 'scan.dart';
 
 class ActivityConfirmPage extends StatelessWidget {
   _startScanning(BuildContext context) {

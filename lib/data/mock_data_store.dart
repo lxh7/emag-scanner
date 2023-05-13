@@ -1,6 +1,6 @@
 // mock some data for the UI
-import 'package:scan/models/activity_category.dart';
-import 'package:scan/models/activity.dart';
+import 'package:emagscan/models/activity_category.dart';
+import 'package:emagscan/models/activity.dart';
 
 class MockDataStore {
   late List<ActivityCategory> _categories;

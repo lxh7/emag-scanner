@@ -1,4 +1,4 @@
-name: scan
+name: emagscan
 description: A scanner app to support the orga-team of EMAG '23'.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -17,7 +17,6 @@ dependencies:
   flutter_svg: ^2.0.5
   connectivity_plus: ^3.0.4
   permission_handler: ^10.2.0
-  mobile_scanner: ^3.2.0
   realm: ^1.0.3
   vibration: ^1.7.5
   settings_ui: ^2.0.2
@@ -28,6 +27,8 @@ dependencies:
     path: lib/apis/backend
   network_info_plus: ^3.0.5
   flutter_launcher_icons: ^0.13.1
+  udp: ^5.0.3
+  mobile_scanner: ^3.2.0
 
 
 dev_dependencies:

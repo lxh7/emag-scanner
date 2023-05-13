@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '/app_settings.dart';
-import '/pages/scan.dart';
+import 'scan_page.dart';
 import '/scanning/settings_scan_handler.dart';
 
 class SettingsPage extends StatefulWidget {
