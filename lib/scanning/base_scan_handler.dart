@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:provider/provider.dart';
-import 'package:scan/data/data_manager.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
-import '../app_settings.dart';
+import '/app_settings.dart';
+import '/data/data_manager.dart';
 import '/enums/scan_result.dart';
-import '/pages/scan.dart';
+import '/pages/scan_page.dart';
 import '/util/barcode_decoder.dart';
 
 /// Handles the specifics during scanning.
@@ -37,7 +37,7 @@ abstract class BaseScanHandler {
 
   /// Return the title to show on the scan page
   String getTitle();
-  String getSubTitle();
+  String getSubTitle() => '';
 
   /// Build a modal "bottom sheet" with error information
   Widget buildBottomSheet(BuildContext context);
@@ -69,5 +69,4 @@ abstract class BaseScanHandler {
     // no implementation here, but also not abstract
     return Future.value(true); // dummy return
   }
-
 }

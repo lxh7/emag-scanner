@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scan/data/data_manager.dart';
-import 'package:scan/models/activity.dart';
 
-import '/enums/api_connection_state.dart';
-import '/pages/activity_load.dart';
+import '/data/data_manager.dart';
+import '/models/activity.dart';
+import 'activity_load_page.dart';
 import '/widgets/activity_tile.dart';
 import '/widgets/connection_widget.dart';
 

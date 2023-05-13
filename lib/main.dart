@@ -7,8 +7,8 @@ import '/app_settings.dart';
 import '/data/backend_data_store.dart';
 import '/data/data_manager.dart';
 import '/data/local_data_store.dart';
-import '/pages/home.dart';
-import 'util/internet_connection_listener.dart';
+import 'pages/home_page.dart';
+import '/util/internet_connection_listener.dart';
 
 void main() async {
   Intl.defaultLocale = 'en';
@@ -20,12 +20,15 @@ void main() async {
     MultiProvider(
       providers: [
         Provider<LocalDataStore>(create: (_) => LocalDataStore()),
-        Provider<BackendDataStore>(create: (_) => BackendDataStore(), lazy: false,),
+        Provider<BackendDataStore>(
+          create: (_) => BackendDataStore(),
+          lazy: false,
+        ),
         ChangeNotifierProvider<InternetConnectionListener>(
             create: (_) => InternetConnectionListener()),
         ChangeNotifierProvider<AppSettings>(create: (_) => AppSettings()),
         ChangeNotifierProvider<DataManager>(
-            create: (context) => DataManager(context)),       
+            create: (context) => DataManager(context)),
       ],
       child: ScanApp(),
     ),

@@ -2,8 +2,9 @@
     package="nl.emag23.scan">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
-        android:label="scan"
+        android:label="EMAG '23 Scanner"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

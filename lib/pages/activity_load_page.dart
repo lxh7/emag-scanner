@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/spinner.dart';
 import '/data/data_manager.dart';
 import '/models/activity.dart';
 import '/models/activity_category.dart';
@@ -73,7 +74,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                     List<ActivityCategory>? categories = snapshot.data;
                     return _buildCategoryUI(categories);
                   } else {
-                    return _spinner();
+                    return Spinner();
                   }
                 },
               ),
@@ -92,7 +93,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                                 .sort((a, b) => _compareActivities(a, b));
                             return _buildActivitiesUI();
                           } else {
-                            return _spinner();
+                            return Spinner();
                           }
                         })
                     : _buildActivitiesUI()
@@ -167,15 +168,6 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     );
   }
 
-  Widget _spinner() {
-    return Center(
-      child: SizedBox(
-        height: 25.0,
-        width: 25.0,
-        child: CircularProgressIndicator(),
-      ),
-    );
-  }
 
   int _compareActivities(Activity a, Activity b) {
     int result = a.start.compareTo(b.start);

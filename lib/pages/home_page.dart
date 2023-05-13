@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:scan/pages/registration_setup.dart';
-import 'package:scan/scanning/registration_scan_handler.dart';
 
-import '/pages/activity_confirm.dart';
-import '/pages/settings.dart';
-import '/scanning/activity_scan_handler.dart';
+import 'registration_setup_page.dart';
+import 'activity_confirm_page.dart';
+import 'settings_page.dart';
 import '/widgets/connection_widget.dart';
-import 'scan.dart';
 
 class HomePage extends StatelessWidget {
   @override

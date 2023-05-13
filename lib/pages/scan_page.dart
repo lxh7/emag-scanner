@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:provider/provider.dart';
 
+import '../data/data_manager.dart';
 import '/enums/scan_result.dart';
 import '/scanning/base_scan_handler.dart';
 import '/util/vibrator.dart';
@@ -23,10 +24,13 @@ class ScanPageState extends State<ScanPage> {
   Timer? _timer;
 
   MobileScannerController cameraController = MobileScannerController(
+    autoStart: true,
     detectionSpeed: DetectionSpeed.normal,
     facing: CameraFacing.back,
     torchEnabled: false,
   );
+
+  late ThemeData _theme;
 
   void setScanResult(ScanResult newResult, String message) {
     if (_timer != null) {
@@ -62,10 +66,10 @@ class ScanPageState extends State<ScanPage> {
     }
   }
 
-  Color getActionColor(context) {
+  Color getActionColor() {
     switch (scanResult) {
       case ScanResult.none:
-        return Theme.of(context).colorScheme.background;
+        return _theme.colorScheme.background;
       case ScanResult.pass:
         return Colors.green;
       case ScanResult.check:
@@ -79,10 +83,14 @@ class ScanPageState extends State<ScanPage> {
   @override
   Widget build(BuildContext context) {
     widget.handler.page = this;
+    _theme = Theme.of(context);
+    var dataManager = context.watch<DataManager>();
     var subTitle = widget.handler.getSubTitle();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: ConnectionWidget.getConnectionStateColor(
+              dataManager.apiConnectionState),
           leading: IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: () => Navigator.pop(context),
@@ -94,54 +102,50 @@ class ScanPageState extends State<ScanPage> {
                   preferredSize: Size.zero,
                   child: Text(
                     subTitle,
-                    style: TextStyle(color: Colors.yellowAccent),
+                    style: TextStyle(color: _theme.secondaryHeaderColor),
                   ),
                 )
               : null,
           actions: [
             IconButton(
-              color: Colors.white,
+              // color: Colors.white,
               icon: ValueListenableBuilder(
                 valueListenable: cameraController.torchState,
                 builder: (context, state, child) {
                   switch (state) {
                     case TorchState.off:
-                      return const Icon(Icons.flash_off, color: Colors.grey);
+                      return const Icon(Icons.lightbulb, color: Colors.grey);
                     case TorchState.on:
-                      return const Icon(Icons.flash_on, color: Colors.yellow);
+                      return const Icon(Icons.lightbulb,
+                          color: Colors.yellowAccent);
                   }
                 },
               ),
               iconSize: 32.0,
               onPressed: () => cameraController.toggleTorch(),
             ),
-            // IconButton(
-            //   color: Colors.white,
-            //   icon: ValueListenableBuilder(
-            //     valueListenable: cameraController.cameraFacingState,
-            //     builder: (context, state, child) {
-            //       switch (state) {
-            //         case CameraFacing.front:
-            //           return const Icon(Icons.camera_front);
-            //         case CameraFacing.back:
-            //           return const Icon(Icons.camera_rear);
-            //       }
-            //     },
-            //   ),
-            //   iconSize: 32.0,
-            //   onPressed: () => cameraController.switchCamera(),
-            // ),
           ],
         ),
+        /*
+        Note: DO NOT put anything else as the body, otherwise the preview window does not appear!
+        */
         body: MobileScanner(
-          fit: BoxFit.contain,
           controller: cameraController,
+          fit: BoxFit.contain,
           onDetect: (capture) =>
               widget.handler.handleBarcodes(capture.barcodes),
+          onScannerStarted: _scannerStarted,
         ),
-        backgroundColor: getActionColor(context),
-        bottomNavigationBar: ConnectionWidget.get(),
+        backgroundColor: getActionColor(),
+        /*
+        Note: DO NOT add a bottomNavigationBar, otherwise the preview window does not appear!
+        */
+        // bottomNavigationBar 
       ),
     );
+  }
+
+  void _scannerStarted(MobileScannerArguments? arguments) {
+    print(arguments);
   }
 }

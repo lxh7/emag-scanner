@@ -7,18 +7,21 @@
         {
             "name": "scan",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "lib/main.dart"
         },
         {
             "name": "scan (profile mode)",
             "request": "launch",
             "type": "dart",
+            "program": "lib/main.dart",
             "flutterMode": "profile"
         },
         {
             "name": "scan (release mode)",
             "request": "launch",
             "type": "dart",
+            "program": "lib/main.dart",
             "flutterMode": "release"
         }
     ]

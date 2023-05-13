@@ -44,13 +44,13 @@ class DataManager extends ChangeNotifier {
     }
 
     if (_internetConnectionListener.connected) {
-      apiConnectionState = ApiConnectionState.internet;
+      apiConnectionState = ApiConnectionState.backendCheck;
     }
   }
 
   void _internetConnectionChanged() {
     if (_internetConnectionListener.connected) {
-      apiConnectionState = ApiConnectionState.internet;
+      apiConnectionState = ApiConnectionState.backendCheck;
     } else {
       apiConnectionState = ApiConnectionState.none;
     }
@@ -71,11 +71,21 @@ class DataManager extends ChangeNotifier {
         case ApiConnectionState.none:
           // nothing to do
           break;
-        case ApiConnectionState.internet:
-        case ApiConnectionState.backend:
+        case ApiConnectionState.backendCheck:
           // start or continue checking API connectivity
           _apiCheckInterval = 0;
           _checkApi();
+          break;
+        case ApiConnectionState.backendFail:
+          // it stops here....
+          break;
+        case ApiConnectionState.authCheck:
+          // start or continue checking API connectivity
+          _apiCheckInterval = 0;
+          _checkApi();
+          break;
+        case ApiConnectionState.authFail:
+          // it stops here....
           break;
         case ApiConnectionState.full:
           // start Scan Info dequeue process
@@ -96,27 +106,29 @@ class DataManager extends ChangeNotifier {
         case ApiConnectionState.none:
           // cannot check connection to the API as we don't have an internet connection at all
           break;
-        case ApiConnectionState.internet:
-          _backend.canReachBackendAsync().then((value) {
-            if (value) {
-              apiConnectionState = ApiConnectionState.backend;
+        case ApiConnectionState.backendCheck:
+          _backend.canReachBackendAsync().then((canReach) {
+            if (canReach) {
+              apiConnectionState = ApiConnectionState.authCheck;
               _checkApi();
             } else {
               _retryCheckApi();
             }
           });
           break;
-        case ApiConnectionState.backend:
-          _backend.ensureLoggedInAsync().then((value) {
-            if (value) {
-              apiConnectionState = ApiConnectionState.full;
+        case ApiConnectionState.authCheck:
+          _backend.ensureLoggedInAsync().then((loggedIn) {
+            if (!loggedIn) {
+              apiConnectionState = ApiConnectionState.authFail;
             } else {
-              // nothing
+              apiConnectionState = ApiConnectionState.full;
             }
           });
           break;
+        case ApiConnectionState.backendFail:
+        case ApiConnectionState.authFail:
         case ApiConnectionState.full:
-          // we're done
+          // not much more we can do
           break;
       }
     } catch (e) {
@@ -126,12 +138,13 @@ class DataManager extends ChangeNotifier {
 
   _retryCheckApi() {
     // keep trying while we have an internet connection but not fully connected
-    if (apiConnectionState == ApiConnectionState.internet ||
-        apiConnectionState == ApiConnectionState.backend) {
+    if (apiConnectionState == ApiConnectionState.backendCheck) {
       if (_apiCheckInterval < 10) {
         _apiCheckInterval++;
+        _apiCheckTimer = Timer(Duration(seconds: _apiCheckInterval), _checkApi);
+      } else {
+        apiConnectionState = ApiConnectionState.backendFail;
       }
-      _apiCheckTimer = Timer(Duration(seconds: _apiCheckInterval), _checkApi);
     }
   }
 

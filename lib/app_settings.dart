@@ -12,7 +12,6 @@ class AppSettings extends ChangeNotifier {
   static const String keyOauthClientSecret = 'OauthClientSecret';
   static const String keyUserId = 'UserId';
   static const String keyPassword = 'Password';
-  static const String keyPrinter = 'Printer';
 
   late Future<SharedPreferences> _prefs;
   late SharedPreferences _storage;
@@ -30,6 +29,9 @@ class AppSettings extends ChangeNotifier {
     _oauthClientSecret = '';
     _password = '';
   }
+
+  get updSendPort => 9867;
+  get updListenPort => 9868;
 
   Future initializeAsync() async {
     _storage = await _prefs;
@@ -119,15 +121,6 @@ class AppSettings extends ChangeNotifier {
   set password(String value) {
     _password = value;
     _setSecureString(keyPassword, value);
-    notifyListeners();
-  }
-
-  String get printer {
-    return _getString(keyPrinter);
-  }
-
-  set printer(String value) {
-    _setString(keyPrinter, value);
     notifyListeners();
   }
 

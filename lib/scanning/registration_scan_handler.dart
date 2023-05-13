@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 
-import '/util/registration_server_api.dart';
+import '../util/registration_service.dart';
 import 'base_scan_handler.dart';
 
 class RegistrationScanHandler extends BaseScanHandler {
+  RegistrationScanHandler({
+    required this.getAccessToken,
+    required this.printer,
+  }) {
+    // nothing to do
+  }
+
+  final Future<String?> Function() getAccessToken;
+  final String printer;
+
   @override
   String getTitle() {
     return 'Scan for registration';
   }
-  
+
   @override
   String getSubTitle() {
-return '';
+    return 'Printing to $printer';
   }
 
   @override
   Future handleKey(String key) async {
     // Send to printer service
-    RegistrationServerApi().printDocuments(key, appSettings.printer);
+    var token = await getAccessToken() ?? '';
+    await RegistrationService().printDocuments(token, key, printer);
   }
 
   @override
