@@ -21,12 +21,12 @@ Method | HTTP request | Description
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PrintApi();
-final printRequestDTO = PrintRequestDTO(); // PrintRequestDTO | 
+final api = Openapi().getPrintApi();
+final PrintRequestDTO printRequestDTO = ; // PrintRequestDTO | 
 
 try {
-    api_instance.printPost(printRequestDTO);
-} catch (e) {
+    api.printPost(printRequestDTO);
+} catch on DioError (e) {
     print('Exception when calling PrintApi->printPost: $e\n');
 }
 ```

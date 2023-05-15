@@ -138,19 +138,19 @@ class AppSettings extends ChangeNotifier {
     _storage.setString(key, value); // do not wait
   }
 
-  int _getInt(String key) {
-    int result = 0;
-    try {
-      result = _storage.getInt(key)!;
-    } catch (e) {
-      // error....
-    }
-    return result;
-  }
+  // int _getInt(String key) {
+  //   int result = 0;
+  //   try {
+  //     result = _storage.getInt(key)!;
+  //   } catch (e) {
+  //     // error....
+  //   }
+  //   return result;
+  // }
 
-  void _setInt(String key, int value) {
-    _storage.setInt(key, value); // do not wait
-  }
+  // void _setInt(String key, int value) {
+  //   _storage.setInt(key, value); // do not wait
+  // }
 
   Future _setSecureString(String key, String value) async {
     _secureStorage.write(key: key, value: value);

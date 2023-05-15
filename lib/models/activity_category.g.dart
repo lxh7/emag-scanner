@@ -42,8 +42,7 @@ class ActivityCategory extends _ActivityCategory
     RealmObjectBase.registerFactory(ActivityCategory._);
     return const SchemaObject(
         ObjectType.realmObject, ActivityCategory, 'ActivityCategory', [
-      SchemaProperty('id', RealmPropertyType.int,
-          primaryKey: true, indexed: true),
+      SchemaProperty('id', RealmPropertyType.int, primaryKey: true),
       SchemaProperty('name', RealmPropertyType.string),
     ]);
   }

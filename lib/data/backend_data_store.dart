@@ -1,6 +1,6 @@
+import 'package:emagscan/apis/backend/lib/api.dart';
 import 'package:oauth2_client/access_token_response.dart';
 import 'package:oauth2_client/oauth2_client.dart';
-import 'package:emagscan/apis/backend/lib/api.dart';
 
 import '/app_settings.dart';
 import '/enums/scan_result.dart';
