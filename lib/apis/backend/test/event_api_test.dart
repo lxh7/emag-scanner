@@ -17,8 +17,23 @@ void main() {
   // final instance = EventApi();
 
   group('tests for EventApi', () {
-    //Future<List<EventDTO>> listEvents(String categoryId) async
+    //Future<EventDTO> getEvent(int eventId) async
+    test('test getEvent', () async {
+      // TODO
+    });
+
+    //Future<List<ParticipantDTO>> getParticipants(int eventId) async
+    test('test getParticipants', () async {
+      // TODO
+    });
+
+    //Future<List<EventDTO>> listEvents({ int categoryId }) async
     test('test listEvents', () async {
+      // TODO
+    });
+
+    //Future<ScanTimeResponseDTO> patchParticipant(int eventId, String participantId, ScanTimeDTO scanTimeDTO) async
+    test('test patchParticipant', () async {
       // TODO
     });
 

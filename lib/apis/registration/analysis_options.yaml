@@ -1,0 +1,16 @@
+analyzer:
+  language:
+    strict-inference: true
+    strict-raw-types: true
+  strong-mode:
+    #implicit-dynamic: false
+    #implicit-casts: false
+  exclude:
+    - test/*.dart
+  errors:
+    deprecated_member_use_from_same_package: ignore
+    prefer_double_quotes: error
+
+linter:
+  rules:
+    prefer_double_quotes: false

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **printersGet**
-> List<String> printersGet()
+> BuiltList<String> printersGet()
 
 
 
@@ -21,12 +21,12 @@ Method | HTTP request | Description
 ```dart
 import 'package:openapi/api.dart';
 
-final api_instance = PrintersApi();
+final api = Openapi().getPrintersApi();
 
 try {
-    final result = api_instance.printersGet();
-    print(result);
-} catch (e) {
+    final response = api.printersGet();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling PrintersApi->printersGet: $e\n');
 }
 ```
@@ -36,7 +36,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**List<String>**
+**BuiltList&lt;String&gt;**
 
 ### Authorization
 

@@ -1,4 +1,4 @@
 # Config options for the dart-dio generator
-pubName: emag_api
+pubName: openapi
 pubVersion: 0.0.1
-pubDescription: "EMAG API Client"
+pubDescription: "EMAG Badge Printer Client"

@@ -73,6 +73,25 @@
           }
         }
       }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "RegistrationServer"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
