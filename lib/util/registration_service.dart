@@ -143,7 +143,7 @@ class RegistrationService {
       IOHttpClientAdapter httpClientAdapter) async {
     ByteData rootCACert = await rootBundle.load('assets/ca.crt');
     ByteData serverCert = await rootBundle.load('assets/self.crt');
-    ByteData serverKey = await rootBundle.load('assets/self.key');
+    ByteData serverKey = await rootBundle.load('assets/self-public.key');
     httpClientAdapter.onHttpClientCreate = (client) {
       // this code will silently accept all certificates
       // client.badCertificateCallback =
