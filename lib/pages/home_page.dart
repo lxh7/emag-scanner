@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
           child: ListView(
             children: [
               ConnectionWidget.get(),
-              SvgPicture.asset('./assets/graphics/logo.svg'),
+              SvgPicture.asset('./assets/images/logo.svg'),
               ElevatedButton(
                 child: const Text('Scan for access'),
                 onPressed: () {

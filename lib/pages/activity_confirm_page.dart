@@ -10,8 +10,9 @@ import '/widgets/activity_tile.dart';
 import '/scanning/activity_scan_handler.dart';
 
 class ActivityConfirmPage extends StatelessWidget {
-  final Logger _logger =
-      getLogger('ActivityConfirmPage'); // TODO: runtimeType.toString());
+  final Logger _logger = getLogger('ActivityConfirmPage');
+
+  ActivityConfirmPage({super.key});
 
   _startScanning(BuildContext context) {
     _logger.i('Start scanning');
