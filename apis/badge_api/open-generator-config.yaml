@@ -1,0 +1,4 @@
+# Config options for the dart-dio generator
+pubName: badge_api
+pubVersion: 0.0.1
+pubDescription: "EMAG Badge Printer Service"

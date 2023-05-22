@@ -52,13 +52,13 @@ class ActivityTile extends StatelessWidget {
             ? activity.name.substring(0, maxTitleLen) + '...'
             : activity.name),
         subtitle: Text(
-            DateFormat("dd-MM-yyyy HH:mm - ").format(activity.start) +
-                DateFormat("HH:mm").format(activity.end)),
+            DateFormat('dd-MM-yyyy HH:mm - ').format(activity.start) +
+                DateFormat('HH:mm').format(activity.end)),
         trailing: trailingWrapper,
         textColor: theme.colorScheme.onPrimary,
         tileColor: theme.colorScheme.primary,
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.black, width: 1),
+          side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(2),
         ),
         onTap: tapAction,

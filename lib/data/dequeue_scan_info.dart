@@ -7,11 +7,14 @@ class DequeueScanInfo {
   int _retryCount = 0;
 
   late LocalDataStore _local;
-  late BackendDataStore _backend;
+  late BackendDataStore _backend;  
+  late Future<String> Function() _getAccessToken;
 
-  DequeueScanInfo(LocalDataStore local, BackendDataStore backend) {
+  DequeueScanInfo(
+      LocalDataStore local, BackendDataStore backend, Future<String> Function() getAccessToken) {
     _local = local;
     _backend = backend;
+    _getAccessToken = getAccessToken;
   }
 
   Future<void> run() async {
@@ -20,6 +23,7 @@ class DequeueScanInfo {
       while (item != null) {
         // send to backend
         await _backend.queryAccessAsync(
+          await _getAccessToken(),
           item.activityId,
           item.personKey,
           item.scanTime,
@@ -30,7 +34,7 @@ class DequeueScanInfo {
       // something went wrong, try again later
       _retryCount++;
       if (_retryCount <= 6) {
-        Timer(Duration(seconds: 10), run);
+        Timer(const Duration(seconds: 10), run);
       }
     }
   }

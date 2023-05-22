@@ -21,7 +21,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
     Navigator.push(
         context,
         MaterialPageRoute<void>(
-          builder: (context) => ActivityLoadPage(),
+          builder: (context) => const ActivityLoadPage(),
           settings: RouteSettings(name: (ActivityLoadPage).toString()),
         ));
   }
@@ -62,10 +62,10 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
               return ListView(
                 children: [
                   ConnectionWidget.get(),
-                  Text('Select activity to scan for. Long press = delete.',
+                  const Text('Select activity to scan for. Long press = delete.',
                       textAlign: TextAlign.center),
                   if (dataManager.isConnected) ...[
-                    Text(
+                    const Text(
                         'Tap the refresh symbol to refresh the list of participants from the server to this device (for offline scanning)',
                         textAlign: TextAlign.center),
                   ],
@@ -74,7 +74,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
                             activity: item,
                             tapAction: () => _selectActivity(item),
                             longPressAction: () => _deleteActivity(item),
-                            trailingWidget: Icon(Icons.refresh, size: 50),
+                            trailingWidget: const Icon(Icons.refresh, size: 50),
                             trailingAction: () => _refreshActivity(item),
                           ))
                       .toList(),
@@ -88,7 +88,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           color: Colors.blue,
           child: IconTheme(
             data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),

@@ -1,6 +1,6 @@
 // mock some data for the UI
-import 'package:emagscan/models/activity_category.dart';
-import 'package:emagscan/models/activity.dart';
+import 'package:emag_scanner/models/activity_category.dart';
+import 'package:emag_scanner/models/activity.dart';
 
 class MockDataStore {
   late List<ActivityCategory> _categories;
@@ -23,40 +23,40 @@ class MockDataStore {
     ]);
 
     _activities = List<Activity>.empty(growable: true);
-    _activities.add(Activity(1, 8, "Ice breaker", DateTime(2023, 8, 2, 18, 0),
+    _activities.add(Activity(1, 8, 'Ice breaker', DateTime(2023, 8, 2, 18, 0),
         DateTime(2023, 8, 2, 22, 0)));
     _activities.add(Activity(
       2,
       9,
-      "Dordrecht",
+      'Dordrecht',
       DateTime(2023, 8, 3, 9, 0),
       DateTime(2023, 8, 3, 17, 30),
     ));
     _activities.add(Activity(
       3,
       9,
-      "Delft",
+      'Delft',
       DateTime(2023, 8, 4, 9, 0),
       DateTime(2023, 8, 4, 16, 30),
     ));
     _activities.add(Activity(
       4,
       10,
-      "Euromast",
+      'Euromast',
       DateTime(2023, 8, 3, 14, 0),
       DateTime(2023, 8, 3, 16, 0),
     ));
     _activities.add(Activity(
       5,
       7,
-      "City walk",
+      'City walk',
       DateTime(2023, 8, 4, 9, 15),
       DateTime(2023, 8, 4, 11, 30),
     ));
     _activities.add(Activity(
       6,
       8,
-      "Gala dinner",
+      'Gala dinner',
       DateTime(2023, 8, 5, 19, 0),
       DateTime(2023, 8, 5, 23, 0),
     ));
@@ -69,7 +69,7 @@ class MockDataStore {
   Future<List<Activity>> getActivities(int? categoryId) async {
     var now = DateTime.now();
     var result = _activities
-        .where((element) => element.end.isAfter(now.add(Duration(hours: 2))))
+        .where((element) => element.end.isAfter(now.add(const Duration(hours: 2))))
         .toList();
     if (categoryId != null) {
       result =

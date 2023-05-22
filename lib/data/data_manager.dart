@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:collection';
+import 'package:logger/logger.dart';
+import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../logging/logging.dart';
 import '/app_settings.dart';
 import '/data/local_data_store.dart';
 import '/data/backend_data_store.dart';
@@ -16,6 +19,7 @@ import '/util/internet_connection_listener.dart';
 
 class DataManager extends ChangeNotifier {
   ApiConnectionState _apiConnectionState = ApiConnectionState.none;
+  late Logger _logger;
   int _apiCheckInterval =
       1; // polling interval (seconds) trying to reach Backend. Will be increaed with every try (max 10 seconds).
   Timer? _apiCheckTimer;
@@ -27,7 +31,12 @@ class DataManager extends ChangeNotifier {
   late List<Activity> _storedActivities;
   Activity? _selectedActivity;
 
+  oauth2.Client? _oauth2Client;
+
+  bool _authenticationStarted = false;
+
   DataManager(BuildContext context) {
+    _logger = getLogger(runtimeType.toString());
     _backend = context.read<BackendDataStore>();
     _local = context.read<LocalDataStore>();
 
@@ -35,29 +44,61 @@ class DataManager extends ChangeNotifier {
     _internetConnectionListener.addListener(_internetConnectionChanged);
 
     _appSettings = context.read<AppSettings>();
-    _appSettings.addListener(_appSettingsChanged);
-    _appSettingsChanged(); // call after _backend has been initialized
+    _appSettings.addListener(_resetState);
+    _resetState(); // call after _backend has been initialized
 
     _storedActivities = _local.getActivities();
     if (_storedActivities.isNotEmpty) {
       _selectedActivity = _storedActivities.first;
     }
-
-    if (_internetConnectionListener.connected) {
-      apiConnectionState = ApiConnectionState.backendCheck;
-    }
   }
 
   void _internetConnectionChanged() {
     if (_internetConnectionListener.connected) {
-      apiConnectionState = ApiConnectionState.backendCheck;
+      apiConnectionState = ApiConnectionState.authCheck;
     } else {
       apiConnectionState = ApiConnectionState.none;
     }
   }
 
-  void _appSettingsChanged() {
-    _backend.configure(_appSettings);
+  void _resetState() {
+    _authenticationStarted = false;
+    _oauth2Client = null;
+    _backend.configure(_appSettings.apiUrl);
+    if (_internetConnectionListener.connected) {
+      apiConnectionState = ApiConnectionState.backendCheck;
+    }
+  }
+
+  Future<String> getOauth2token() async {
+    if (!_authenticationStarted) {
+      _authenticationStarted = true;
+      if (_oauth2Client == null) {
+        try {
+          _logger.d('Getting OAuth2 token');
+          _oauth2Client = await oauth2.clientCredentialsGrant(
+            Uri.parse(_appSettings.oauthTokenUrl),
+            _appSettings.oauthClientId,
+            _appSettings.oauthClientSecret,
+            basicAuth: false,
+          );
+          _logger.d('Got OAuth2 token');
+        } on Exception catch (ex) {
+          _logger.e('Exception getting OAuth2 token', ex);
+        } catch (err) {
+          _logger.e('Error getting OAuth2 token', err);
+        }
+      } else {
+        // check if we need to refresh
+        if (_oauth2Client!.credentials.isExpired &&
+            !_oauth2Client!.credentials.canRefresh) {
+          // we need a new token but cannot refresh. Re-create the OAuth2 Client
+          _oauth2Client = null;
+          return await getOauth2token();
+        }
+      }
+    }
+    return _oauth2Client?.credentials.accessToken ?? '';
   }
 
   ApiConnectionState get apiConnectionState {
@@ -71,77 +112,69 @@ class DataManager extends ChangeNotifier {
         case ApiConnectionState.none:
           // nothing to do
           break;
+        case ApiConnectionState.authCheck:
         case ApiConnectionState.backendCheck:
           // start or continue checking API connectivity
           _apiCheckInterval = 0;
-          _checkApi();
-          break;
-        case ApiConnectionState.backendFail:
-          // it stops here....
-          break;
-        case ApiConnectionState.authCheck:
-          // start or continue checking API connectivity
-          _apiCheckInterval = 0;
-          _checkApi();
+          _checkConnectivity();
           break;
         case ApiConnectionState.authFail:
+        case ApiConnectionState.backendFail:
           // it stops here....
           break;
         case ApiConnectionState.full:
           // start Scan Info dequeue process
-          DequeueScanInfo(_local, _backend).run();
+          DequeueScanInfo(_local, _backend, getOauth2token).run();
           break;
       }
       notifyListeners();
     }
   }
 
-  void _checkApi() {
+  Future<void> _checkConnectivity() async {
     if (_apiCheckTimer != null) {
       _apiCheckTimer!.cancel();
       _apiCheckTimer = null;
     }
     try {
       switch (apiConnectionState) {
-        case ApiConnectionState.none:
-          // cannot check connection to the API as we don't have an internet connection at all
+        case ApiConnectionState.authCheck:
+          var token = await getOauth2token();
+          if (token == '') {
+            apiConnectionState = ApiConnectionState.authFail;
+          } else {
+            apiConnectionState = ApiConnectionState.backendCheck;
+          }
           break;
         case ApiConnectionState.backendCheck:
-          _backend.canReachBackendAsync().then((canReach) {
+          var token = await getOauth2token();
+          if (token == '') {
+            // fall back to failed authentication
+            apiConnectionState = ApiConnectionState.authFail;
+          } else {
+            var canReach = await _backend.canReachBackendAsync(token);
             if (canReach) {
-              apiConnectionState = ApiConnectionState.authCheck;
-              _checkApi();
-            } else {
-              _retryCheckApi();
-            }
-          });
-          break;
-        case ApiConnectionState.authCheck:
-          _backend.ensureLoggedInAsync().then((loggedIn) {
-            if (!loggedIn) {
-              apiConnectionState = ApiConnectionState.authFail;
-            } else {
               apiConnectionState = ApiConnectionState.full;
+            } else {
+              _retryCheckConnectivity();
             }
-          });
+          }
           break;
-        case ApiConnectionState.backendFail:
-        case ApiConnectionState.authFail:
-        case ApiConnectionState.full:
-          // not much more we can do
+        default: // not much more we can do
           break;
       }
     } catch (e) {
-      _retryCheckApi();
+      _retryCheckConnectivity();
     }
   }
 
-  _retryCheckApi() {
-    // keep trying while we have an internet connection but not fully connected
+  _retryCheckConnectivity() {
+    // keep trying while we have an internet connection but are not fully connected
     if (apiConnectionState == ApiConnectionState.backendCheck) {
       if (_apiCheckInterval < 10) {
         _apiCheckInterval++;
-        _apiCheckTimer = Timer(Duration(seconds: _apiCheckInterval), _checkApi);
+        _apiCheckTimer =
+            Timer(Duration(seconds: _apiCheckInterval), _checkConnectivity);
       } else {
         apiConnectionState = ApiConnectionState.backendFail;
       }
@@ -164,7 +197,7 @@ class DataManager extends ChangeNotifier {
   Future<List<ActivityCategory>> getCategories() async {
     List<ActivityCategory>? result;
     if (isConnected) {
-      result = await _backend.getCategoriesAsync();
+      result = await _backend.getCategoriesAsync(await getOauth2token());
       if (result.isNotEmpty) {
         _local.storeCategories(result);
       }
@@ -177,7 +210,8 @@ class DataManager extends ChangeNotifier {
   Future<List<Activity>> getActivities(ActivityCategory category) async {
     List<Activity>? result;
     if (isConnected) {
-      result = await _backend.getActivitiesAsync(category.id);
+      result = await _backend.getActivitiesAsync(
+          await getOauth2token(), category.id);
     }
     if (result != null) {
       return result;
@@ -186,7 +220,8 @@ class DataManager extends ChangeNotifier {
   }
 
   Future<Activity?> refreshActivityAsync(Activity activity) async {
-    var freshActivity = await _backend.getActivityAsync(activity.id);
+    var freshActivity =
+        await _backend.getActivityAsync(await getOauth2token(), activity.id);
     if (freshActivity == null) {
       return null;
     }
@@ -232,6 +267,7 @@ class DataManager extends ChangeNotifier {
     AccessCheckResult result;
     if (isConnected) {
       result = await _backend.queryAccessAsync(
+        await getOauth2token(),
         info.activityId,
         info.personKey,
         info.scanTime,
@@ -245,7 +281,8 @@ class DataManager extends ChangeNotifier {
 
   Future<Activity?> getActivity(int activityId) async {
     if (isConnected) {
-      return await _backend.getActivityAsync(activityId);
+      return await _backend.getActivityAsync(
+          await getOauth2token(), activityId);
     } else {
       return _local.getActivity(activityId);
     }

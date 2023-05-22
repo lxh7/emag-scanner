@@ -6,7 +6,6 @@ part 'activity.g.dart';
 @RealmModel()
 class _Activity {
   @PrimaryKey()
-  @Indexed()
   late int id;
   late int categoryId;
   late String name;

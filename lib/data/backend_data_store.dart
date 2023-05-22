@@ -1,8 +1,7 @@
-import 'package:emagscan/apis/backend/lib/api.dart';
-import 'package:oauth2_client/access_token_response.dart';
-import 'package:oauth2_client/oauth2_client.dart';
+import 'package:backoffice_api/backoffice_api.dart';
+import 'package:logger/logger.dart';
 
-import '/app_settings.dart';
+import '/logging/logging.dart';
 import '/enums/scan_result.dart';
 import '/models/activity.dart';
 import '/models/activity_category.dart';
@@ -10,35 +9,29 @@ import '/models/access_check_result.dart';
 import '/util/dto_helper.dart';
 
 class BackendDataStore {
-  static OAuth2Client? _oauthClient;
-  static AccessTokenResponse? _oauthAccessTokenResponse;
-  static OAuth? _oauth;
-
-  late AppSettings _appSettings;
-
   static final BackendDataStore _instance = BackendDataStore._initialize();
+  static late Logger _logger;
 
   factory BackendDataStore() {
     return _instance;
   }
 
   BackendDataStore._initialize() {
-    // nothing, at the moment
+    _logger = getLogger(runtimeType.toString());
   }
 
-  void configure(AppSettings settings) {
-    _appSettings = settings;
-    // reset all OAUTH stuff to ensure fresh login
-    defaultApiClient = ApiClient();
-    _oauthClient = null;
-    _oauthAccessTokenResponse = null;
-    _oauth = null;
+  String _apiUrl = '';
+  BackofficeApi? _backofficeApi;
+
+  void configure(String apiUrl) {
+    _apiUrl = apiUrl;
+    _backofficeApi = null;
   }
 
-  Future<bool> canReachBackendAsync() async {
-    ensureApiConfigured();
+  Future<bool> canReachBackendAsync(String token) async {
     try {
-      await HealthApi().health();
+      var api = _getBackofficeApi(token);
+      await api.getHealthApi().health();
       return true;
     } catch (e) {
       // cannot reach
@@ -46,171 +39,116 @@ class BackendDataStore {
     }
   }
 
-  Future<String?> getAccessToken() async {
-    if (await canReachBackendAsync()) {
-      await ensureLoggedInAsync();
-      return _oauthAccessTokenResponse?.accessToken;
-    } else {
-      return null;
-    }
-  }
-
-  Future<List<ActivityCategory>> getCategoriesAsync() async {
-    if (await ensureLoggedInAsync()) {
-      var api = CategoryApi();
-
-      try {
-        var list = await api.listCategories();
-        if (list != null) {
-          return list
-              .map((x) => ActivityCategory(
-                    x.id!,
-                    x.name!,
-                  ))
-              .toList();
-        }
-      } catch (e) {
-        print('Exception when calling CategoryApi->listCategories: $e\n');
+  Future<List<ActivityCategory>> getCategoriesAsync(String token) async {
+    try {
+      var api = _getBackofficeApi(token);
+      var listResponse = await api.getCategoryApi().listCategories();
+      if (listResponse.data != null) {
+        return listResponse.data!
+            .map((x) => ActivityCategory(
+                  x.id!,
+                  x.name!,
+                ))
+            .toList();
       }
+    } catch (e) {
+      //
     }
     return List<ActivityCategory>.empty();
   }
 
-  Future<List<Activity>> getActivitiesAsync(int? categoryId) async {
-    if (await ensureLoggedInAsync()) {
-      var api = EventApi();
-
-      try {
-        List<EventDTO>? list;
-        if (categoryId == null) {
-          list = await api.listEvents();
-        } else {
-          list = await api.listEvents(categoryId: categoryId);
-        }
-
-        if (list != null) {
-          return list.map(DtoHelper.fromEventDTO).toList();
-        }
-      } catch (e) {
-        print('Exception when calling EventApi->listEvents: $e\n');
+  Future<List<Activity>> getActivitiesAsync(
+      String token, int? categoryId) async {
+    try {
+      var api = _getBackofficeApi(token);
+      Iterable<EventDTO>? list;
+      if (categoryId == null) {
+        var response = await api.getEventApi().listEvents();
+        list = response.data;
+      } else {
+        var response =
+            await api.getEventApi().listEvents(categoryId: categoryId);
+        list = response.data;
       }
+
+      if (list != null) {
+        return list.map(DtoHelper.fromEventDTO).toList();
+      }
+    } catch (e) {
+      _logger.e('Exception when calling EventApi->listEvents:', e);
     }
     return List<Activity>.empty();
   }
 
-  Future<Activity?> getActivityAsync(int activityId) async {
-    if (await ensureLoggedInAsync()) {
-      var api = EventApi();
-      try {
-        var eventDTO = await api.getEvent(activityId);
-        if (eventDTO == null) {
-          return null;
-        }
-        var activity = DtoHelper.fromEventDTO(eventDTO);
-        var participants = await api.getParticipants(activityId);
-        if (participants?.isNotEmpty == true) {
-          activity.participants.clear();
-          activity.participants.addAll(participants!
-              .map((e) => ActivityParticipant(
-                    e.participantId!,
-                    scanTime: null,
-                  ))
-              .toList());
-        }
-        return activity;
-      } catch (e) {
-        print('Exception when calling EventApi->listEvents: $e\n');
+  Future<Activity?> getActivityAsync(String token, int activityId) async {
+    try {
+      var api = _getBackofficeApi(token);
+      var eventApi = api.getEventApi();
+      var eventResponse = await eventApi.getEvent(eventId: activityId);
+      if (eventResponse.data == null) {
+        return null;
       }
+      var eventDTO = eventResponse.data!;
+      var activity = DtoHelper.fromEventDTO(eventDTO);
+      var participantResponse =
+          await eventApi.getParticipants(eventId: activityId);
+      var participants = participantResponse.data;
+      if (participants?.isNotEmpty == true) {
+        activity.participants.clear();
+        activity.participants.addAll(participants!
+            .map((e) => ActivityParticipant(
+                  e.participantId!,
+                  scanTime: null,
+                ))
+            .toList());
+      }
+      return activity;
+    } catch (e) {
+      _logger.e('Exception when calling EventApi->getParticipants:', e);
     }
     return null;
   }
 
   Future<AccessCheckResult> queryAccessAsync(
-      int activityId, String personKey, DateTime scanTime) async {
-    if (await ensureLoggedInAsync()) {
-      var api = EventApi();
-      var access = await api.patchParticipant(
-        activityId,
-        personKey,
-        ScanTimeDTO(scanTime: scanTime.toIso8601String()),
-      );
-      if (access == null) {
+      String token, int activityId, String personKey, DateTime scanTime) async {
+    var api = _getBackofficeApi(token);
+    var dto = ScanTimeDTOBuilder();
+    dto.scanTime = scanTime.toIso8601String();
+    var accessResponse = await api.getEventApi().patchParticipant(
+          eventId: activityId,
+          participantId: personKey,
+          scanTimeDTO: dto.build(),
+        );
+    var response = accessResponse.data;
+    if (response == null) {
+      return AccessCheckResult(
+          scanResult: ScanResult.deny, message: 'No data returned');
+    }
+    switch (response.grant) {
+      case 'pass':
+        return AccessCheckResult(scanResult: ScanResult.pass);
+      case 'check':
         return AccessCheckResult(
-            scanResult: ScanResult.deny, message: 'No data returned');
-      }
-      switch (access.grant) {
-        case 'pass':
-          return AccessCheckResult(scanResult: ScanResult.pass);
-        case 'check':
-          return AccessCheckResult(
-              scanResult: ScanResult.check,
-              prevScanTime: DtoHelper.convertDate(
-                access.prevScanTime,
-                DateTime(2000, 1, 1),
-              ));
-        case 'deny':
-          return AccessCheckResult(scanResult: ScanResult.deny);
-      }
+            scanResult: ScanResult.check,
+            prevScanTime: DtoHelper.convertDate(
+              response.prevScanTime,
+              DateTime(2000, 1, 1),
+            ));
+      case 'deny':
+        return AccessCheckResult(scanResult: ScanResult.deny);
+      default:
+        return AccessCheckResult(
+            scanResult: ScanResult.error,
+            message: 'Unknown access grant value returned: ${response.grant}');
     }
-    return AccessCheckResult(
-        scanResult: ScanResult.error, message: 'Not logged in');
   }
 
-  Future<bool> ensureLoggedInAsync() async {
-    // do we have a token, and is it still valid?
-    if (_oauthAccessTokenResponse?.isValid() == true &&
-        _oauthAccessTokenResponse?.refreshNeeded() == false) {
-      return true;
-    }
-
-    // we need a (new) token
-    _oauthClient ??= OAuth2Client(
-        authorizeUrl: _appSettings.oauthAuthorizationUrl,
-        tokenUrl: _appSettings.oauthTokenUrl,
-        redirectUri: _appSettings.oauthRedirectUri,
-        customUriScheme: '');
-    // if we already have a token (with refreshToken), check if it is (nearly) expired
-    // and in that case refresh it...
-    if (_oauthAccessTokenResponse?.refreshToken != null &&
-        !_oauthAccessTokenResponse!.refreshNeeded()) {
-      _oauthAccessTokenResponse = await _oauthClient!.refreshToken(
-        _oauthAccessTokenResponse!.refreshToken!,
-        clientId: _appSettings.oauthClientId,
-      );
-    } else {
-      //Request a token using the Authorization Code flow...
-      _oauthAccessTokenResponse =
-          await _oauthClient!.getTokenWithClientCredentialsFlow(
-        clientId: _appSettings.oauthClientId,
-        clientSecret: _appSettings.oauthClientSecret,
-        // scopes: ['scope1'],
-      );
-    }
-
-    // Configure OpenApi access token for authorization: OAuth2, or update  the access token
-    var accessToken = _oauthAccessTokenResponse!.accessToken ?? '';
-    if (accessToken == '') {
-      return false;
-    }
-    _oauth = OAuth(accessToken: accessToken);
-
-    // force refresh of apiClient
-    defaultApiClient = ApiClient(
-      basePath: _appSettings.apiUrl,
-      authentication: _oauth,
-    );
-    return true;
-  }
-
-  // public function, so that checking Health can be done elsewhere
-  void ensureApiConfigured() {
-    // did we ever initiate our defaultApiClient?
-    if (defaultApiClient.basePath == '' ||
-        defaultApiClient.basePath == 'http://localhost') {
-      defaultApiClient = ApiClient(
-        basePath: _appSettings.apiUrl,
-        authentication: _oauth,
-      );
-    }
+  BackofficeApi _getBackofficeApi(var token) {
+    _backofficeApi ??= BackofficeApi(basePathOverride: _apiUrl);
+    // Set the (refreshed) token for authentication.
+    // Note: the OAuthInterceptor expects the name/key 'OAuth2' because
+    // it was generated as such with the OpenApi Generator.
+    _backofficeApi!.setOAuthToken('OAuth2', token);
+    return _backofficeApi!;
   }
 }

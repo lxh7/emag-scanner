@@ -15,6 +15,7 @@ class LocalDataStore {
       ActivityCategory.schema,
       Activity.schema,
       ActivityParticipant.schema,
+      ScanInfo.schema,
     ]);
     _realm = Realm(_config);
   }

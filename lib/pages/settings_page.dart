@@ -53,17 +53,17 @@ class _SettingsPageState extends State<SettingsPage> {
         body: SettingsList(
           sections: [
             SettingsSection(
-              title: Text('API'),
+              title: const Text('API'),
               tiles: <SettingsTile>[
                 SettingsTile(
                   title: Text(
                     'URL of the API (do not end with /)',
-                    style: TextStyle(color: Colors.orange),
+                    style: const TextStyle(color: Colors.orange),
                     textScaleFactor: titleScaleFactor,
                   ),
                   value: TextField(
                     controller: TextEditingController(text: appSettings.apiUrl),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       prefixIcon: Icon(Icons.power),
                       filled: true,
@@ -77,13 +77,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 SettingsTile(
                   title: Text(
                     'OAUTH authorization URL',
-                    style: TextStyle(color: Colors.orange),
+                    style: const TextStyle(color: Colors.orange),
                     textScaleFactor: titleScaleFactor,
                   ),
                   value: TextField(
                     controller: TextEditingController(
                         text: appSettings.oauthAuthorizationUrl),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       prefixIcon: Icon(Icons.safety_check),
                       filled: true,
@@ -97,13 +97,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 SettingsTile(
                   title: Text(
                     'OAUTH token URL',
-                    style: TextStyle(color: Colors.orange),
+                    style: const TextStyle(color: Colors.orange),
                     textScaleFactor: titleScaleFactor,
                   ),
                   value: TextField(
                     controller:
                         TextEditingController(text: appSettings.oauthTokenUrl),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       prefixIcon: Icon(Icons.token),
                       filled: true,
@@ -117,13 +117,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 SettingsTile(
                   title: Text(
                     'OAUTH client id',
-                    style: TextStyle(color: Colors.orange),
+                    style: const TextStyle(color: Colors.orange),
                     textScaleFactor: titleScaleFactor,
                   ),
                   value: TextField(
                     controller:
                         TextEditingController(text: appSettings.oauthClientId),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       prefixIcon: Icon(Icons.perm_identity),
                       filled: true,
@@ -137,7 +137,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 SettingsTile(
                   title: Text(
                     'OAUTH client secret',
-                    style: TextStyle(color: Colors.orange),
+                    style: const TextStyle(color: Colors.orange),
                     textScaleFactor: titleScaleFactor,
                   ),
                   value: TextField(
@@ -146,8 +146,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      prefixIcon: Icon(Icons.password),
+                      border: const UnderlineInputBorder(),
+                      prefixIcon: const Icon(Icons.password),
                       suffixIcon: IconButton(
                         icon: Icon(oauthClientSecretVisible
                             ? Icons.visibility

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '/data/backend_data_store.dart';
 import '/data/data_manager.dart';
 import 'scan_page.dart';
 import '/scanning/registration_scan_handler.dart';
@@ -11,14 +10,16 @@ import '/widgets/printer_tile.dart';
 import '/widgets/spinner.dart';
 
 class RegistrationSetupPage extends StatelessWidget {
-  void _startScanning(
-      BuildContext context, BackendDataStore backend, String printer) {
+  const RegistrationSetupPage({super.key});
+
+  void _startScanning(BuildContext context,
+      Future<String> Function() getTokenFunc, String printer) {
     Navigator.push(
       context,
       MaterialPageRoute<void>(
         builder: (context) => ScanPage(
           handler: RegistrationScanHandler(
-            getAccessToken: backend.getAccessToken,
+            getTokenFunc: getTokenFunc,
             printer: printer,
           ),
         ),
@@ -31,7 +32,6 @@ class RegistrationSetupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var backend = context.read<BackendDataStore>();
     var registrationService = RegistrationService();
 
     return SafeArea(
@@ -51,8 +51,9 @@ class RegistrationSetupPage extends StatelessWidget {
             child: ListView(
               children: [
                 ConnectionWidget.get(),
-                Text('Select printer', textAlign: TextAlign.center),
-                _getTokenWaiterWidget(backend, registrationService),
+                const Text('Select printer', textAlign: TextAlign.center),
+                _getTokenWaiterWidget(
+                    dataManager.getOauth2token, registrationService),
               ], // children
             ),
           ),
@@ -62,15 +63,17 @@ class RegistrationSetupPage extends StatelessWidget {
   }
 
   FutureBuilder<String?> _getTokenWaiterWidget(
-      BackendDataStore backend, RegistrationService registrationService) {
+      Future<String> Function() getTokenFunc,
+      RegistrationService registrationService) {
     return FutureBuilder(
-      future: backend.getAccessToken(),
+      future: getTokenFunc(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           var token = snapshot.data;
-          return _getPrintersWaiterWidget(registrationService, token, backend);
+          return _getPrintersWaiterWidget(
+              registrationService, token, getTokenFunc);
         } else {
-          return Spinner();
+          return const Spinner();
         }
       },
     );
@@ -79,38 +82,39 @@ class RegistrationSetupPage extends StatelessWidget {
   FutureBuilder<List<String>> _getPrintersWaiterWidget(
       RegistrationService registrationService,
       String? token,
-      BackendDataStore backend) {
+      Future<String> Function() getTokenFunc) {
     return FutureBuilder(
       future: registrationService.getPrinters(token ?? ''),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           List<String>? printers = snapshot.data;
-          return _getPrintersWidgets(printers, context, backend);
+          return _getPrintersWidgets(printers, context, getTokenFunc);
         } else {
-          return Spinner();
+          return const Spinner();
         }
       },
     );
   }
 
-  Widget _getPrintersWidgets(
-      List<String>? printers, BuildContext context, BackendDataStore backend) {
+  Widget _getPrintersWidgets(List<String>? printers, BuildContext context,
+      Future<String> Function() getTokenFunc) {
     if (printers?.isNotEmpty == true) {
       var result = ListView(
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           ...printers!
               .map((item) => PrinterTile(
                     printer: item,
-                    tapAction: () => _startScanning(context, backend, item),
+                    tapAction: () =>
+                        _startScanning(context, getTokenFunc, item),
                   ))
               .toList()
         ],
       );
       return result;
     } else {
-      return Text('No printers found');
+      return const Text('No printers found');
     }
   }
 }

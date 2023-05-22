@@ -13,26 +13,26 @@ class SettingsScanHandler extends BaseScanHandler {
 
   @override
   void handleBarcode(Barcode barcode) {
-    if (barcode.rawValue == null) {
-      MyDialog.error(scanPage.context, 'No data in barcode');
+    if (barcode.rawValue == null) {       
+      MyDialog.showError(scanPage.context, 'No data in barcode');
       return;
     }
     if (barcode.type != BarcodeType.text) {
-      MyDialog.error(scanPage.context, 'Invalid barcode');
+      MyDialog.showError(scanPage.context, 'Invalid barcode');
       return;
     }
     if (barcode.displayValue == null) {
-      MyDialog.error(scanPage.context, 'Barcode does not contain proper data');
+      MyDialog.showError(scanPage.context, 'Barcode does not contain proper data');
       return;
     }
     var settingsInfo = json.decode(barcode.displayValue!);
     var totalSet = appSettings.setValues(settingsInfo);
-    MyDialog.info(scanPage.context, "$totalSet, values set");
+    MyDialog.showInfo(scanPage.context, '$totalSet, values set');
     Navigator.pop(scanPage.context);
   }
 
   @override
   Widget buildBottomSheet(BuildContext context) {
-    return Text('Nothing special to show');
+    return const Text('Nothing special to show');
   }
 }
