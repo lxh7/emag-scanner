@@ -1,38 +1,47 @@
 import 'dart:async';
+import 'package:emag_scanner/util/my_dialog.dart';
+import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:provider/provider.dart';
 
-import '../data/data_manager.dart';
+import '/logging/logging.dart';
+import '/data/data_manager.dart';
+import '/enums/api_connection_state.dart';
 import '/enums/scan_result.dart';
 import '/scanning/base_scan_handler.dart';
 import '/util/vibrator.dart';
-import '/widgets/connection_widget.dart';
 
 class ScanPage extends StatefulWidget {
   final BaseScanHandler handler;
 
-  ScanPage({super.key, required this.handler});
+  const ScanPage({super.key, required this.handler});
 
   @override
   State<ScanPage> createState() => ScanPageState();
 }
 
 class ScanPageState extends State<ScanPage> {
+  late Logger _logger;
+  late ThemeData _theme;
+  late MobileScannerController _cameraController;
   late ScanResult scanResult = ScanResult.none;
   late String scanMessage = '';
   Timer? _timer;
+  static bool _torchEnabled = false;
 
-  MobileScannerController cameraController = MobileScannerController(
-    autoStart: true,
-    detectionSpeed: DetectionSpeed.normal,
-    facing: CameraFacing.back,
-    torchEnabled: false,
-  );
-
-  late ThemeData _theme;
+  ScanPageState() {
+    _logger = getLogger(runtimeType.toString());
+    _cameraController = MobileScannerController(
+      autoStart: true,
+      detectionSpeed: DetectionSpeed.normal,
+      facing: CameraFacing.back,
+      torchEnabled: _torchEnabled,
+    );
+  }
 
   void setScanResult(ScanResult newResult, String message) {
+    _logger.i('Scan state set to $newResult with message "$message"');
     if (_timer != null) {
       _timer!.cancel();
     }
@@ -43,40 +52,78 @@ class ScanPageState extends State<ScanPage> {
     switch (newResult) {
       case ScanResult.none:
         // quiet and peaceful ...
+        Vibrator.stopBuzzer();
         break;
       case ScanResult.pass:
         Vibrator.okBuzzer();
-        // auto reset status after a short while
-        _timer = Timer(
-          Duration(milliseconds: 1500),
-          () => setScanResult(ScanResult.none, ''),
-        );
+        if (scanMessage == '') {
+          // auto reset status after a short while
+          _timer = Timer(
+            const Duration(milliseconds: 1500),
+            () => setScanResult(ScanResult.none, ''),
+          );
+        } else {
+          showDialog(
+            'Scan OK',
+            message,
+            backgroundColor: Colors.green,
+            icon: Icons.question_mark,
+          );
+        }
         break;
       case ScanResult.check:
         Vibrator.warningBuzzer();
-        showModalBottomSheet(
-            context: context, builder: widget.handler.buildBottomSheet);
+        showDialog(
+          'Additional check needed',
+          message,
+          // backgroundColor: Colors.orange,
+          icon: Icons.question_mark,
+        );
         break;
       case ScanResult.deny:
       case ScanResult.error:
         Vibrator.errorBuzzer();
-        showModalBottomSheet(
-            context: context, builder: widget.handler.buildBottomSheet);
+        showDialog(
+          'Not allowed',
+          message,
+          //backgroundColor: Colors.red,
+          icon: Icons.block,
+        );
         break;
     }
   }
 
-  Color getActionColor() {
-    switch (scanResult) {
-      case ScanResult.none:
-        return _theme.colorScheme.background;
-      case ScanResult.pass:
-        return Colors.green;
-      case ScanResult.check:
-        return Colors.orange;
-      case ScanResult.deny:
-      case ScanResult.error:
-        return Colors.red;
+  void showDialog(
+    String caption,
+    String message, {
+    Color? backgroundColor,
+    required IconData icon,
+  }) {
+    _stopScanning();
+    MyDialog.showPopup(
+      context,
+      caption,
+      message,
+      backgroundColor: backgroundColor,
+      icon: Icon(
+        icon,
+        color: Colors.black,
+        size: 48.0,
+      ),
+      onClose: _startScanning,
+    );
+  }
+
+  void _stopScanning() {
+    _torchEnabled = _cameraController.torchEnabled;
+    _cameraController.stop();
+  }
+
+  void _startScanning() {
+    setScanResult(ScanResult.none, '');
+    _cameraController.start();
+    if (_torchEnabled ^ _cameraController.torchEnabled) {
+      _cameraController.toggleTorch();
     }
   }
 
@@ -89,14 +136,25 @@ class ScanPageState extends State<ScanPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: ConnectionWidget.getConnectionStateColor(
-              dataManager.apiConnectionState),
           leading: IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(widget.handler.getTitle()),
           centerTitle: subTitle != '',
+          toolbarHeight: 80,
+          flexibleSpace: FlexibleSpaceBar(
+            stretchModes: const <StretchMode>[
+              StretchMode.zoomBackground,
+              StretchMode.blurBackground,
+              StretchMode.fadeTitle,
+            ],
+            centerTitle: true,
+            title: Text(
+              dataManager.apiConnectionState.displayMessage,
+              textScaleFactor: 0.6,
+            ),
+          ),
           bottom: subTitle != ''
               ? PreferredSize(
                   preferredSize: Size.zero,
@@ -107,10 +165,14 @@ class ScanPageState extends State<ScanPage> {
                 )
               : null,
           actions: [
+            Icon(
+              Icons.network_wifi,
+              color: dataManager.apiConnectionState.color,
+            ),
             IconButton(
               // color: Colors.white,
               icon: ValueListenableBuilder(
-                valueListenable: cameraController.torchState,
+                valueListenable: _cameraController.torchState,
                 builder: (context, state, child) {
                   switch (state) {
                     case TorchState.off:
@@ -122,7 +184,7 @@ class ScanPageState extends State<ScanPage> {
                 },
               ),
               iconSize: 32.0,
-              onPressed: () => cameraController.toggleTorch(),
+              onPressed: () => _cameraController.toggleTorch(),
             ),
           ],
         ),
@@ -130,22 +192,22 @@ class ScanPageState extends State<ScanPage> {
         Note: DO NOT put anything else as the body, otherwise the preview window does not appear!
         */
         body: MobileScanner(
-          controller: cameraController,
+          controller: _cameraController,
           fit: BoxFit.contain,
           onDetect: (capture) =>
               widget.handler.handleBarcodes(capture.barcodes),
           onScannerStarted: _scannerStarted,
         ),
-        backgroundColor: getActionColor(),
+        backgroundColor: scanResult.getColor(_theme.colorScheme.background),
         /*
         Note: DO NOT add a bottomNavigationBar, otherwise the preview window does not appear!
         */
-        // bottomNavigationBar 
+        // bottomNavigationBar
       ),
     );
   }
 
   void _scannerStarted(MobileScannerArguments? arguments) {
-    print(arguments);
+    _logger.i('Scanner started: $arguments');
   }
 }

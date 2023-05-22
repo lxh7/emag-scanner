@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -14,6 +16,9 @@ import '/util/barcode_decoder.dart';
 abstract class BaseScanHandler {
   AppSettings? _appSettings;
   DataManager? _dataManager;
+  static const String _dummyKey = '**!**';
+  static String _lastKey = _dummyKey;
+  static Timer? _lastKeyTimer;
 
   AppSettings get appSettings {
     _appSettings ??= Provider.of<AppSettings>(scanPage.context, listen: false);
@@ -56,12 +61,22 @@ abstract class BaseScanHandler {
   }
 
   void handleBarcode(Barcode barcode) {
-    var personKey = BarcodeDecoder.decode(barcode);
-    if (personKey == null) {
+    var key = BarcodeDecoder.decode(barcode);
+    if (key == null) {
       scanPage.setScanResult(ScanResult.error, 'Not a valid EMAG QR-code');
       return;
     }
-    handleKey(personKey);
+    // prevent rapid duplicate scanning of keys
+    if (key != _lastKey) {
+      _lastKey = key;
+      // reset last key in case something needs to be scanned more than once
+      if (_lastKeyTimer != null) _lastKeyTimer!.cancel();
+      _lastKeyTimer = Timer(const Duration(seconds: 3), () {
+        _lastKey = _dummyKey;
+        _lastKeyTimer = null;
+      });
+      handleKey(key);
+    }
   }
 
   /// Handle a key retrieved from the barcode scanned.

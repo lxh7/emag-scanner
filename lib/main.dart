@@ -30,12 +30,14 @@ void main() async {
         ChangeNotifierProvider<DataManager>(
             create: (context) => DataManager(context)),
       ],
-      child: ScanApp(),
+      child: const ScanApp(),
     ),
   );
 }
 
 class ScanApp extends StatelessWidget {
+  const ScanApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     final elevatedButtonThemeData = ElevatedButtonThemeData(
@@ -52,9 +54,9 @@ class ScanApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.light,
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Color.fromARGB(255, 3, 56, 116),
+            seedColor: const Color.fromARGB(255, 3, 56, 116),
             brightness: Brightness.light),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Color.fromARGB(255, 3, 56, 116),
           foregroundColor: Colors.white,
         ),
@@ -74,7 +76,7 @@ class ScanApp extends StatelessWidget {
       // ),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }

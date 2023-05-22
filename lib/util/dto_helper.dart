@@ -1,4 +1,4 @@
-import 'package:emagscan/apis/backend/lib/api.dart';
+import 'package:backoffice_api/backoffice_api.dart';
 
 import '/models/activity.dart';
 

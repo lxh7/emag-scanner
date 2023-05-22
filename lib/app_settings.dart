@@ -5,8 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AppSettings extends ChangeNotifier {
   static const String keyApiUrl = 'ApiURL';
-  static const String keyOauthAuthorizationUrl = "OauthAuthUrl";
-  static const String keyOauthTokenUrl = "OauthTokenUrl";
+  static const String keyOauthAuthorizationUrl = 'OauthAuthUrl';
+  static const String keyOauthTokenUrl = 'OauthTokenUrl';
   static const String keyOauthRedirectUri = 'OuthRedirectUri';
   static const String keyOauthClientId = 'OauthClientId';
   static const String keyOauthClientSecret = 'OauthClientSecret';
@@ -35,9 +35,9 @@ class AppSettings extends ChangeNotifier {
 
   Future initializeAsync() async {
     _storage = await _prefs;
-    _secureStorage = FlutterSecureStorage(
+    _secureStorage = const FlutterSecureStorage(
       // iOptions: const IOSOptions(),
-      aOptions: const AndroidOptions(encryptedSharedPreferences: true),
+      aOptions: AndroidOptions(encryptedSharedPreferences: true),
       // lOptions: const LinuxOptions(),
       // webOptions: const WebOptions(),
       // mOptions: const MacOsOptions(),

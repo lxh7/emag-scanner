@@ -7,12 +7,14 @@ import 'settings_page.dart';
 import '/widgets/connection_widget.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Emag \'23 Scanner'),
+          title: const Text('EMAG \'23 Scanner'),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.settings),
@@ -21,7 +23,7 @@ class HomePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                        builder: (context) => SettingsPage(),
+                        builder: (context) => const SettingsPage(),
                         settings:
                             RouteSettings(name: (SettingsPage).toString())));
               },
@@ -35,7 +37,7 @@ class HomePage extends StatelessWidget {
               ConnectionWidget.get(),
               SvgPicture.asset('./assets/graphics/logo.svg'),
               ElevatedButton(
-                child: Text('Scan for access'),
+                child: const Text('Scan for access'),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -49,12 +51,12 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ElevatedButton(
-                child: Text('Scan for registration'),
+                child: const Text('Scan for registration'),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (context) => RegistrationSetupPage(),
+                      builder: (context) => const RegistrationSetupPage(),
                       settings: RouteSettings(
                         name: (RegistrationSetupPage).toString(),
                       ),

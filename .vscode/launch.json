@@ -5,24 +5,33 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "scan",
+            "name": "emag_scanner",
             "request": "launch",
-            "type": "dart",
-            "program": "lib/main.dart"
+            "type": "dart"
         },
         {
-            "name": "scan (profile mode)",
+            "name": "emag_scanner (profile mode)",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart",
             "flutterMode": "profile"
         },
         {
-            "name": "scan (release mode)",
+            "name": "emag_scanner (release mode)",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main.dart",
             "flutterMode": "release"
+        },
+        {
+            "name": "backoffice_api",
+            "cwd": "lib\\apis\\backoffice_api",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "badge_api",
+            "cwd": "lib\\apis\\badge_api",
+            "request": "launch",
+            "type": "dart"
         }
     ]
 }

@@ -12,16 +12,16 @@ class ConnectionWidget {
         if (dataManager.apiConnectionState != ApiConnectionState.full) {
           //if not fully connected show error message box
           return Container(
-            padding: EdgeInsets.all(10.00),
-            margin: EdgeInsets.only(bottom: 10.00),
-            color: getConnectionStateColor(dataManager.apiConnectionState),
+            padding: const EdgeInsets.all(10.00),
+            margin: const EdgeInsets.only(bottom: 10.00),
+            color: dataManager.apiConnectionState.color,
             child: Row(children: [
               Container(
-                margin: EdgeInsets.only(right: 6.00),
-                child: Icon(Icons.info, color: Colors.white),
+                margin: const EdgeInsets.only(right: 6.00),
+                child: const Icon(Icons.info, color: Colors.white),
               ), // icon for error message
-              Text(getConnectionStateText(dataManager.apiConnectionState),
-                  style: TextStyle(color: Colors.white)),
+              Text(dataManager.apiConnectionState.displayMessage,
+                  style: const TextStyle(color: Colors.white)),
               //show error message text
             ]),
           );
@@ -31,36 +31,5 @@ class ConnectionWidget {
         }
       },
     );
-  }
-
-  static String getConnectionStateText(ApiConnectionState connectionState) {
-    switch (connectionState) {
-      case ApiConnectionState.none:
-        return "No internet connection available";
-      case ApiConnectionState.backendCheck:
-        return 'Checking connectivity to backend';
-      case ApiConnectionState.backendFail:
-        return 'Backend cout not be reached';
-      case ApiConnectionState.authCheck:
-        return 'Authenticating...';
-      case ApiConnectionState.authFail:
-        return 'Authentication failed';
-      case ApiConnectionState.full:
-        return 'Fully connected';
-    }
-  }
-
-  static Color getConnectionStateColor(ApiConnectionState connectionState) {
-    switch (connectionState) {
-      case ApiConnectionState.none:
-      case ApiConnectionState.backendFail:
-      case ApiConnectionState.authFail:
-        return Colors.red;
-      case ApiConnectionState.backendCheck:
-      case ApiConnectionState.authCheck:
-        return Colors.orange;
-      case ApiConnectionState.full:
-        return Colors.green;
-    }
   }
 }

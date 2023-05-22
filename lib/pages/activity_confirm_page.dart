@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
+import '/logging/logging.dart';
 import '/data/data_manager.dart';
 import 'scan_page.dart';
 import 'activity_select_page.dart';
@@ -8,8 +10,11 @@ import '/widgets/activity_tile.dart';
 import '/scanning/activity_scan_handler.dart';
 
 class ActivityConfirmPage extends StatelessWidget {
+  final Logger _logger =
+      getLogger('ActivityConfirmPage'); // TODO: runtimeType.toString());
+
   _startScanning(BuildContext context) {
-    print('start scanning');
+    _logger.i('Start scanning');
     Navigator.push(
       context,
       MaterialPageRoute<void>(
@@ -22,11 +27,11 @@ class ActivityConfirmPage extends StatelessWidget {
   }
 
   _selectOtherActivity(BuildContext context) {
-    print('select other activity');
+    _logger.i('Select other activity');
     Navigator.push(
       context,
       MaterialPageRoute<void>(
-        builder: (context) => ActivitySelectPage(),
+        builder: (context) => const ActivitySelectPage(),
         settings: RouteSettings(name: (ActivitySelectPage).toString()),
       ),
     );
@@ -51,9 +56,9 @@ class ActivityConfirmPage extends StatelessWidget {
             child: ListView(
               children: [
                 if (dataManager.selectedActivity != null) ...[
-                  Center(
+                  const Center(
                     child: Text(
-                        "Tap to start scanning participants for this activity"),
+                        'Tap to start scanning participants for this activity'),
                   ),
                   ActivityTile(
                     activity: dataManager.selectedActivity!,

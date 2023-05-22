@@ -65,8 +65,8 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
           child: ListView(
             children: [
               ConnectionWidget.get(),
-              Text('Load activities', textAlign: TextAlign.center),
-              Text('Filter by category'),
+              const Text('Load activities', textAlign: TextAlign.center),
+              const Text('Filter by category'),
               FutureBuilder(
                 future: dataManager.getCategories(),
                 builder: (context, snapshot) {
@@ -74,12 +74,12 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                     List<ActivityCategory>? categories = snapshot.data;
                     return _buildCategoryUI(categories);
                   } else {
-                    return Spinner();
+                    return const Spinner();
                   }
                 },
               ),
               if (_category != null) ...[
-                Text('Tap to load activity & participants'),
+                const Text('Tap to load activity & participants'),
                 _activities == null
                     ? FutureBuilder(
                         future: _loadActivities(),
@@ -88,12 +88,12 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                               ConnectionState.done) {
                             _activities = snapshot.data;
                             _activities!.removeWhere((a) => a.end.isBefore(
-                                DateTime.now().add(Duration(hours: -8))));
+                                DateTime.now().add(const Duration(hours: -8))));
                             _activities!
                                 .sort((a, b) => _compareActivities(a, b));
                             return _buildActivitiesUI();
                           } else {
-                            return Spinner();
+                            return const Spinner();
                           }
                         })
                     : _buildActivitiesUI()
@@ -123,7 +123,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
   _buildCategoryUI(List<ActivityCategory>? categories) {
     if (categories?.isEmpty == true) {
       _category = null;
-      return Text('No categories loaded from server');
+      return const Text('No categories loaded from server');
     }
     _category ??= categories!.first;
     return DropdownButton<ActivityCategory>(
@@ -154,7 +154,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
 
   Widget _buildActivitiesUI() {
     if (_activities == null || _activities!.isEmpty) {
-      return Text('No activities in this category');
+      return const Text('No activities in this category');
     }
     return ListView(
       shrinkWrap: true,

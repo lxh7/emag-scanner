@@ -37,12 +37,11 @@ class ActivityScanHandler extends BaseScanHandler {
       case ScanResult.check:
         if (previousScanTime != null) {
           message =
-              'This code has been scanned earlier for this activity, on ${DateFormat.yMd().format(previousScanTime!)} at ${DateFormat.Hm().format(previousScanTime!)}.';
-          // 'Individual has been scanned before',
+              'This code has been scanned earlier for this activity,\non ${DateFormat.yMd().format(previousScanTime!)} at ${DateFormat.Hm().format(previousScanTime!)}.';
         } else {
           message = 'Unsure about this person: reason unknown.';
         }
-        message = '$message Perform additional check(s) (e.g. stamp)';
+        message = '$message Please perform additional check(s)';
         break;
       case ScanResult.deny:
         message =
@@ -61,14 +60,16 @@ class ActivityScanHandler extends BaseScanHandler {
 
   @override
   Widget buildBottomSheet(BuildContext context) {
+    var theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.all(10),
-      color: scanPage.getActionColor(),
+      padding: const EdgeInsets.all(10),
+      color: scanPage.scanResult.getColor(
+          theme.bottomSheetTheme.backgroundColor ?? Colors.blueAccent),
       height: 100,
       child: Column(children: [
         Center(child: Text(scanPage.scanMessage)),
         ElevatedButton(
-          child: Center(
+          child: const Center(
             child: Text('Dismiss'),
           ),
           onPressed: () {

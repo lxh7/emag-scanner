@@ -1,12 +1,12 @@
 import 'package:vibration/vibration.dart';
 
 class Vibrator {
-  static const int _startWait = 20;
-  static const int _shortBzt = 200;
-  static const int _mediumBzt = 400;
-  static const int _longBzt = 800;
-  static const int _shortPause = 250;
-  static const int _longPause = 1000;
+  static const int _startWait = 5;
+  static const int _shortBzt = 80;
+  static const int _mediumBzt = 200;
+  static const int _longBzt = 400;
+  static const int _shortPause = 125;
+  static const int _longPause = 250;
 
   static stopBuzzer() async {
     if (await Vibration.hasVibrator() == true) {
@@ -27,15 +27,8 @@ class Vibrator {
   static warningBuzzer() async {
     if (await Vibration.hasVibrator() == true) {
       if (await Vibration.hasCustomVibrationsSupport() == true) {
-        Vibration.vibrate(pattern: [
-          _startWait,
-          _mediumBzt,
-          _shortPause,
-          _mediumBzt,
-          _shortPause,
-          _mediumBzt,
-          _longPause
-        ], repeat: 3);
+        Vibration.vibrate(
+            pattern: [_startWait, _mediumBzt, _shortPause, _mediumBzt, _longPause]);
       } else {
         Vibration.vibrate();
         Vibration.vibrate();
@@ -46,15 +39,8 @@ class Vibrator {
   static errorBuzzer() async {
     if (await Vibration.hasVibrator() == true) {
       if (await Vibration.hasCustomVibrationsSupport() == true) {
-        Vibration.vibrate(pattern: [
-          _startWait,
-          _longBzt,
-          _shortPause,
-          _longBzt,
-          _shortPause,
-          _longBzt,
-          _longPause
-        ], repeat: 3);
+        Vibration.vibrate(
+            pattern: [_startWait, _longBzt, _shortPause, _longBzt, _shortPause, _longBzt, _longPause]);
       } else {
         Vibration.vibrate();
         Vibration.vibrate();

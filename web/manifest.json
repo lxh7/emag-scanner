@@ -1,6 +1,6 @@
 {
-    "name": "scan",
-    "short_name": "scan",
+    "name": "emag_scanner",
+    "short_name": "emag_scanner",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",

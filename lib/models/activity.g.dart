@@ -73,8 +73,7 @@ class Activity extends _Activity
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Activity._);
     return const SchemaObject(ObjectType.realmObject, Activity, 'Activity', [
-      SchemaProperty('id', RealmPropertyType.int,
-          primaryKey: true, indexed: true),
+      SchemaProperty('id', RealmPropertyType.int, primaryKey: true),
       SchemaProperty('categoryId', RealmPropertyType.int),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('start', RealmPropertyType.timestamp),

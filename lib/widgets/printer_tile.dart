@@ -32,7 +32,7 @@ class PrinterTile extends StatelessWidget {
         textColor: theme.colorScheme.onPrimary,
         tileColor: theme.colorScheme.primary,
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.black, width: 1),
+          side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(2),
         ),
         onTap: tapAction,
