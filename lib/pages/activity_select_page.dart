@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/util/my_dialog.dart';
 import '/util/routes.dart';
 import '/data/data_manager.dart';
 import '/models/activity.dart';
