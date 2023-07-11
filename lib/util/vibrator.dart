@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:vibration/vibration.dart';
 
 class Vibrator {
@@ -16,7 +18,8 @@ class Vibrator {
 
   static okBuzzer() async {
     if (await Vibration.hasVibrator() == true) {
-      if (await Vibration.hasCustomVibrationsSupport() == true) {
+      if (await Vibration.hasCustomVibrationsSupport() == true &&
+          !Platform.isIOS) {
         Vibration.vibrate(duration: _shortBzt);
       } else {
         Vibration.vibrate();
@@ -26,11 +29,18 @@ class Vibrator {
 
   static warningBuzzer() async {
     if (await Vibration.hasVibrator() == true) {
-      if (await Vibration.hasCustomVibrationsSupport() == true) {
-        Vibration.vibrate(
-            pattern: [_startWait, _mediumBzt, _shortPause, _mediumBzt, _longPause]);
+      if (await Vibration.hasCustomVibrationsSupport() == true &&
+          !Platform.isIOS) {
+        Vibration.vibrate(pattern: [
+          _startWait,
+          _mediumBzt,
+          _shortPause,
+          _mediumBzt,
+          _longPause
+        ]);
       } else {
         Vibration.vibrate();
+        await Future.delayed(const Duration(milliseconds: 600));
         Vibration.vibrate();
       }
     }
@@ -38,12 +48,22 @@ class Vibrator {
 
   static errorBuzzer() async {
     if (await Vibration.hasVibrator() == true) {
-      if (await Vibration.hasCustomVibrationsSupport() == true) {
-        Vibration.vibrate(
-            pattern: [_startWait, _longBzt, _shortPause, _longBzt, _shortPause, _longBzt, _longPause]);
+      if (await Vibration.hasCustomVibrationsSupport() == true &&
+          !Platform.isIOS) {
+        Vibration.vibrate(pattern: [
+          _startWait,
+          _longBzt,
+          _shortPause,
+          _longBzt,
+          _shortPause,
+          _longBzt,
+          _longPause
+        ]);
       } else {
         Vibration.vibrate();
+        await Future.delayed(const Duration(milliseconds: 600));
         Vibration.vibrate();
+        await Future.delayed(const Duration(milliseconds: 600));
         Vibration.vibrate();
       }
     }
