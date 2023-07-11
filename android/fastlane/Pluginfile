@@ -5,3 +5,4 @@
 gem 'pry'
 gem 'fastlane-plugin-match_keystore'
 
+gem 'fastlane-plugin-match_keystore'

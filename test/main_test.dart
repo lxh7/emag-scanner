@@ -11,7 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:emag_scanner/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Main app / home screen test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const ScanApp());
 

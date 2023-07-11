@@ -26,8 +26,6 @@ class AppSettings extends ChangeNotifier {
   AppSettings._constructor() {
     WidgetsFlutterBinding.ensureInitialized();
     _prefs = SharedPreferences.getInstance();
-    _oauthClientSecret = '';
-    _password = '';
   }
 
   get updSendPort => 9867;
@@ -36,19 +34,14 @@ class AppSettings extends ChangeNotifier {
   Future initializeAsync() async {
     _storage = await _prefs;
     _secureStorage = const FlutterSecureStorage(
-      // iOptions: const IOSOptions(),
+      // iOptions: IOSOptions(),
       aOptions: AndroidOptions(encryptedSharedPreferences: true),
-      // lOptions: const LinuxOptions(),
-      // webOptions: const WebOptions(),
-      // mOptions: const MacOsOptions(),
-      // wOptions: const WindowsOptions(),
+      // lOptions: LinuxOptions(),
+      // webOptions: WebOptions(),
+      // mOptions: MacOsOptions(),
+      // wOptions: WindowsOptions(),
     );
-    await _loadSecureStrings();
   }
-
-  // local storage of secret values (to overcome async complexity)
-  late String _oauthClientSecret;
-  late String _password;
 
   String get apiUrl {
     return _getString(keyApiUrl);
@@ -95,12 +88,11 @@ class AppSettings extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get oauthClientSecret {
-    return _oauthClientSecret;
+  Future<String> getOauthClientSecret() async {
+    return await _getSecureString(keyOauthClientSecret);
   }
 
   set oauthClientSecret(String value) {
-    _oauthClientSecret = value;
     _setSecureString(keyOauthClientSecret, value);
     notifyListeners();
   }
@@ -110,16 +102,17 @@ class AppSettings extends ChangeNotifier {
   }
 
   set userId(String value) {
+    value = value.trim();
     _setString(keyUserId, value);
     notifyListeners();
   }
 
-  String get password {
-    return _password;
+  Future<String> getPassword() async {
+    return await _getSecureString(keyPassword);
   }
 
   set password(String value) {
-    _password = value;
+    value = value.trim();
     _setSecureString(keyPassword, value);
     notifyListeners();
   }
@@ -160,11 +153,6 @@ class AppSettings extends ChangeNotifier {
     var value = await _secureStorage.read(key: key);
     if (value == null) return '';
     return value;
-  }
-
-  Future _loadSecureStrings() async {
-    _oauthClientSecret = await _getSecureString(keyOauthClientSecret);
-    _password = await _getSecureString(keyPassword);
   }
 
   int setValues(data) {

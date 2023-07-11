@@ -97,7 +97,7 @@ class BackendDataStore {
         activity.participants.clear();
         activity.participants.addAll(participants!
             .map((e) => ActivityParticipant(
-                  e.participantId!,
+                  e.personId!,
                   scanTime: null,
                 ))
             .toList());
@@ -116,7 +116,7 @@ class BackendDataStore {
     dto.scanTime = scanTime.toIso8601String();
     var accessResponse = await api.getEventApi().patchParticipant(
           eventId: activityId,
-          participantId: personKey,
+          personId: personKey,
           scanTimeDTO: dto.build(),
         );
     var response = accessResponse.data;

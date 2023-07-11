@@ -13,6 +13,8 @@ import 'package:backoffice_api/src/api/category_api.dart';
 import 'package:backoffice_api/src/api/default_api.dart';
 import 'package:backoffice_api/src/api/event_api.dart';
 import 'package:backoffice_api/src/api/health_api.dart';
+import 'package:backoffice_api/src/api/person_api.dart';
+import 'package:backoffice_api/src/api/test_api.dart';
 
 class BackofficeApi {
   static const String basePath = r'http://localhost';
@@ -90,5 +92,17 @@ class BackofficeApi {
   /// by doing that all interceptors will not be executed
   HealthApi getHealthApi() {
     return HealthApi(dio, serializers);
+  }
+
+  /// Get PersonApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  PersonApi getPersonApi() {
+    return PersonApi(dio, serializers);
+  }
+
+  /// Get TestApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  TestApi getTestApi() {
+    return TestApi(dio, serializers);
   }
 }

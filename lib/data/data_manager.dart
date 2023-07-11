@@ -5,16 +5,16 @@ import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../logging/logging.dart';
 import '/app_settings.dart';
 import '/data/local_data_store.dart';
 import '/data/backend_data_store.dart';
 import '/data/dequeue_scan_info.dart';
 import '/enums/api_connection_state.dart';
+import '/logging/logging.dart';
+import '/models/access_check_result.dart';
 import '/models/activity.dart';
 import '/models/activity_category.dart';
 import '/models/scan_info.dart';
-import '/models/access_check_result.dart';
 import '/util/internet_connection_listener.dart';
 
 class DataManager extends ChangeNotifier {
@@ -75,13 +75,32 @@ class DataManager extends ChangeNotifier {
       _authenticationStarted = true;
       if (_oauth2Client == null) {
         try {
-          _logger.d('Getting OAuth2 token');
-          _oauth2Client = await oauth2.clientCredentialsGrant(
-            Uri.parse(_appSettings.oauthTokenUrl),
-            _appSettings.oauthClientId,
-            _appSettings.oauthClientSecret,
-            basicAuth: false,
-          );
+          var username = _appSettings.userId;
+          var password = await _appSettings.getPassword();
+          var clientSecret = await _appSettings.getOauthClientSecret();
+          if (username == '' || password == '') {
+            _logger.d('Getting clientCredentialsGrant token');
+            // either userId or password (or both) not set, can only authenticate at "client" level
+            _oauth2Client = await oauth2.clientCredentialsGrant(
+              Uri.parse(_appSettings.oauthTokenUrl),
+              _appSettings.oauthClientId,
+              clientSecret,
+              // scopes: ...,
+              basicAuth: false,
+            );
+          } else {
+            _logger.d('Getting resourceOwnerPasswordGrant token');
+            _oauth2Client = await oauth2.resourceOwnerPasswordGrant(
+              // both userId or password are set, authenticate as a user (should give more priveleges)
+              Uri.parse(_appSettings.oauthAuthorizationUrl),
+              username,
+              password,
+              identifier: _appSettings.oauthClientId,
+              secret: clientSecret,
+              // scopes: ...,
+              basicAuth: false,
+            );
+          }
           _logger.d('Got OAuth2 token');
         } on Exception catch (ex) {
           _logger.e('Exception getting OAuth2 token', ex);

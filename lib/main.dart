@@ -1,3 +1,5 @@
+import 'package:emag_scanner/pages/activity_load_page.dart';
+import 'package:emag_scanner/pages/activity_select_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -7,8 +9,13 @@ import '/app_settings.dart';
 import '/data/backend_data_store.dart';
 import '/data/data_manager.dart';
 import '/data/local_data_store.dart';
-import 'pages/home_page.dart';
+import '/util/routes.dart';
 import '/util/internet_connection_listener.dart';
+import 'pages/home_page.dart';
+import 'pages/activity_confirm_page.dart';
+import 'pages/registration_setup_page.dart';
+import 'pages/settings_page.dart';
+import 'pages/scan_page.dart';
 
 void main() async {
   Intl.defaultLocale = 'en';
@@ -50,6 +57,16 @@ class ScanApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'EMAG\'23 scan app',
+      initialRoute: '/',
+      routes: {
+        // '/': (context) => const HomePage(), -- redundant
+        Routes.settings: (context) => const SettingsPage(),
+        Routes.scan: (context) => const ScanPage(),        
+        Routes.activityConfirm: (context) => ActivityConfirmPage(),
+        Routes.activitySelect: (context) => const ActivitySelectPage(),
+        Routes.activityDownload: (context) => const ActivityLoadPage(),
+        Routes.registrationSetup: (context) => const RegistrationSetupPage(),
+      },
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,

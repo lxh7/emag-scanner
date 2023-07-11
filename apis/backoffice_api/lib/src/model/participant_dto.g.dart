@@ -10,12 +10,27 @@ class _$ParticipantDTO extends ParticipantDTO {
   @override
   final int? eventId;
   @override
-  final String? participantId;
+  final String? personId;
+  @override
+  final String? firstName;
+  @override
+  final String? surname;
+  @override
+  final String? nickname;
+  @override
+  final String? mobilePhone;
 
   factory _$ParticipantDTO([void Function(ParticipantDTOBuilder)? updates]) =>
       (new ParticipantDTOBuilder()..update(updates))._build();
 
-  _$ParticipantDTO._({this.eventId, this.participantId}) : super._();
+  _$ParticipantDTO._(
+      {this.eventId,
+      this.personId,
+      this.firstName,
+      this.surname,
+      this.nickname,
+      this.mobilePhone})
+      : super._();
 
   @override
   ParticipantDTO rebuild(void Function(ParticipantDTOBuilder) updates) =>
@@ -30,14 +45,22 @@ class _$ParticipantDTO extends ParticipantDTO {
     if (identical(other, this)) return true;
     return other is ParticipantDTO &&
         eventId == other.eventId &&
-        participantId == other.participantId;
+        personId == other.personId &&
+        firstName == other.firstName &&
+        surname == other.surname &&
+        nickname == other.nickname &&
+        mobilePhone == other.mobilePhone;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, eventId.hashCode);
-    _$hash = $jc(_$hash, participantId.hashCode);
+    _$hash = $jc(_$hash, personId.hashCode);
+    _$hash = $jc(_$hash, firstName.hashCode);
+    _$hash = $jc(_$hash, surname.hashCode);
+    _$hash = $jc(_$hash, nickname.hashCode);
+    _$hash = $jc(_$hash, mobilePhone.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -46,7 +69,11 @@ class _$ParticipantDTO extends ParticipantDTO {
   String toString() {
     return (newBuiltValueToStringHelper(r'ParticipantDTO')
           ..add('eventId', eventId)
-          ..add('participantId', participantId))
+          ..add('personId', personId)
+          ..add('firstName', firstName)
+          ..add('surname', surname)
+          ..add('nickname', nickname)
+          ..add('mobilePhone', mobilePhone))
         .toString();
   }
 }
@@ -59,10 +86,25 @@ class ParticipantDTOBuilder
   int? get eventId => _$this._eventId;
   set eventId(int? eventId) => _$this._eventId = eventId;
 
-  String? _participantId;
-  String? get participantId => _$this._participantId;
-  set participantId(String? participantId) =>
-      _$this._participantId = participantId;
+  String? _personId;
+  String? get personId => _$this._personId;
+  set personId(String? personId) => _$this._personId = personId;
+
+  String? _firstName;
+  String? get firstName => _$this._firstName;
+  set firstName(String? firstName) => _$this._firstName = firstName;
+
+  String? _surname;
+  String? get surname => _$this._surname;
+  set surname(String? surname) => _$this._surname = surname;
+
+  String? _nickname;
+  String? get nickname => _$this._nickname;
+  set nickname(String? nickname) => _$this._nickname = nickname;
+
+  String? _mobilePhone;
+  String? get mobilePhone => _$this._mobilePhone;
+  set mobilePhone(String? mobilePhone) => _$this._mobilePhone = mobilePhone;
 
   ParticipantDTOBuilder() {
     ParticipantDTO._defaults(this);
@@ -72,7 +114,11 @@ class ParticipantDTOBuilder
     final $v = _$v;
     if ($v != null) {
       _eventId = $v.eventId;
-      _participantId = $v.participantId;
+      _personId = $v.personId;
+      _firstName = $v.firstName;
+      _surname = $v.surname;
+      _nickname = $v.nickname;
+      _mobilePhone = $v.mobilePhone;
       _$v = null;
     }
     return this;
@@ -94,7 +140,13 @@ class ParticipantDTOBuilder
 
   _$ParticipantDTO _build() {
     final _$result = _$v ??
-        new _$ParticipantDTO._(eventId: eventId, participantId: participantId);
+        new _$ParticipantDTO._(
+            eventId: eventId,
+            personId: personId,
+            firstName: firstName,
+            surname: surname,
+            nickname: nickname,
+            mobilePhone: mobilePhone);
     replace(_$result);
     return _$result;
   }

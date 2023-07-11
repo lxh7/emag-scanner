@@ -12,14 +12,30 @@ part 'participant_dto.g.dart';
 ///
 /// Properties:
 /// * [eventId] 
-/// * [participantId] 
+/// * [personId] 
+/// * [firstName] 
+/// * [surname] 
+/// * [nickname] 
+/// * [mobilePhone] 
 @BuiltValue()
 abstract class ParticipantDTO implements Built<ParticipantDTO, ParticipantDTOBuilder> {
   @BuiltValueField(wireName: r'eventId')
   int? get eventId;
 
-  @BuiltValueField(wireName: r'participantId')
-  String? get participantId;
+  @BuiltValueField(wireName: r'personId')
+  String? get personId;
+
+  @BuiltValueField(wireName: r'firstName')
+  String? get firstName;
+
+  @BuiltValueField(wireName: r'surname')
+  String? get surname;
+
+  @BuiltValueField(wireName: r'nickname')
+  String? get nickname;
+
+  @BuiltValueField(wireName: r'mobilePhone')
+  String? get mobilePhone;
 
   ParticipantDTO._();
 
@@ -51,10 +67,38 @@ class _$ParticipantDTOSerializer implements PrimitiveSerializer<ParticipantDTO> 
         specifiedType: const FullType(int),
       );
     }
-    if (object.participantId != null) {
-      yield r'participantId';
+    if (object.personId != null) {
+      yield r'personId';
       yield serializers.serialize(
-        object.participantId,
+        object.personId,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.firstName != null) {
+      yield r'firstName';
+      yield serializers.serialize(
+        object.firstName,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.surname != null) {
+      yield r'surname';
+      yield serializers.serialize(
+        object.surname,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.nickname != null) {
+      yield r'nickname';
+      yield serializers.serialize(
+        object.nickname,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.mobilePhone != null) {
+      yield r'mobilePhone';
+      yield serializers.serialize(
+        object.mobilePhone,
         specifiedType: const FullType(String),
       );
     }
@@ -88,12 +132,40 @@ class _$ParticipantDTOSerializer implements PrimitiveSerializer<ParticipantDTO> 
           ) as int;
           result.eventId = valueDes;
           break;
-        case r'participantId':
+        case r'personId':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
-          result.participantId = valueDes;
+          result.personId = valueDes;
+          break;
+        case r'firstName':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.firstName = valueDes;
+          break;
+        case r'surname':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.surname = valueDes;
+          break;
+        case r'nickname':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.nickname = valueDes;
+          break;
+        case r'mobilePhone':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.mobilePhone = valueDes;
           break;
         default:
           unhandled.add(key);

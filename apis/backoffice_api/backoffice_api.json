@@ -123,7 +123,7 @@
                 }
             }
         },
-        "\/api\/event\/{eventId}\/participant\/{participantId}": {
+        "\/api\/event\/{eventId}\/participant\/{personId}": {
             "patch": {
                 "tags": [
                     "Event"
@@ -139,7 +139,7 @@
                         }
                     },
                     {
-                        "name": "participantId",
+                        "name": "personId",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -180,6 +180,49 @@
                 "responses": {
                     "200": {
                         "description": "Success."
+                    }
+                }
+            }
+        },
+        "\/api\/test": {
+            "get": {
+                "tags": [
+                    "Test"
+                ],
+                "operationId": "test",
+                "responses": {
+                    "200": {
+                        "description": "Success."
+                    }
+                }
+            }
+        },
+        "\/api\/person\/{personId}": {
+            "get": {
+                "tags": [
+                    "Person"
+                ],
+                "operationId": "getPerson",
+                "parameters": [
+                    {
+                        "name": "personId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/PersonDTO"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -237,7 +280,19 @@
                     "eventId": {
                         "type": "integer"
                     },
-                    "participantId": {
+                    "personId": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "nickname": {
+                        "type": "string"
+                    },
+                    "mobilePhone": {
                         "type": "string"
                     }
                 },
@@ -265,6 +320,69 @@
                     }
                 },
                 "type": "object"
+            },
+            "PersonDTO": {
+                "description": "PersonDTO",
+                "properties": {
+                    "personId": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "nickname": {
+                        "type": "string"
+                    },
+                    "mobilePhone": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "countryCode": {
+                        "type": "string"
+                    },
+                    "country": {
+                        "type": "string"
+                    },
+                    "regEvents": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/RegEventDTO"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "RegEventDTO": {
+                "description": "RegEventDTO",
+                "properties": {
+                    "eventId": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "start": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "end": {
+                        "type": "string",
+                        "format": "datetime"
+                    },
+                    "type": {
+                        "type": "integer"
+                    },
+                    "scanTime": {
+                        "type": "string",
+                        "format": "datetime"
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
@@ -272,6 +390,10 @@
                 "type": "oauth2",
                 "flows": {
                     "clientCredentials": {
+                        "tokenUrl": "\/token",
+                        "scopes": {}
+                    },
+                    "password": {
                         "tokenUrl": "\/token",
                         "scopes": {}
                     }

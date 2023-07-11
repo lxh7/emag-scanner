@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/util/routes.dart';
 import '/data/data_manager.dart';
 import '/models/activity.dart';
-import 'activity_load_page.dart';
 import '/widgets/activity_tile.dart';
 import '/widgets/connection_widget.dart';
 
@@ -18,12 +18,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
   late DataManager _dataManager;
 
   _addActivity() {
-    Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (context) => const ActivityLoadPage(),
-          settings: RouteSettings(name: (ActivityLoadPage).toString()),
-        ));
+    Navigator.pushNamed(context, Routes.activityDownload);
   }
 
   _selectActivity(Activity activity) {
@@ -58,11 +53,15 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
         ),
         body: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Consumer<DataManager>(builder: (context, dataManager, child) {
+            child:
+                Consumer<DataManager>(builder: (context, dataManager, child) {
               return ListView(
                 children: [
                   ConnectionWidget.get(),
-                  const Text('Select activity to scan for. Long press = delete.',
+                  Text(
+                      _dataManager.storedActivities.isEmpty
+                          ? 'Please load activites first'
+                          : 'Select activity to scan for. Long press = delete.',
                       textAlign: TextAlign.center),
                   if (dataManager.isConnected) ...[
                     const Text(

@@ -12,7 +12,6 @@ class HealthApi {
 
   final Dio _dio;
 
-  // ignore: unused_field
   final Serializers _serializers;
 
   const HealthApi(this._dio, this._serializers);
@@ -47,6 +46,9 @@ class HealthApi {
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
+            'type': 'oauth2',
+            'name': 'OAuth2',
+          },{
             'type': 'oauth2',
             'name': 'OAuth2',
           },

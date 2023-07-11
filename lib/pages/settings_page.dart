@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
 import '/app_settings.dart';
-import 'scan_page.dart';
+import '/util/routes.dart';
 import '/scanning/settings_scan_handler.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -37,16 +37,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: const Icon(Icons.qr_code),
                 tooltip: 'Scan settings',
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute<void>(
-                        builder: (context) =>
-                            ScanPage(handler: SettingsScanHandler()),
-                        settings: RouteSettings(
-                          name: (ScanPage).toString() +
-                              (SettingsScanHandler).toString(),
-                        ),
-                      ));
+                  Navigator.pushNamed(context, Routes.scan,
+                      arguments: SettingsScanHandler());
                 }),
           ],
         ),
@@ -173,16 +165,15 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                 ),
-                /*
                 SettingsTile(
                   title: Text(
                     'User ID',
-                    style: TextStyle(color: Colors.orange),
+                    style: const TextStyle(color: Colors.orange),
                     textScaleFactor: titleScaleFactor,
                   ),
                   value: TextField(
                     controller: TextEditingController(text: appSettings.userId),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       prefixIcon: Icon(Icons.perm_identity),
                       filled: true,
@@ -198,7 +189,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 SettingsTile(
                   title: Text(
                     'Password',
-                    style: TextStyle(color: Colors.orange),
+                    style: const TextStyle(color: Colors.orange),
                     textScaleFactor: titleScaleFactor,
                   ),
                   value: TextField(
@@ -207,8 +198,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     keyboardType: TextInputType.visiblePassword,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
-                      border: UnderlineInputBorder(),
-                      prefixIcon: Icon(Icons.password),
+                      border: const UnderlineInputBorder(),
+                      prefixIcon: const Icon(Icons.password),
                       suffixIcon: IconButton(
                         icon: Icon(passwordVisible
                             ? Icons.visibility
@@ -232,7 +223,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       }
                     },
                   ),
-                ),*/
+                ),
               ],
             ),
           ], // sections

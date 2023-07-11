@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:emag_scanner/util/my_dialog.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -10,12 +9,11 @@ import '/data/data_manager.dart';
 import '/enums/api_connection_state.dart';
 import '/enums/scan_result.dart';
 import '/scanning/base_scan_handler.dart';
+import '/util/my_dialog.dart';
 import '/util/vibrator.dart';
 
 class ScanPage extends StatefulWidget {
-  final BaseScanHandler handler;
-
-  const ScanPage({super.key, required this.handler});
+  const ScanPage({super.key});
 
   @override
   State<ScanPage> createState() => ScanPageState();
@@ -129,10 +127,12 @@ class ScanPageState extends State<ScanPage> {
 
   @override
   Widget build(BuildContext context) {
-    widget.handler.page = this;
+    late BaseScanHandler handler =
+        ModalRoute.of(context)!.settings.arguments as BaseScanHandler;
+    handler.page = this;
     _theme = Theme.of(context);
     var dataManager = context.watch<DataManager>();
-    var subTitle = widget.handler.getSubTitle();
+    var subTitle = handler.getSubTitle();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -140,7 +140,7 @@ class ScanPageState extends State<ScanPage> {
             icon: const Icon(Icons.chevron_left),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text(widget.handler.getTitle()),
+          title: Text(handler.getTitle()),
           centerTitle: subTitle != '',
           toolbarHeight: 80,
           flexibleSpace: FlexibleSpaceBar(
@@ -195,7 +195,7 @@ class ScanPageState extends State<ScanPage> {
           controller: _cameraController,
           fit: BoxFit.contain,
           onDetect: (capture) =>
-              widget.handler.handleBarcodes(capture.barcodes),
+              handler.handleBarcodes(capture.barcodes),
           onScannerStarted: _scannerStarted,
         ),
         backgroundColor: scanResult.getColor(_theme.colorScheme.background),

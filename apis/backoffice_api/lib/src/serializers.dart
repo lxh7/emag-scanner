@@ -17,6 +17,8 @@ import 'package:backoffice_api/src/model/date.dart';
 import 'package:backoffice_api/src/model/category_dto.dart';
 import 'package:backoffice_api/src/model/event_dto.dart';
 import 'package:backoffice_api/src/model/participant_dto.dart';
+import 'package:backoffice_api/src/model/person_dto.dart';
+import 'package:backoffice_api/src/model/reg_event_dto.dart';
 import 'package:backoffice_api/src/model/scan_time_dto.dart';
 import 'package:backoffice_api/src/model/scan_time_response_dto.dart';
 
@@ -26,6 +28,8 @@ part 'serializers.g.dart';
   CategoryDTO,
   EventDTO,
   ParticipantDTO,
+  PersonDTO,
+  RegEventDTO,
   ScanTimeDTO,
   ScanTimeResponseDTO,
 ])

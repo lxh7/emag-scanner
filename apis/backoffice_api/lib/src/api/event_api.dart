@@ -56,6 +56,9 @@ class EventApi {
           {
             'type': 'oauth2',
             'name': 'OAuth2',
+          },{
+            'type': 'oauth2',
+            'name': 'OAuth2',
           },
         ],
         ...?extra,
@@ -134,6 +137,9 @@ class EventApi {
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
+            'type': 'oauth2',
+            'name': 'OAuth2',
+          },{
             'type': 'oauth2',
             'name': 'OAuth2',
           },
@@ -216,6 +222,9 @@ class EventApi {
           {
             'type': 'oauth2',
             'name': 'OAuth2',
+          },{
+            'type': 'oauth2',
+            'name': 'OAuth2',
           },
         ],
         ...?extra,
@@ -272,7 +281,7 @@ class EventApi {
   ///
   /// Parameters:
   /// * [eventId] 
-  /// * [participantId] 
+  /// * [personId] 
   /// * [scanTimeDTO] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -285,7 +294,7 @@ class EventApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ScanTimeResponseDTO>> patchParticipant({ 
     required int eventId,
-    required String participantId,
+    required String personId,
     required ScanTimeDTO scanTimeDTO,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -294,7 +303,7 @@ class EventApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/event/{eventId}/participant/{participantId}'.replaceAll('{' r'eventId' '}', eventId.toString()).replaceAll('{' r'participantId' '}', participantId.toString());
+    final _path = r'/api/event/{eventId}/participant/{personId}'.replaceAll('{' r'eventId' '}', eventId.toString()).replaceAll('{' r'personId' '}', personId.toString());
     final _options = Options(
       method: r'PATCH',
       headers: <String, dynamic>{
@@ -303,6 +312,9 @@ class EventApi {
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
+            'type': 'oauth2',
+            'name': 'OAuth2',
+          },{
             'type': 'oauth2',
             'name': 'OAuth2',
           },
