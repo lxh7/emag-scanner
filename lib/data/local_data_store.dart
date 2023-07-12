@@ -1,5 +1,7 @@
+import 'package:logger/logger.dart';
 import 'package:realm/realm.dart';
 
+import '../logging/logging.dart';
 import '/enums/scan_result.dart';
 import '/models/activity.dart';
 import '/models/activity_category.dart';
@@ -9,6 +11,7 @@ import '/models/access_check_result.dart';
 class LocalDataStore {
   late LocalConfiguration _config;
   late Realm _realm;
+  static late Logger _logger;
 
   LocalDataStore() {
     _config = Configuration.local([
@@ -18,6 +21,7 @@ class LocalDataStore {
       ScanInfo.schema,
     ]);
     _realm = Realm(_config);
+    _logger = getLogger(runtimeType.toString());
   }
 
   // @override
@@ -51,7 +55,8 @@ class LocalDataStore {
         return null;
       }
       return data.first;
-    } on Exception {
+    } on Exception catch (ex) {
+      _logger.e('Exception in getActivity on local store:', ex);
       return null;
     }
   }
@@ -88,7 +93,8 @@ class LocalDataStore {
         participation.scanTime = data.scanTime;
         _realm.add(participation, update: true);
       });
-    } on Exception {
+    } on Exception catch (ex) {
+      _logger.e('Exception in checkAccess on local store:', ex);
       result = AccessCheckResult(scanResult: ScanResult.deny);
     }
     return result;
@@ -129,7 +135,8 @@ class LocalDataStore {
   ScanInfo? getScanInfo() {
     try {
       return _realm.query<ScanInfo>('SORT(scanTime ASC) LIMIT(1)').first;
-    } on Exception {
+    } on Exception catch (ex) {
+      _logger.e('Exception in getScanInfo on local store:', ex);
       return null;
     }
   }
@@ -139,8 +146,8 @@ class LocalDataStore {
       _realm.write(() {
         _realm.delete(info);
       });
-    } on Exception {
-      // log?
+    } on Exception catch (ex) { 
+      _logger.e('Exception in removeScanInfo on local store:', ex);
     }
   }
 }

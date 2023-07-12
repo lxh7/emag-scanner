@@ -1,16 +1,13 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:emag_scanner/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:emag_scanner/main.dart' as app;
 
-class MockNavigatorObserver extends Mock implements NavigatorObserver {}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

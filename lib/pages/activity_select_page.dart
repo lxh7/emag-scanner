@@ -29,7 +29,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
 
   _deleteActivity(Activity activity) async {
     var delete = await MyDialog.confirmAsync(context,
-        'Do you want to remove the info about ${activity.name} from your device?');
+        'Do you want to remove the info about \'${activity.name}\' from your device?');
     if (delete) {
       _dataManager.removeStoredActivity(activity);
       setState(() {});
