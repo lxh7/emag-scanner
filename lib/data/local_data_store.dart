@@ -56,7 +56,7 @@ class LocalDataStore {
       }
       return data.first;
     } on Exception catch (ex) {
-      _logger.e('Exception in getActivity on local store:', ex);
+      _logger.e('Exception in LocalDataStore.getActivity()', ex);
       return null;
     }
   }
@@ -94,7 +94,7 @@ class LocalDataStore {
         _realm.add(participation, update: true);
       });
     } on Exception catch (ex) {
-      _logger.e('Exception in checkAccess on local store:', ex);
+      _logger.e('Exception in LocalDataStore.checkAccess()', ex);
       result = AccessCheckResult(scanResult: ScanResult.deny);
     }
     return result;
@@ -136,7 +136,7 @@ class LocalDataStore {
     try {
       return _realm.query<ScanInfo>('SORT(scanTime ASC) LIMIT(1)').first;
     } on Exception catch (ex) {
-      _logger.e('Exception in getScanInfo on local store:', ex);
+      _logger.e('Exception in LocalDataStore.getScanInfo()', ex);
       return null;
     }
   }
@@ -147,7 +147,7 @@ class LocalDataStore {
         _realm.delete(info);
       });
     } on Exception catch (ex) { 
-      _logger.e('Exception in removeScanInfo on local store:', ex);
+      _logger.e('Exception in removeScanInfo on local store', ex);
     }
   }
 }

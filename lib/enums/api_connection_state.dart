@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum ApiConnectionState {
   none,
   authCheck, // connected to internet, authenticating
-  authFail, // connected to internet, authentication failed
+  authFail, // connected to internet, authentication failed, no token received
   backendCheck, // authenticated, trying to connect to backend
   backendFail, // authenticated, backend could not be reached
   full, // connected to backend, authenticated
@@ -17,7 +17,7 @@ extension ApiConnectionStateExtension on ApiConnectionState {
       case ApiConnectionState.authCheck:
         return 'Authenticating...';
       case ApiConnectionState.authFail:
-        return 'Authentication failed';
+        return 'Authentication failed (got no token)';
       case ApiConnectionState.backendCheck:
         return 'Checking connectivity to backend';
       case ApiConnectionState.backendFail:
@@ -30,8 +30,8 @@ extension ApiConnectionStateExtension on ApiConnectionState {
   Color get color {
     switch (this) {
       case ApiConnectionState.none:
-      case ApiConnectionState.authFail:
       case ApiConnectionState.backendFail:
+      case ApiConnectionState.authFail:
         return Colors.red;
       case ApiConnectionState.authCheck:
       case ApiConnectionState.backendCheck:

@@ -75,7 +75,7 @@ class BackendDataStore {
         return list.map(DtoHelper.fromEventDTO).toList();
       }
     } catch (e) {
-      _logger.e('Exception when calling EventApi->listEvents:', e);
+      _logger.e('Exception when calling EventApi->listEvents', e);
     }
     return List<Activity>.empty();
   }
@@ -104,7 +104,7 @@ class BackendDataStore {
       }
       return activity;
     } catch (e) {
-      _logger.e('Exception when calling EventApi->getParticipants:', e);
+      _logger.e('Exception when calling EventApi->getParticipants', e);
     }
     return null;
   }

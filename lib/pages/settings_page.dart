@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     },
                   ),
                 ),
-                SettingsTile(
+                /*SettingsTile(
                   title: Text(
                     'OAUTH authorization URL',
                     style: const TextStyle(color: Colors.orange),
@@ -85,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       appSettings.oauthAuthorizationUrl = value;
                     },
                   ),
-                ),
+                ),*/
                 SettingsTile(
                   title: Text(
                     'OAUTH token URL',
@@ -159,9 +159,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     controller: TextEditingController(text: ''),
                     onChanged: (value) {
-                      if (value != '') {
-                        appSettings.oauthClientSecret = value;
-                      }
+                      appSettings.oauthClientSecret = value;
                     },
                   ),
                 ),
@@ -180,9 +178,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     autocorrect: false,
                     onChanged: (value) {
-                      if (value != '') {
-                        appSettings.userId = value;
-                      }
+                      appSettings.userId = value;
                     },
                   ),
                 ),

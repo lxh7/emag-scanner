@@ -75,29 +75,31 @@ class DataManager extends ChangeNotifier {
       _authenticationStarted = true;
       if (_oauth2Client == null) {
         try {
+          var tokenUrl=_appSettings.oauthTokenUrl;
+          var clientId = _appSettings.oauthClientId;
+          var clientSecret = await _appSettings.getOauthClientSecret();
           var username = _appSettings.userId;
           var password = await _appSettings.getPassword();
-          var clientSecret = await _appSettings.getOauthClientSecret();
           if (username == '' || password == '') {
-            _logger.d('Getting clientCredentialsGrant token');
+            _logger.d('Getting clientCredentialsGrant token on $tokenUrl');
             // either userId or password (or both) not set, can only authenticate at "client" level
             _oauth2Client = await oauth2.clientCredentialsGrant(
-              Uri.parse(_appSettings.oauthTokenUrl),
-              _appSettings.oauthClientId,
+              Uri.parse(tokenUrl),
+              clientId,
               clientSecret,
               // scopes: ...,
               basicAuth: false,
             );
           } else {
-            _logger.d('Getting resourceOwnerPasswordGrant token');
+            _logger.d('Getting resourceOwnerPasswordGrant token on $tokenUrl');
             _oauth2Client = await oauth2.resourceOwnerPasswordGrant(
               // both userId or password are set, authenticate as a user (should give more priveleges)
-              Uri.parse(_appSettings.oauthAuthorizationUrl),
+              Uri.parse(tokenUrl),
               username,
               password,
-              identifier: _appSettings.oauthClientId,
+              identifier: clientId,
               secret: clientSecret,
-              // scopes: ...,
+              // scopes: ['profile'],
               basicAuth: false,
             );
           }
@@ -113,6 +115,7 @@ class DataManager extends ChangeNotifier {
             !_oauth2Client!.credentials.canRefresh) {
           // we need a new token but cannot refresh. Re-create the OAuth2 Client
           _oauth2Client = null;
+          _authenticationStarted = false;
           return await getOauth2token();
         }
       }
