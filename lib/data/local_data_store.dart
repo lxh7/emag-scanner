@@ -134,7 +134,8 @@ class LocalDataStore {
 
   ScanInfo? getScanInfo() {
     try {
-      return _realm.query<ScanInfo>('SORT(scanTime ASC) LIMIT(1)').first;
+      // oldest first
+      return _realm.query<ScanInfo>('TRUEPREDICATE SORT(scanTime ASC) LIMIT(1)').first;
     } on Exception catch (ex) {
       _logger.e('Exception in LocalDataStore.getScanInfo()', ex);
       return null;
