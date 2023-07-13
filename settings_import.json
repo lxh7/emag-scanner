@@ -1,8 +1,6 @@
 {
-    "apiurl": "https://backoffice.emag23.nl",
-    "oauthauthurl": "https://backoffice.emag23.nl/authorize",
-    "oauthtokenurl": "https://backoffice.emag23.nl/token",
-    "oauthredirecturi": "https://backoffice.emag23.nl/bundles/nelmioapidoc/oauth2-redirect.html",
+    "apiurl": "https://api-test.emag23.nl",
+    "oauthtokenurl": "https://api-test.emag23.nl/token",
     "oauthclientid": "test2",
     "oauthclientsecret": "test2",
     "userid": "mensa",
