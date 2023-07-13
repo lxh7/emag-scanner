@@ -156,10 +156,13 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     if (_activities == null || _activities!.isEmpty) {
       return const Text('No activities in this category');
     }
+    
     var storedActivities =
         dataManager.storedActivities.map((item) => item.id).toList();
     return ListView(
+      primary: false,
       shrinkWrap: true,
+      scrollDirection: Axis.vertical,
       children: _activities!
           .map((item) => ActivityTile(
                 activity: item,
