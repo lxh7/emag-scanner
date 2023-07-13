@@ -48,7 +48,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
 
   @override
   Widget build(BuildContext context) {
-    var dataManager = context.read<DataManager>(); 
+    var dataManager = context.read<DataManager>();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -91,12 +91,12 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                                 DateTime.now().add(const Duration(hours: -8))));
                             _activities!
                                 .sort((a, b) => _compareActivities(a, b));
-                            return _buildActivitiesUI();
+                            return _buildActivitiesUI(dataManager);
                           } else {
                             return const Spinner();
                           }
                         })
-                    : _buildActivitiesUI()
+                    : _buildActivitiesUI(dataManager)
               ],
             ], // children
           ),
@@ -152,22 +152,24 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     );
   }
 
-  Widget _buildActivitiesUI() {
+  Widget _buildActivitiesUI(DataManager dataManager) {
     if (_activities == null || _activities!.isEmpty) {
       return const Text('No activities in this category');
     }
+    var storedActivities =
+        dataManager.storedActivities.map((item) => item.id).toList();
     return ListView(
       shrinkWrap: true,
       children: _activities!
           .map((item) => ActivityTile(
                 activity: item,
+                enabled: !storedActivities.contains(item.id),
                 tapAction: () => _downloadActivityParticipantsAsync(item)
                     .then((value) => Navigator.pop(context)),
               ))
           .toList(),
     );
   }
-
 
   int _compareActivities(Activity a, Activity b) {
     int result = a.start.compareTo(b.start);
