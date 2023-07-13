@@ -1,8 +1,8 @@
 import 'package:logger/logger.dart';
 import 'package:realm/realm.dart';
 
-import '../logging/logging.dart';
 import '/enums/scan_result.dart';
+import '/logging/logging.dart';
 import '/models/activity.dart';
 import '/models/activity_category.dart';
 import '/models/scan_info.dart';
@@ -127,6 +127,7 @@ class LocalDataStore {
   }
 
   void addScanInfo(ScanInfo info) {
+    _logger.d('Adding ScanInfo to queue');
     _realm.write(() {
       _realm.add(info);
     });
@@ -134,8 +135,15 @@ class LocalDataStore {
 
   ScanInfo? getScanInfo() {
     try {
+      _logger.d('Checking ScanInfo queue');
       // oldest first
-      return _realm.query<ScanInfo>('TRUEPREDICATE SORT(scanTime ASC) LIMIT(1)').first;
+      var realmResults =
+          _realm.query<ScanInfo>('TRUEPREDICATE SORT(scanTime ASC) LIMIT(1)');
+      if (realmResults.isEmpty) {
+        _logger.d('ScanInfo queue is empty');
+        return null;
+      }
+      return realmResults.first;
     } on Exception catch (ex) {
       _logger.e('Exception in LocalDataStore.getScanInfo()', ex);
       return null;
@@ -143,11 +151,12 @@ class LocalDataStore {
   }
 
   void removeScanInfo(ScanInfo info) {
+    _logger.d('Removing ScanInfo from queue');
     try {
       _realm.write(() {
         _realm.delete(info);
       });
-    } on Exception catch (ex) { 
+    } on Exception catch (ex) {
       _logger.e('Exception in removeScanInfo on local store', ex);
     }
   }
