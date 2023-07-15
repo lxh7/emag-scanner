@@ -20,9 +20,9 @@ class DtoHelper {
 
   static Participation fromParticipationDTO(ParticipationDTO x) {
     return Participation(
-      convertInt(x.eventId, -1),
+      convertInt(x.eventId, -1), // activityId
+      x.personId ?? '', // personId
       activity: x.event == null ? null : fromEventDTO(x.event!),
-      x.personId ?? '',
       person: x.person == null ? null : fromPersonDTO(x.person!),
       scanTime: null,
       answer1: x.answer1,
@@ -46,7 +46,7 @@ class DtoHelper {
       Iterable<ParticipationDTO>? dtos) {
     var result = List<Participation>.empty();
     if (dtos != null) {
-      result = dtos!.map((p) => fromParticipationDTO(p)).toList();
+      result = dtos.map((p) => fromParticipationDTO(p)).toList();
     }
     return result;
   }

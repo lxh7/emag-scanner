@@ -10,7 +10,7 @@ void main() {
       const String partId1 = 'abcd1234';
       const String partId2 = 'bcde2345';
       const String partId3 = 'cdef3456';
-      // const String partId4 = 'defg4567';
+      const String nonPartId1 = 'defg4567';
       int expectCount = 0;
       int count = 0;
 
@@ -53,7 +53,7 @@ void main() {
 
       // unregistered person scan
       var scanTime3 = DateTime.now();
-      var info3 = ScanInfo(activityId, 'xxxxxxxxxx', scanTime3);
+      var info3 = ScanInfo(activityId, nonPartId1, scanTime3);
       result = local.queryAccess(info3);
       assert(result.scanResult == ScanResult.deny);
 
@@ -63,10 +63,19 @@ void main() {
       // get oldest scan info from queue
       var scanInfoFromQueue = local.getScanInfo();
       assert(scanInfoFromQueue != null);
-      assert(scanInfoFromQueue!.scanTime == scanTime1);
+      assert(scanInfoFromQueue!.scanTime.millisecondsSinceEpoch ==
+          scanTime1.millisecondsSinceEpoch);
 
       local.removeScanInfo(scanInfoFromQueue!);
       expectCount--;
+      count = local.objectCount();
+      assert(count == expectCount);
+
+      var loadedActivity = local.getActivity(activityId);
+      assert(loadedActivity != null);
+      assert(loadedActivity!.participations.isNotEmpty);
+      local.deleteActivity(loadedActivity!);
+      expectCount -= 4;
       count = local.objectCount();
       assert(count == expectCount);
 

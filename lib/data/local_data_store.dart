@@ -15,8 +15,9 @@ class LocalDataStore {
       Category.schema,
       Activity.schema,
       Participation.schema,
+      Person.schema,
       ScanInfo.schema,
-    ], schemaVersion: 0);
+    ], schemaVersion: 1);
     _realm = Realm(_config);
     _logger = getLogger(runtimeType.toString());
   }
@@ -31,19 +32,21 @@ class LocalDataStore {
   void clear() {
     _logger.d('Removing all objects in local store');
     _realm.write(() {
-      _realm.deleteAll<ScanInfo>();
-      _realm.deleteAll<Participation>();
-      _realm.deleteAll<Activity>();
       _realm.deleteAll<Category>();
+      _realm.deleteAll<Activity>();
+      _realm.deleteAll<Participation>();
+      _realm.deleteAll<Person>();
+      _realm.deleteAll<ScanInfo>();
     });
   }
 
   int objectCount() {
-    _logger.d('Counting a object in local store');
-    var count = _realm.all<ScanInfo>().length +
+    _logger.d('Counting objects in local store');
+    var count = _realm.all<Category>().length +
         _realm.all<Activity>().length +
-        _realm.all<Category>().length +
-        _realm.all<Participation>().length;
+        _realm.all<Participation>().length +
+        _realm.all<Person>().length +
+        _realm.all<ScanInfo>().length;
     _logger.v('$count');
     return count;
   }
@@ -67,11 +70,12 @@ class LocalDataStore {
 
   Activity? getActivity(int activityId) {
     try {
-      var data = _realm.query<Activity>('id == \$0', [activityId]);
-      if (data.isEmpty) {
-        return null;
-      }
-      return data.first;
+      // var data = _realm.query<Activity>('id == \$0', [activityId]);
+      return _realm.find<Activity>(activityId);
+      // if (data.isEmpty) {
+      //   return null;
+      // }
+      // return data.first;
     } on Exception catch (ex) {
       _logger.e('Exception in LocalDataStore.getActivity()', ex);
       return null;
@@ -84,13 +88,13 @@ class LocalDataStore {
   }
 
   void deleteActivity(Activity activity) {
-    _realm.writeAsync(() {
-      var activityParticipants = _realm.query<Participation>(
-        'activityId == \$0',
-        [activity.id],
-      );
+    _realm.write(() {
+      // var activityParticipants = _realm.query<Participation>(
+      //   'activityId == \$0',
+      //   [activity.id],
+      // );
+      _realm.deleteMany(activity.participations);
       _realm.delete(activity);
-      _realm.deleteMany(activityParticipants);
     });
   }
 

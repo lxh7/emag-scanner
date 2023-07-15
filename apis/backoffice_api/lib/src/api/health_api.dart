@@ -2,6 +2,8 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: unused_field
+
 import 'dart:async';
 
 import 'package:built_value/serializer.dart';
@@ -28,6 +30,7 @@ class HealthApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future]
+  // ignore: deprecated_member_use
   /// Throws [DioError] if API call or serialization fails
   Future<Response<void>> health({ 
     CancelToken? cancelToken,

@@ -2,6 +2,8 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 
 import 'package:built_value/serializer.dart';
