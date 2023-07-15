@@ -43,6 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
         body: SettingsList(
+          shrinkWrap: true,
           sections: [
             SettingsSection(
               title: const Text('API'),
