@@ -3,10 +3,7 @@ import 'package:realm/realm.dart';
 
 import '/enums/scan_result.dart';
 import '/logging/logging.dart';
-import '/models/activity.dart';
-import '/models/activity_category.dart';
-import '/models/scan_info.dart';
-import '/models/access_check_result.dart';
+import '/models/domain.dart';
 
 class LocalDataStore {
   late LocalConfiguration _config;
@@ -15,11 +12,11 @@ class LocalDataStore {
 
   LocalDataStore() {
     _config = Configuration.local([
-      ActivityCategory.schema,
+      Category.schema,
       Activity.schema,
-      ActivityParticipant.schema,
+      Participation.schema,
       ScanInfo.schema,
-    ]);
+    ], schemaVersion: 0);
     _realm = Realm(_config);
     _logger = getLogger(runtimeType.toString());
   }
@@ -31,12 +28,32 @@ class LocalDataStore {
   //   super.dispose();
   // }
 
-  List<ActivityCategory> getCategories() {
-    var categories = _realm.all<ActivityCategory>();
+  void clear() {
+    _logger.d('Removing all objects in local store');
+    _realm.write(() {
+      _realm.deleteAll<ScanInfo>();
+      _realm.deleteAll<Participation>();
+      _realm.deleteAll<Activity>();
+      _realm.deleteAll<Category>();
+    });
+  }
+
+  int objectCount() {
+    _logger.d('Counting a object in local store');
+    var count = _realm.all<ScanInfo>().length +
+        _realm.all<Activity>().length +
+        _realm.all<Category>().length +
+        _realm.all<Participation>().length;
+    _logger.v('$count');
+    return count;
+  }
+
+  List<Category> getCategories() {
+    var categories = _realm.all<Category>();
     return categories.toList();
   }
 
-  void storeCategories(List<ActivityCategory> categories) {
+  void storeCategories(List<Category> categories) {
     _realm.write(() {
       _realm.addAll(categories, update: true);
     });
@@ -67,69 +84,57 @@ class LocalDataStore {
   }
 
   void deleteActivity(Activity activity) {
-    _realm.write(() {
+    _realm.writeAsync(() {
+      var activityParticipants = _realm.query<Participation>(
+        'activityId == \$0',
+        [activity.id],
+      );
       _realm.delete(activity);
+      _realm.deleteMany(activityParticipants);
     });
   }
 
-  AccessCheckResult checkAccess(ScanInfo data) {
-    AccessCheckResult result;
+  AccessCheckResult queryAccess(ScanInfo info) {
+    AccessCheckResult result = AccessCheckResult(scanResult: ScanResult.error);
+    Participation participant;
     try {
-      var participation = _realm
-          .query<ActivityParticipant>('activityId == \$0 && personKey == \$1', [
-        data.activityId,
-        data.personKey,
-      ]).first;
-      if (participation.scanTime == null) {
-        result = AccessCheckResult(scanResult: ScanResult.pass);
+      // get the item from the store
+      var realmResults = _realm.query<Participation>(
+        'activityId == \$0 && personKey = \$1 LIMIT(1)',
+        [info.activityId, info.personKey],
+      );
+      if (realmResults.isEmpty) {
+        // no item in store, i.e. person is not registered on activity
+        result.scanResult = ScanResult.deny;
       } else {
-        result = AccessCheckResult(
-          scanResult: ScanResult.check,
-          prevScanTime: participation.scanTime,
-        );
+        // found, person is participant
+        participant = realmResults.first;
+        // scheck scan time
+        if (participant.scanTime == null) {
+          // first scan
+          result.scanResult = ScanResult.pass;
+        } else {
+          // subsequent scan
+          result.scanResult = ScanResult.check;
+          result.prevScanTime = participant.scanTime;
+        }
+        // update local storage
+        _realm.write(() {
+          participant.scanTime = info.scanTime;
+          _realm.add<Participation>(participant, update: true);
+        });
       }
-      // write (new) scan time
-      _realm.write(() {
-        participation.scanTime = data.scanTime;
-        _realm.add(participation, update: true);
-      });
-    } on Exception catch (ex) {
-      _logger.e('Exception in LocalDataStore.checkAccess()', ex);
-      result = AccessCheckResult(scanResult: ScanResult.deny);
+    } on StateError catch (ex) {
+      _logger.e('Error in LocalDataStore.queryAccess()', ex);
+      result.message = 'Error in LocalDataStore.queryAccess(): ${ex.message}';
     }
     return result;
   }
 
-  AccessCheckResult queryAccess(ScanInfo info) {
-    try {
-      var participant = _realm.query<ActivityParticipant>(
-        'activity.id == \$0 && personKey = \$1 LIMIT(1)',
-        [info.activityId, info.personKey],
-      ).first;
-      if (participant.scanTime == null) {
-        _realm.write(() {
-          participant.scanTime = info.scanTime;
-          _realm.add<ActivityParticipant>(participant, update: true);
-        });
-        return AccessCheckResult(
-          scanResult: ScanResult.pass,
-        );
-      }
-      return AccessCheckResult(
-        scanResult: ScanResult.check,
-        prevScanTime: participant.scanTime,
-      );
-    } on StateError {
-      return AccessCheckResult(
-        scanResult: ScanResult.deny,
-      );
-    }
-  }
-
-  void addScanInfo(ScanInfo info) {
+  void queueScanInfo(ScanInfo info) {
     _logger.d('Adding ScanInfo to queue');
     _realm.write(() {
-      _realm.add(info);
+      _realm.add<ScanInfo>(info);
     });
   }
 

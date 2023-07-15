@@ -78,9 +78,8 @@ Class | Method | HTTP request | Description
 
  - [CategoryDTO](doc\CategoryDTO.md)
  - [EventDTO](doc\EventDTO.md)
- - [ParticipantDTO](doc\ParticipantDTO.md)
+ - [ParticipationDTO](doc\ParticipationDTO.md)
  - [PersonDTO](doc\PersonDTO.md)
- - [RegEventDTO](doc\RegEventDTO.md)
  - [ScanTimeDTO](doc\ScanTimeDTO.md)
  - [ScanTimeResponseDTO](doc\ScanTimeResponseDTO.md)
 

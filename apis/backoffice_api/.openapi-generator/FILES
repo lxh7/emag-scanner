@@ -7,10 +7,9 @@ doc/DefaultApi.md
 doc/EventApi.md
 doc/EventDTO.md
 doc/HealthApi.md
-doc/ParticipantDTO.md
+doc/ParticipationDTO.md
 doc/PersonApi.md
 doc/PersonDTO.md
-doc/RegEventDTO.md
 doc/ScanTimeDTO.md
 doc/ScanTimeResponseDTO.md
 doc/TestApi.md
@@ -32,9 +31,8 @@ lib/src/date_serializer.dart
 lib/src/model/category_dto.dart
 lib/src/model/date.dart
 lib/src/model/event_dto.dart
-lib/src/model/participant_dto.dart
+lib/src/model/participation_dto.dart
 lib/src/model/person_dto.dart
-lib/src/model/reg_event_dto.dart
 lib/src/model/scan_time_dto.dart
 lib/src/model/scan_time_response_dto.dart
 lib/src/serializers.dart

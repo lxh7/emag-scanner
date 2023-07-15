@@ -1,16 +1,54 @@
 import 'package:backoffice_api/backoffice_api.dart';
 
-import '/models/activity.dart';
+import '/models/domain.dart';
 
 class DtoHelper {
+  static final DateTime defaultDateTime =
+      DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
   static Activity fromEventDTO(EventDTO x) {
     return Activity(
-      convertInt(x.id, 0),
-      convertInt(x.categoryId, 0),
-      convertString(x.name, ''),
-      convertDate(x.start, DateTime(2000, 1, 1, 12, 0, 0)),
-      convertDate(x.end, DateTime(2000, 1, 1, 12, 0, 0, 1)),
+        convertInt(x.id, 0),
+        convertInt(x.categoryId, 0),
+        convertString(x.name, ''),
+        convertDate(x.start, defaultDateTime),
+        convertDate(x.end, defaultDateTime),
+        question1: x.question1,
+        question2: x.question2,
+        question3: x.question3,
+        participations: getParticipations(x.participations));
+  }
+
+  static Participation fromParticipationDTO(ParticipationDTO x) {
+    return Participation(
+      convertInt(x.eventId, -1),
+      activity: x.event == null ? null : fromEventDTO(x.event!),
+      x.personId ?? '',
+      person: x.person == null ? null : fromPersonDTO(x.person!),
+      scanTime: null,
+      answer1: x.answer1,
+      answer2: x.answer2,
+      answer3: x.answer3,
     );
+  }
+
+  static Person fromPersonDTO(PersonDTO x) {
+    return Person(
+        convertString(x.personId, ''),
+        convertString(x.firstName, ''),
+        convertString(x.surname, ''),
+        convertString(x.nickname, ''),
+        convertString(x.mobilePhone, ''),
+        convertString(x.email, ''),
+        participations: getParticipations(x.participations));
+  }
+
+  static List<Participation> getParticipations(
+      Iterable<ParticipationDTO>? dtos) {
+    var result = List<Participation>.empty();
+    if (dtos != null) {
+      result = dtos!.map((p) => fromParticipationDTO(p)).toList();
+    }
+    return result;
   }
 
   static int convertInt(int? value, int def) {

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/spinner.dart';
+import '/widgets/spinner.dart';
 import '/data/data_manager.dart';
-import '/models/activity.dart';
-import '/models/activity_category.dart';
+import '/models/domain.dart';
 import '/widgets/activity_tile.dart';
 import '/widgets/connection_widget.dart';
 
@@ -16,12 +15,12 @@ class ActivityLoadPage extends StatefulWidget {
 }
 
 class _ActivityLoadPageState extends State<ActivityLoadPage> {
-  ActivityCategory? _category;
+  Category? _category;
   List<Activity>? _activities;
 
   // methods/functions
 
-  Future _downloadActivityParticipantsAsync(Activity activity) async {
+  Future _downloadParticipationsAsync(Activity activity) async {
     var dataManager = context.read<DataManager>();
     activity = await dataManager.refreshActivityAsync(activity) ?? activity;
     dataManager.addStoredActivity(activity);
@@ -37,7 +36,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
   }
 
   // UI event handlers
-  void _setFilterCategory(ActivityCategory value) {
+  void _setFilterCategory(Category value) {
     if (_category != value) {
       setState(() {
         _category = value;
@@ -71,7 +70,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                 future: dataManager.getCategories(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    List<ActivityCategory>? categories = snapshot.data;
+                    List<Category>? categories = snapshot.data;
                     return _buildCategoryUI(categories);
                   } else {
                     return const Spinner();
@@ -120,13 +119,13 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     );
   }
 
-  _buildCategoryUI(List<ActivityCategory>? categories) {
+  _buildCategoryUI(List<Category>? categories) {
     if (categories?.isEmpty == true) {
       _category = null;
       return const Text('No categories loaded from server');
     }
     _category ??= categories!.first;
-    return DropdownButton<ActivityCategory>(
+    return DropdownButton<Category>(
       value: _category,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
@@ -135,15 +134,15 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
         height: 2,
         color: Colors.deepPurpleAccent,
       ),
-      onChanged: (ActivityCategory? value) {
+      onChanged: (Category? value) {
         // This is called when the user selects an item.
         setState(() {
           _category = value!;
         });
       },
       items: categories!
-          .map<DropdownMenuItem<ActivityCategory>>((ActivityCategory value) {
-        return DropdownMenuItem<ActivityCategory>(
+          .map<DropdownMenuItem<Category>>((Category value) {
+        return DropdownMenuItem<Category>(
           value: value,
           child: Text(value.name),
           onTap: () => _setFilterCategory(value),
@@ -167,7 +166,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
           .map((item) => ActivityTile(
                 activity: item,
                 enabled: !storedActivities.contains(item.id),
-                tapAction: () => _downloadActivityParticipantsAsync(item)
+                tapAction: () => _downloadParticipationsAsync(item)
                     .then((value) => Navigator.pop(context)),
               ))
           .toList(),

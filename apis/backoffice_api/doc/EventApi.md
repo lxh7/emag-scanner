@@ -61,7 +61,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getParticipants**
-> BuiltList<ParticipantDTO> getParticipants(eventId)
+> EventDTO getParticipants(eventId)
 
 
 
@@ -92,7 +92,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BuiltList&lt;ParticipantDTO&gt;**](ParticipantDTO.md)
+[**EventDTO**](EventDTO.md)
 
 ### Authorization
 

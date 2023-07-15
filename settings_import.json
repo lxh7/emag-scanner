@@ -3,6 +3,5 @@
     "oauthtokenurl": "https://api-test.emag23.nl/token",
     "oauthclientid": "test2",
     "oauthclientsecret": "test2",
-    "userid": "mensa",
-    "password": "secret"
+    "userid": "mensa"
 }

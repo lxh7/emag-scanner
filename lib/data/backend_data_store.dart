@@ -3,9 +3,7 @@ import 'package:logger/logger.dart';
 
 import '/logging/logging.dart';
 import '/enums/scan_result.dart';
-import '/models/activity.dart';
-import '/models/activity_category.dart';
-import '/models/access_check_result.dart';
+import '/models/domain.dart';
 import '/util/dto_helper.dart';
 
 class BackendDataStore {
@@ -39,13 +37,13 @@ class BackendDataStore {
     }
   }
 
-  Future<List<ActivityCategory>> getCategoriesAsync(String token) async {
+  Future<List<Category>> getCategoriesAsync(String token) async {
     try {
       var api = _getBackofficeApi(token);
       var listResponse = await api.getCategoryApi().listCategories();
       if (listResponse.data != null) {
         return listResponse.data!
-            .map((x) => ActivityCategory(
+            .map((x) => Category(
                   x.id!,
                   x.name!,
                 ))
@@ -54,7 +52,7 @@ class BackendDataStore {
     } catch (e) {
       //
     }
-    return List<ActivityCategory>.empty();
+    return List<Category>.empty();
   }
 
   Future<List<Activity>> getActivitiesAsync(
@@ -62,20 +60,14 @@ class BackendDataStore {
     try {
       var api = _getBackofficeApi(token);
       Iterable<EventDTO>? list;
-      if (categoryId == null) {
-        var response = await api.getEventApi().listEvents();
-        list = response.data;
-      } else {
-        var response =
-            await api.getEventApi().listEvents(categoryId: categoryId);
-        list = response.data;
-      }
+      var response = await api.getEventApi().listEvents(categoryId: categoryId);
+      list = response.data;
 
       if (list != null) {
         return list.map(DtoHelper.fromEventDTO).toList();
       }
     } catch (e) {
-      _logger.e('Exception when calling EventApi->listEvents', e);
+      _logger.e('Exception in BackendDataStore->getActivitiesAsync', e);
     }
     return List<Activity>.empty();
   }
@@ -84,27 +76,14 @@ class BackendDataStore {
     try {
       var api = _getBackofficeApi(token);
       var eventApi = api.getEventApi();
-      var eventResponse = await eventApi.getEvent(eventId: activityId);
+      var eventResponse = await eventApi.getParticipants(eventId: activityId);
       if (eventResponse.data == null) {
         return null;
       }
       var eventDTO = eventResponse.data!;
-      var activity = DtoHelper.fromEventDTO(eventDTO);
-      var participantResponse =
-          await eventApi.getParticipants(eventId: activityId);
-      var participants = participantResponse.data;
-      if (participants?.isNotEmpty == true) {
-        activity.participants.clear();
-        activity.participants.addAll(participants!
-            .map((e) => ActivityParticipant(
-                  e.personId!,
-                  scanTime: null,
-                ))
-            .toList());
-      }
-      return activity;
+      return DtoHelper.fromEventDTO(eventDTO);
     } catch (e) {
-      _logger.e('Exception when calling EventApi->getParticipants', e);
+      _logger.e('Exception in BackendDataStore->getActivityAsync', e);
     }
     return null;
   }

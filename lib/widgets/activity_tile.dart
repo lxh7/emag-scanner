@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart'; // for date format
 // import 'package:intl/date_symbol_data_local.dart'; // for other locales
 import 'package:flutter/material.dart';
-import '../models/activity.dart';
+import '/models/domain.dart';
 
 class ActivityTile extends StatelessWidget {
   const ActivityTile({

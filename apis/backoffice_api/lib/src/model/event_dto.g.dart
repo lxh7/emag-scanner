@@ -17,11 +17,28 @@ class _$EventDTO extends EventDTO {
   final String? start;
   @override
   final String? end;
+  @override
+  final String? question1;
+  @override
+  final String? question2;
+  @override
+  final String? question3;
+  @override
+  final BuiltList<ParticipationDTO>? participations;
 
   factory _$EventDTO([void Function(EventDTOBuilder)? updates]) =>
       (new EventDTOBuilder()..update(updates))._build();
 
-  _$EventDTO._({this.id, this.categoryId, this.name, this.start, this.end})
+  _$EventDTO._(
+      {this.id,
+      this.categoryId,
+      this.name,
+      this.start,
+      this.end,
+      this.question1,
+      this.question2,
+      this.question3,
+      this.participations})
       : super._();
 
   @override
@@ -39,7 +56,11 @@ class _$EventDTO extends EventDTO {
         categoryId == other.categoryId &&
         name == other.name &&
         start == other.start &&
-        end == other.end;
+        end == other.end &&
+        question1 == other.question1 &&
+        question2 == other.question2 &&
+        question3 == other.question3 &&
+        participations == other.participations;
   }
 
   @override
@@ -50,6 +71,10 @@ class _$EventDTO extends EventDTO {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, start.hashCode);
     _$hash = $jc(_$hash, end.hashCode);
+    _$hash = $jc(_$hash, question1.hashCode);
+    _$hash = $jc(_$hash, question2.hashCode);
+    _$hash = $jc(_$hash, question3.hashCode);
+    _$hash = $jc(_$hash, participations.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -61,7 +86,11 @@ class _$EventDTO extends EventDTO {
           ..add('categoryId', categoryId)
           ..add('name', name)
           ..add('start', start)
-          ..add('end', end))
+          ..add('end', end)
+          ..add('question1', question1)
+          ..add('question2', question2)
+          ..add('question3', question3)
+          ..add('participations', participations))
         .toString();
   }
 }
@@ -89,6 +118,24 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
   String? get end => _$this._end;
   set end(String? end) => _$this._end = end;
 
+  String? _question1;
+  String? get question1 => _$this._question1;
+  set question1(String? question1) => _$this._question1 = question1;
+
+  String? _question2;
+  String? get question2 => _$this._question2;
+  set question2(String? question2) => _$this._question2 = question2;
+
+  String? _question3;
+  String? get question3 => _$this._question3;
+  set question3(String? question3) => _$this._question3 = question3;
+
+  ListBuilder<ParticipationDTO>? _participations;
+  ListBuilder<ParticipationDTO> get participations =>
+      _$this._participations ??= new ListBuilder<ParticipationDTO>();
+  set participations(ListBuilder<ParticipationDTO>? participations) =>
+      _$this._participations = participations;
+
   EventDTOBuilder() {
     EventDTO._defaults(this);
   }
@@ -101,6 +148,10 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
       _name = $v.name;
       _start = $v.start;
       _end = $v.end;
+      _question1 = $v.question1;
+      _question2 = $v.question2;
+      _question3 = $v.question3;
+      _participations = $v.participations?.toBuilder();
       _$v = null;
     }
     return this;
@@ -121,9 +172,30 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
   EventDTO build() => _build();
 
   _$EventDTO _build() {
-    final _$result = _$v ??
-        new _$EventDTO._(
-            id: id, categoryId: categoryId, name: name, start: start, end: end);
+    _$EventDTO _$result;
+    try {
+      _$result = _$v ??
+          new _$EventDTO._(
+              id: id,
+              categoryId: categoryId,
+              name: name,
+              start: start,
+              end: end,
+              question1: question1,
+              question2: question2,
+              question3: question3,
+              participations: _participations?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'participations';
+        _participations?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'EventDTO', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

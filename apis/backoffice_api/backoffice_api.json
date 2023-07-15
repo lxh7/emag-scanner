@@ -112,10 +112,7 @@
                         "content": {
                             "application\/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#\/components\/schemas\/ParticipantDTO"
-                                    }
+                                    "$ref": "#\/components\/schemas\/EventDTO"
                                 }
                             }
                         }
@@ -270,30 +267,21 @@
                     "end": {
                         "type": "string",
                         "format": "datetime"
-                    }
-                },
-                "type": "object"
-            },
-            "ParticipantDTO": {
-                "description": "ParticipantDTO",
-                "properties": {
-                    "eventId": {
-                        "type": "integer"
                     },
-                    "personId": {
+                    "question1": {
                         "type": "string"
                     },
-                    "firstName": {
+                    "question2": {
                         "type": "string"
                     },
-                    "surname": {
+                    "question3": {
                         "type": "string"
                     },
-                    "nickname": {
-                        "type": "string"
-                    },
-                    "mobilePhone": {
-                        "type": "string"
+                    "participations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/ParticipationDTO"
+                        }
                     }
                 },
                 "type": "object"
@@ -336,6 +324,9 @@
                     "nickname": {
                         "type": "string"
                     },
+                    "email": {
+                        "type": "string"
+                    },
                     "mobilePhone": {
                         "type": "string"
                     },
@@ -348,38 +339,42 @@
                     "country": {
                         "type": "string"
                     },
-                    "regEvents": {
+                    "participations": {
                         "type": "array",
                         "items": {
-                            "$ref": "#\/components\/schemas\/RegEventDTO"
+                            "$ref": "#\/components\/schemas\/ParticipationDTO"
                         }
                     }
                 },
                 "type": "object"
             },
-            "RegEventDTO": {
-                "description": "RegEventDTO",
+            "ParticipationDTO": {
+                "description": "ParticipationDTO",
                 "properties": {
-                    "eventId": {
-                        "type": "integer"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "start": {
-                        "type": "string",
-                        "format": "datetime"
-                    },
-                    "end": {
-                        "type": "string",
-                        "format": "datetime"
-                    },
-                    "type": {
-                        "type": "integer"
-                    },
                     "scanTime": {
                         "type": "string",
                         "format": "datetime"
+                    },
+                    "eventId": {
+                        "type": "integer"
+                    },
+                    "event": {
+                        "$ref": "#\/components\/schemas\/EventDTO"
+                    },
+                    "personId": {
+                        "type": "string"
+                    },
+                    "person": {
+                        "$ref": "#\/components\/schemas\/PersonDTO"
+                    },
+                    "answer1": {
+                        "type": "string"
+                    },
+                    "answer2": {
+                        "type": "string"
+                    },
+                    "answer3": {
+                        "type": "string"
                     }
                 },
                 "type": "object"

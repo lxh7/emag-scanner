@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '/enums/scan_result.dart';
-import '/models/scan_info.dart';
+import '/models/domain.dart';
 import 'base_scan_handler.dart';
 
 class ActivityScanHandler extends BaseScanHandler {

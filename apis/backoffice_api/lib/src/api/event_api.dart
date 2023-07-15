@@ -9,7 +9,6 @@ import 'package:dio/dio.dart';
 
 import 'package:backoffice_api/src/api_util.dart';
 import 'package:backoffice_api/src/model/event_dto.dart';
-import 'package:backoffice_api/src/model/participant_dto.dart';
 import 'package:backoffice_api/src/model/scan_time_dto.dart';
 import 'package:backoffice_api/src/model/scan_time_response_dto.dart';
 import 'package:built_collection/built_collection.dart';
@@ -117,9 +116,9 @@ class EventApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [BuiltList<ParticipantDTO>] as data
+  /// Returns a [Future] containing a [Response] with a [EventDTO] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<BuiltList<ParticipantDTO>>> getParticipants({ 
+  Future<Response<EventDTO>> getParticipants({ 
     required int eventId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -157,14 +156,14 @@ class EventApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BuiltList<ParticipantDTO> _responseData;
+    EventDTO _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(ParticipantDTO)]);
+      const _responseType = FullType(EventDTO);
       _responseData = _serializers.deserialize(
         _response.data!,
         specifiedType: _responseType,
-      ) as BuiltList<ParticipantDTO>;
+      ) as EventDTO;
 
     } catch (error, stackTrace) {
       throw DioError(
@@ -176,7 +175,7 @@ class EventApi {
       );
     }
 
-    return Response<BuiltList<ParticipantDTO>>(
+    return Response<EventDTO>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

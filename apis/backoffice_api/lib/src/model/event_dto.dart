@@ -3,6 +3,8 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:backoffice_api/src/model/participation_dto.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -16,6 +18,10 @@ part 'event_dto.g.dart';
 /// * [name] 
 /// * [start] 
 /// * [end] 
+/// * [question1] 
+/// * [question2] 
+/// * [question3] 
+/// * [participations] 
 @BuiltValue()
 abstract class EventDTO implements Built<EventDTO, EventDTOBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -32,6 +38,18 @@ abstract class EventDTO implements Built<EventDTO, EventDTOBuilder> {
 
   @BuiltValueField(wireName: r'end')
   String? get end;
+
+  @BuiltValueField(wireName: r'question1')
+  String? get question1;
+
+  @BuiltValueField(wireName: r'question2')
+  String? get question2;
+
+  @BuiltValueField(wireName: r'question3')
+  String? get question3;
+
+  @BuiltValueField(wireName: r'participations')
+  BuiltList<ParticipationDTO>? get participations;
 
   EventDTO._();
 
@@ -91,6 +109,34 @@ class _$EventDTOSerializer implements PrimitiveSerializer<EventDTO> {
         specifiedType: const FullType(String),
       );
     }
+    if (object.question1 != null) {
+      yield r'question1';
+      yield serializers.serialize(
+        object.question1,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.question2 != null) {
+      yield r'question2';
+      yield serializers.serialize(
+        object.question2,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.question3 != null) {
+      yield r'question3';
+      yield serializers.serialize(
+        object.question3,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.participations != null) {
+      yield r'participations';
+      yield serializers.serialize(
+        object.participations,
+        specifiedType: const FullType(BuiltList, [FullType(ParticipationDTO)]),
+      );
+    }
   }
 
   @override
@@ -148,6 +194,34 @@ class _$EventDTOSerializer implements PrimitiveSerializer<EventDTO> {
             specifiedType: const FullType(String),
           ) as String;
           result.end = valueDes;
+          break;
+        case r'question1':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.question1 = valueDes;
+          break;
+        case r'question2':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.question2 = valueDes;
+          break;
+        case r'question3':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.question3 = valueDes;
+          break;
+        case r'participations':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(ParticipationDTO)]),
+          ) as BuiltList<ParticipationDTO>;
+          result.participations.replace(valueDes);
           break;
         default:
           unhandled.add(key);

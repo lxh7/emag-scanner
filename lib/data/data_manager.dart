@@ -11,10 +11,7 @@ import '/data/backend_data_store.dart';
 import '/data/dequeue_scan_info.dart';
 import '/enums/api_connection_state.dart';
 import '/logging/logging.dart';
-import '/models/access_check_result.dart';
-import '/models/activity.dart';
-import '/models/activity_category.dart';
-import '/models/scan_info.dart';
+import '/models/domain.dart';
 import '/util/internet_connection_listener.dart';
 
 class DataManager extends ChangeNotifier {
@@ -216,8 +213,8 @@ class DataManager extends ChangeNotifier {
     return _selectedActivity;
   }
 
-  Future<List<ActivityCategory>> getCategories() async {
-    List<ActivityCategory>? result;
+  Future<List<Category>> getCategories() async {
+    List<Category>? result;
     if (isConnected) {
       result = await _backend.getCategoriesAsync(await getOauth2token());
       if (result.isNotEmpty) {
@@ -229,7 +226,7 @@ class DataManager extends ChangeNotifier {
     return result;
   }
 
-  Future<List<Activity>> getActivities(ActivityCategory category) async {
+  Future<List<Activity>> getActivities(Category category) async {
     List<Activity>? result;
     if (isConnected) {
       result = await _backend.getActivitiesAsync(
@@ -288,15 +285,20 @@ class DataManager extends ChangeNotifier {
   Future<AccessCheckResult> checkAccess(ScanInfo info) async {
     AccessCheckResult result;
     if (isConnected) {
+      // backend is leading in determining access, use this result
       result = await _backend.queryAccessAsync(
         await getOauth2token(),
         info.activityId,
         info.personKey,
         info.scanTime,
       );
-      _local.checkAccess(info);
+      // update local store
+      _local.queryAccess(info);
     } else {
+      // backend cannot be reached, rely on local store
       result = _local.queryAccess(info);
+      // make sure scan info is synchronised to backend when we gain connectivity again.
+      _local.queueScanInfo(info); 
     }
     return result;
   }

@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:backoffice_api/src/model/reg_event_dto.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -11,17 +12,14 @@ part 'participant_dto.g.dart';
 /// ParticipantDTO
 ///
 /// Properties:
-/// * [eventId] 
 /// * [personId] 
 /// * [firstName] 
 /// * [surname] 
 /// * [nickname] 
 /// * [mobilePhone] 
+/// * [regEvent] 
 @BuiltValue()
 abstract class ParticipantDTO implements Built<ParticipantDTO, ParticipantDTOBuilder> {
-  @BuiltValueField(wireName: r'eventId')
-  int? get eventId;
-
   @BuiltValueField(wireName: r'personId')
   String? get personId;
 
@@ -36,6 +34,9 @@ abstract class ParticipantDTO implements Built<ParticipantDTO, ParticipantDTOBui
 
   @BuiltValueField(wireName: r'mobilePhone')
   String? get mobilePhone;
+
+  @BuiltValueField(wireName: r'regEvent')
+  RegEventDTO? get regEvent;
 
   ParticipantDTO._();
 
@@ -60,13 +61,6 @@ class _$ParticipantDTOSerializer implements PrimitiveSerializer<ParticipantDTO> 
     ParticipantDTO object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
-    if (object.eventId != null) {
-      yield r'eventId';
-      yield serializers.serialize(
-        object.eventId,
-        specifiedType: const FullType(int),
-      );
-    }
     if (object.personId != null) {
       yield r'personId';
       yield serializers.serialize(
@@ -102,6 +96,13 @@ class _$ParticipantDTOSerializer implements PrimitiveSerializer<ParticipantDTO> 
         specifiedType: const FullType(String),
       );
     }
+    if (object.regEvent != null) {
+      yield r'regEvent';
+      yield serializers.serialize(
+        object.regEvent,
+        specifiedType: const FullType(RegEventDTO),
+      );
+    }
   }
 
   @override
@@ -125,13 +126,6 @@ class _$ParticipantDTOSerializer implements PrimitiveSerializer<ParticipantDTO> 
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
-        case r'eventId':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.eventId = valueDes;
-          break;
         case r'personId':
           final valueDes = serializers.deserialize(
             value,
@@ -166,6 +160,13 @@ class _$ParticipantDTOSerializer implements PrimitiveSerializer<ParticipantDTO> 
             specifiedType: const FullType(String),
           ) as String;
           result.mobilePhone = valueDes;
+          break;
+        case r'regEvent':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(RegEventDTO),
+          ) as RegEventDTO;
+          result.regEvent.replace(valueDes);
           break;
         default:
           unhandled.add(key);

@@ -1,25 +1,24 @@
 // mock some data for the UI
-import 'package:emag_scanner/models/activity_category.dart';
-import 'package:emag_scanner/models/activity.dart';
+import 'package:emag_scanner/models/domain.dart';
 
 class MockDataStore {
-  late List<ActivityCategory> _categories;
+  late List<Category> _categories;
   late List<Activity> _activities;
 
   MockDataStore() {
-    _categories = List<ActivityCategory>.from([
-      ActivityCategory(8, 'Meals'),
-      ActivityCategory(5, 'EMAG'),
-      ActivityCategory(16, 'Activities'),
-      ActivityCategory(7, 'Rotterdam'),
-      ActivityCategory(6, 'Escape Rooms'),
-      ActivityCategory(10, 'Fun & games'),
-      ActivityCategory(9, 'Tours'),
-      ActivityCategory(11, 'Art & science'),
-      ActivityCategory(12, 'Family'),
-      ActivityCategory(13, 'Water'),
-      ActivityCategory(14, 'Lectures'),
-      ActivityCategory(15, 'Workshops'),
+    _categories = List<Category>.from([
+      Category(8, 'Meals'),
+      Category(5, 'EMAG'),
+      Category(16, 'Activities'),
+      Category(7, 'Rotterdam'),
+      Category(6, 'Escape Rooms'),
+      Category(10, 'Fun & games'),
+      Category(9, 'Tours'),
+      Category(11, 'Art & science'),
+      Category(12, 'Family'),
+      Category(13, 'Water'),
+      Category(14, 'Lectures'),
+      Category(15, 'Workshops'),
     ]);
 
     _activities = List<Activity>.empty(growable: true);
@@ -62,7 +61,7 @@ class MockDataStore {
     ));
   }
 
-  Future<List<ActivityCategory>> getCategories() async {
+  Future<List<Category>> getCategories() async {
     return _categories;
   }
 

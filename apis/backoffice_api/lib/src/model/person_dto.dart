@@ -3,8 +3,8 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:backoffice_api/src/model/participation_dto.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:backoffice_api/src/model/reg_event_dto.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -17,11 +17,12 @@ part 'person_dto.g.dart';
 /// * [firstName] 
 /// * [surname] 
 /// * [nickname] 
+/// * [email] 
 /// * [mobilePhone] 
 /// * [city] 
 /// * [countryCode] 
 /// * [country] 
-/// * [regEvents] 
+/// * [participations] 
 @BuiltValue()
 abstract class PersonDTO implements Built<PersonDTO, PersonDTOBuilder> {
   @BuiltValueField(wireName: r'personId')
@@ -36,6 +37,9 @@ abstract class PersonDTO implements Built<PersonDTO, PersonDTOBuilder> {
   @BuiltValueField(wireName: r'nickname')
   String? get nickname;
 
+  @BuiltValueField(wireName: r'email')
+  String? get email;
+
   @BuiltValueField(wireName: r'mobilePhone')
   String? get mobilePhone;
 
@@ -48,8 +52,8 @@ abstract class PersonDTO implements Built<PersonDTO, PersonDTOBuilder> {
   @BuiltValueField(wireName: r'country')
   String? get country;
 
-  @BuiltValueField(wireName: r'regEvents')
-  BuiltList<RegEventDTO>? get regEvents;
+  @BuiltValueField(wireName: r'participations')
+  BuiltList<ParticipationDTO>? get participations;
 
   PersonDTO._();
 
@@ -102,6 +106,13 @@ class _$PersonDTOSerializer implements PrimitiveSerializer<PersonDTO> {
         specifiedType: const FullType(String),
       );
     }
+    if (object.email != null) {
+      yield r'email';
+      yield serializers.serialize(
+        object.email,
+        specifiedType: const FullType(String),
+      );
+    }
     if (object.mobilePhone != null) {
       yield r'mobilePhone';
       yield serializers.serialize(
@@ -130,11 +141,11 @@ class _$PersonDTOSerializer implements PrimitiveSerializer<PersonDTO> {
         specifiedType: const FullType(String),
       );
     }
-    if (object.regEvents != null) {
-      yield r'regEvents';
+    if (object.participations != null) {
+      yield r'participations';
       yield serializers.serialize(
-        object.regEvents,
-        specifiedType: const FullType(BuiltList, [FullType(RegEventDTO)]),
+        object.participations,
+        specifiedType: const FullType(BuiltList, [FullType(ParticipationDTO)]),
       );
     }
   }
@@ -188,6 +199,13 @@ class _$PersonDTOSerializer implements PrimitiveSerializer<PersonDTO> {
           ) as String;
           result.nickname = valueDes;
           break;
+        case r'email':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.email = valueDes;
+          break;
         case r'mobilePhone':
           final valueDes = serializers.deserialize(
             value,
@@ -216,12 +234,12 @@ class _$PersonDTOSerializer implements PrimitiveSerializer<PersonDTO> {
           ) as String;
           result.country = valueDes;
           break;
-        case r'regEvents':
+        case r'participations':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(BuiltList, [FullType(RegEventDTO)]),
-          ) as BuiltList<RegEventDTO>;
-          result.regEvents.replace(valueDes);
+            specifiedType: const FullType(BuiltList, [FullType(ParticipationDTO)]),
+          ) as BuiltList<ParticipationDTO>;
+          result.participations.replace(valueDes);
           break;
         default:
           unhandled.add(key);

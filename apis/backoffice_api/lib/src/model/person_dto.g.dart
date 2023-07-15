@@ -16,6 +16,8 @@ class _$PersonDTO extends PersonDTO {
   @override
   final String? nickname;
   @override
+  final String? email;
+  @override
   final String? mobilePhone;
   @override
   final String? city;
@@ -24,7 +26,7 @@ class _$PersonDTO extends PersonDTO {
   @override
   final String? country;
   @override
-  final BuiltList<RegEventDTO>? regEvents;
+  final BuiltList<ParticipationDTO>? participations;
 
   factory _$PersonDTO([void Function(PersonDTOBuilder)? updates]) =>
       (new PersonDTOBuilder()..update(updates))._build();
@@ -34,11 +36,12 @@ class _$PersonDTO extends PersonDTO {
       this.firstName,
       this.surname,
       this.nickname,
+      this.email,
       this.mobilePhone,
       this.city,
       this.countryCode,
       this.country,
-      this.regEvents})
+      this.participations})
       : super._();
 
   @override
@@ -56,11 +59,12 @@ class _$PersonDTO extends PersonDTO {
         firstName == other.firstName &&
         surname == other.surname &&
         nickname == other.nickname &&
+        email == other.email &&
         mobilePhone == other.mobilePhone &&
         city == other.city &&
         countryCode == other.countryCode &&
         country == other.country &&
-        regEvents == other.regEvents;
+        participations == other.participations;
   }
 
   @override
@@ -70,11 +74,12 @@ class _$PersonDTO extends PersonDTO {
     _$hash = $jc(_$hash, firstName.hashCode);
     _$hash = $jc(_$hash, surname.hashCode);
     _$hash = $jc(_$hash, nickname.hashCode);
+    _$hash = $jc(_$hash, email.hashCode);
     _$hash = $jc(_$hash, mobilePhone.hashCode);
     _$hash = $jc(_$hash, city.hashCode);
     _$hash = $jc(_$hash, countryCode.hashCode);
     _$hash = $jc(_$hash, country.hashCode);
-    _$hash = $jc(_$hash, regEvents.hashCode);
+    _$hash = $jc(_$hash, participations.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -86,11 +91,12 @@ class _$PersonDTO extends PersonDTO {
           ..add('firstName', firstName)
           ..add('surname', surname)
           ..add('nickname', nickname)
+          ..add('email', email)
           ..add('mobilePhone', mobilePhone)
           ..add('city', city)
           ..add('countryCode', countryCode)
           ..add('country', country)
-          ..add('regEvents', regEvents))
+          ..add('participations', participations))
         .toString();
   }
 }
@@ -114,6 +120,10 @@ class PersonDTOBuilder implements Builder<PersonDTO, PersonDTOBuilder> {
   String? get nickname => _$this._nickname;
   set nickname(String? nickname) => _$this._nickname = nickname;
 
+  String? _email;
+  String? get email => _$this._email;
+  set email(String? email) => _$this._email = email;
+
   String? _mobilePhone;
   String? get mobilePhone => _$this._mobilePhone;
   set mobilePhone(String? mobilePhone) => _$this._mobilePhone = mobilePhone;
@@ -130,11 +140,11 @@ class PersonDTOBuilder implements Builder<PersonDTO, PersonDTOBuilder> {
   String? get country => _$this._country;
   set country(String? country) => _$this._country = country;
 
-  ListBuilder<RegEventDTO>? _regEvents;
-  ListBuilder<RegEventDTO> get regEvents =>
-      _$this._regEvents ??= new ListBuilder<RegEventDTO>();
-  set regEvents(ListBuilder<RegEventDTO>? regEvents) =>
-      _$this._regEvents = regEvents;
+  ListBuilder<ParticipationDTO>? _participations;
+  ListBuilder<ParticipationDTO> get participations =>
+      _$this._participations ??= new ListBuilder<ParticipationDTO>();
+  set participations(ListBuilder<ParticipationDTO>? participations) =>
+      _$this._participations = participations;
 
   PersonDTOBuilder() {
     PersonDTO._defaults(this);
@@ -147,11 +157,12 @@ class PersonDTOBuilder implements Builder<PersonDTO, PersonDTOBuilder> {
       _firstName = $v.firstName;
       _surname = $v.surname;
       _nickname = $v.nickname;
+      _email = $v.email;
       _mobilePhone = $v.mobilePhone;
       _city = $v.city;
       _countryCode = $v.countryCode;
       _country = $v.country;
-      _regEvents = $v.regEvents?.toBuilder();
+      _participations = $v.participations?.toBuilder();
       _$v = null;
     }
     return this;
@@ -180,16 +191,17 @@ class PersonDTOBuilder implements Builder<PersonDTO, PersonDTOBuilder> {
               firstName: firstName,
               surname: surname,
               nickname: nickname,
+              email: email,
               mobilePhone: mobilePhone,
               city: city,
               countryCode: countryCode,
               country: country,
-              regEvents: _regEvents?.build());
+              participations: _participations?.build());
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'regEvents';
-        _regEvents?.build();
+        _$failedField = 'participations';
+        _participations?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'PersonDTO', _$failedField, e.toString());
