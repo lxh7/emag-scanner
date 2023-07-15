@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-import '/util/routes.dart';
-import '/logging/logging.dart';
 import '/data/data_manager.dart';
-import '/widgets/activity_tile.dart';
+import '/logging/logging.dart';
+import '/models/domain.dart';
 import '/scanning/activity_scan_handler.dart';
+import '/util/routes.dart';
+import '/widgets/activity_tile.dart';
 
 class ActivityConfirmPage extends StatelessWidget {
   final Logger _logger = getLogger('ActivityConfirmPage');
@@ -16,6 +17,11 @@ class ActivityConfirmPage extends StatelessWidget {
   _startScanning(BuildContext context) {
     _logger.i('Start scanning');
     Navigator.pushNamed(context, Routes.scan, arguments: ActivityScanHandler());
+  }
+
+  _showParticipants(Activity activity) {
+    _logger.i('Show particpants');
+    // TODO: implement
   }
 
   _selectOtherActivity(BuildContext context) {
@@ -46,8 +52,7 @@ class ActivityConfirmPage extends StatelessWidget {
                     child: Text(
                         'No activity is selected. Please select one first'),
                   ),
-                ]
-                else ...[
+                ] else ...[
                   const Center(
                     child: Text(
                         'Tap to start scanning participants for this activity'),
@@ -55,6 +60,11 @@ class ActivityConfirmPage extends StatelessWidget {
                   ActivityTile(
                     activity: dataManager.selectedActivity!,
                     tapAction: () => _startScanning(context),
+                    longPressAction: () => _showParticipants(dataManager.selectedActivity!),
+                    /*
+                    trailingWidget: const Icon(Icons.refresh, size: 50),
+                    trailingAction: () => _refreshActivity(item),
+                    */
                   )
                 ]
               ], // children

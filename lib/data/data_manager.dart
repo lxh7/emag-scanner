@@ -72,7 +72,7 @@ class DataManager extends ChangeNotifier {
       _authenticationStarted = true;
       if (_oauth2Client == null) {
         try {
-          var tokenUrl=_appSettings.oauthTokenUrl;
+          var tokenUrl = _appSettings.oauthTokenUrl;
           var clientId = _appSettings.oauthClientId;
           var clientSecret = await _appSettings.getOauthClientSecret();
           var username = _appSettings.userId;
@@ -298,7 +298,7 @@ class DataManager extends ChangeNotifier {
       // backend cannot be reached, rely on local store
       result = _local.queryAccess(info);
       // make sure scan info is synchronised to backend when we gain connectivity again.
-      _local.queueScanInfo(info); 
+      _local.queueScanInfo(info);
     }
     return result;
   }
