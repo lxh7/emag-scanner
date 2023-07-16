@@ -20,13 +20,13 @@ class DataManager extends ChangeNotifier {
   int _apiCheckInterval =
       1; // polling interval (seconds) trying to reach Backend. Will be increaed with every try (max 10 seconds).
   Timer? _apiCheckTimer;
-
   late InternetConnectionListener _internetConnectionListener;
   late AppSettings _appSettings;
   late BackendDataStore _backend;
   late LocalDataStore _local;
   late List<Activity> _storedActivities;
   Activity? _selectedActivity;
+  static DateTime? _categoriesFetchTime;
 
   oauth2.Client? _oauth2Client;
 
@@ -216,14 +216,26 @@ class DataManager extends ChangeNotifier {
   Future<List<Category>> getCategories() async {
     List<Category>? result;
     if (isConnected) {
-      result = await _backend.getCategoriesAsync(await getOauth2token());
-      if (result.isNotEmpty) {
-        _local.storeCategories(result);
+      if (_categoriesFetchTime == null ||
+          (DateTime.now().difference(_categoriesFetchTime!).inMinutes < 120)) {
+        _categoriesFetchTime = DateTime.now();
+        result = await _backend.getCategoriesAsync(await getOauth2token());
+        if (result.isNotEmpty) {
+          _local.storeCategories(result);
+        }
       }
-    } else {
-      result = _local.getCategories();
     }
+    // if we shouldn't or couldn't fetch fresh list from API, get it local
+    result ??= _local.getCategories();
     return result;
+  }
+
+  List<int> getGoodieCategories() {
+    return _appSettings.goodieCategories;
+  }
+
+  void setGoodieCategories(List<int> values) {
+    _appSettings.goodieCategories = values;
   }
 
   Future<List<Activity>> getActivities(Category category) async {
@@ -310,5 +322,12 @@ class DataManager extends ChangeNotifier {
     } else {
       return _local.getActivity(activityId);
     }
+  }
+
+  Future<Person?> getPerson(String id) async {
+    if (isConnected) {
+      return await _backend.getPerson(await getOauth2token(), id);
+    }
+    return null;
   }
 }

@@ -38,6 +38,8 @@ class _Participation {
   // @Backlink(#participations)
   late _Person? person;
   late DateTime? scanTime;
+  bool paid = false;
+  bool waitlisted = true;
   late String? answer1;
   late String? answer2;
   late String? answer3;
@@ -53,6 +55,22 @@ class _Person {
   late String phone;
   late String email;
   late List<_Participation> participations;
+
+  String get name {
+    var buffer = StringBuffer();
+    if (nickName.isNotEmpty) {
+      buffer.write(nickName);
+      buffer.write(' (');
+      buffer.write(firstName);
+      buffer.write(') ');
+    } else {
+      buffer.write(firstName);
+      buffer.write(' ');
+    }
+    buffer.write(lastName);
+
+    return buffer.toString();
+  }
 }
 
 // info packet to send to API for access check

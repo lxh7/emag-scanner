@@ -122,6 +122,17 @@ class BackendDataStore {
     }
   }
 
+  Future<Person?> getPerson(String token, String id) async {
+    var api = _getBackofficeApi(token);
+
+    var response = await api.getPersonApi().getPerson(personId: id);
+    var personDTO = response.data;
+    if (personDTO == null) {
+      return null;
+    }
+    return DtoHelper.fromPersonDTO(personDTO);
+  }
+
   BackofficeApi _getBackofficeApi(var token) {
     _backofficeApi ??= BackofficeApi(basePathOverride: _apiUrl);
     // Set the (refreshed) token for authentication.

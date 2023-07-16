@@ -1,5 +1,3 @@
-import 'package:emag_scanner/pages/activity_load_page.dart';
-import 'package:emag_scanner/pages/activity_select_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -12,8 +10,13 @@ import '/data/local_data_store.dart';
 import '/util/routes.dart';
 import '/util/internet_connection_listener.dart';
 import 'pages/home_page.dart';
+import 'pages/activity_load_page.dart';
+import 'pages/activity_select_page.dart';
 import 'pages/activity_confirm_page.dart';
+import 'pages/activity_participants_page.dart';
 import 'pages/registration_setup_page.dart';
+import 'pages/goodies_setup_page.dart';
+import 'pages/goodies_show_page.dart';
 import 'pages/settings_page.dart';
 import 'pages/scan_page.dart';
 
@@ -65,7 +68,10 @@ class ScanApp extends StatelessWidget {
         Routes.activityConfirm: (context) => ActivityConfirmPage(),
         Routes.activitySelect: (context) => const ActivitySelectPage(),
         Routes.activityDownload: (context) => const ActivityLoadPage(),
+        Routes.activityParticipants: (context) => const ActivityParticipantsPage(),
         Routes.registrationSetup: (context) => const RegistrationSetupPage(),
+        Routes.goodiesSetup: (context) => const GoodiesSetupPage(),
+        Routes.goodiesShow: (context) => const GoodiesShowPage(),
       },
       theme: ThemeData(
         useMaterial3: true,

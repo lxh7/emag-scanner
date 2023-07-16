@@ -91,6 +91,10 @@ class ScanPageState extends State<ScanPage> {
     }
   }
 
+  void showResultInAPage(String routeName, dynamic result) {
+    Navigator.pushNamed(context, routeName, arguments: result);
+  }
+
   void showDialog(
     String caption,
     String message, {
@@ -194,8 +198,7 @@ class ScanPageState extends State<ScanPage> {
         body: MobileScanner(
           controller: _cameraController,
           fit: BoxFit.contain,
-          onDetect: (capture) =>
-              handler.handleBarcodes(capture.barcodes),
+          onDetect: (capture) => handler.handleBarcodes(capture.barcodes),
           onScannerStarted: _scannerStarted,
         ),
         backgroundColor: scanResult.getColor(_theme.colorScheme.background),

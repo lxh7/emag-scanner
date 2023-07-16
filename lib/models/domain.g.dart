@@ -154,21 +154,33 @@ class Activity extends _Activity
 
 class Participation extends _Participation
     with RealmEntity, RealmObjectBase, RealmObject {
+  static var _defaultsSet = false;
+
   Participation(
     int activityId,
     String personKey, {
     Activity? activity,
     Person? person,
     DateTime? scanTime,
+    bool paid = false,
+    bool waitlisted = true,
     String? answer1,
     String? answer2,
     String? answer3,
   }) {
+    if (!_defaultsSet) {
+      _defaultsSet = RealmObjectBase.setDefaults<Participation>({
+        'paid': false,
+        'waitlisted': true,
+      });
+    }
     RealmObjectBase.set(this, 'activityId', activityId);
     RealmObjectBase.set(this, 'activity', activity);
     RealmObjectBase.set(this, 'personKey', personKey);
     RealmObjectBase.set(this, 'person', person);
     RealmObjectBase.set(this, 'scanTime', scanTime);
+    RealmObjectBase.set(this, 'paid', paid);
+    RealmObjectBase.set(this, 'waitlisted', waitlisted);
     RealmObjectBase.set(this, 'answer1', answer1);
     RealmObjectBase.set(this, 'answer2', answer2);
     RealmObjectBase.set(this, 'answer3', answer3);
@@ -205,6 +217,16 @@ class Participation extends _Participation
       RealmObjectBase.get<DateTime>(this, 'scanTime') as DateTime?;
   @override
   set scanTime(DateTime? value) => RealmObjectBase.set(this, 'scanTime', value);
+
+  @override
+  bool get paid => RealmObjectBase.get<bool>(this, 'paid') as bool;
+  @override
+  set paid(bool value) => RealmObjectBase.set(this, 'paid', value);
+
+  @override
+  bool get waitlisted => RealmObjectBase.get<bool>(this, 'waitlisted') as bool;
+  @override
+  set waitlisted(bool value) => RealmObjectBase.set(this, 'waitlisted', value);
 
   @override
   String? get answer1 =>
@@ -244,6 +266,8 @@ class Participation extends _Participation
       SchemaProperty('person', RealmPropertyType.object,
           optional: true, linkTarget: 'Person'),
       SchemaProperty('scanTime', RealmPropertyType.timestamp, optional: true),
+      SchemaProperty('paid', RealmPropertyType.bool),
+      SchemaProperty('waitlisted', RealmPropertyType.bool),
       SchemaProperty('answer1', RealmPropertyType.string, optional: true),
       SchemaProperty('answer2', RealmPropertyType.string, optional: true),
       SchemaProperty('answer3', RealmPropertyType.string, optional: true),

@@ -5,6 +5,9 @@ class Routes {
   static const activityConfirm = '/activity/confirm';
   static const activitySelect = '/activity/select';
   static const activityDownload = '/activity/download';
-  
+  static const activityParticipants = '/activity/participants';
+
   static const registrationSetup = '/registration/setup';
+  static const goodiesSetup = '/goodies/setup';
+  static const goodiesShow = '/goodies/show';
 }

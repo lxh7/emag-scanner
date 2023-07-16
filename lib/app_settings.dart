@@ -12,6 +12,7 @@ class AppSettings extends ChangeNotifier {
   static const String keyOauthClientSecret = 'OauthClientSecret';
   static const String keyUserId = 'UserId';
   static const String keyPassword = 'Password';
+  static const String keyGoodieCategories = 'GoodieCategories';
 
   late Future<SharedPreferences> _prefs;
   late SharedPreferences _storage;
@@ -115,6 +116,17 @@ class AppSettings extends ChangeNotifier {
     value = value.trim();
     _setSecureString(keyPassword, value);
     notifyListeners();
+  }
+
+  List<int> get goodieCategories {
+    var s = _getString(keyGoodieCategories);
+    if (s.isEmpty) return List<int>.empty();
+    return s.split(',').map<int>((e) => int.parse(e)).toList();
+  }
+
+  set goodieCategories(List<int> categories) {
+    _setString(
+        keyGoodieCategories, categories.map((i) => i.toString()).join(','));
   }
 
   String _getString(String key) {

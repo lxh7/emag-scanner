@@ -35,10 +35,16 @@ class HomePage extends StatelessWidget {
                   Navigator.pushNamed(context, Routes.activityConfirm);
                 },
               ),
+              // ElevatedButton(
+              //   child: const Text('Scan for registration'),
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, Routes.registrationSetup);
+              //   },
+              // ),
               ElevatedButton(
-                child: const Text('Scan for registration'),
+                child: const Text('Scan for goodies'),
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.registrationSetup);
+                  Navigator.pushNamed(context, Routes.goodiesSetup);
                 },
               ),
             ],
