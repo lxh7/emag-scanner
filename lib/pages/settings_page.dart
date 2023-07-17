@@ -44,7 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         body: SettingsList(
           shrinkWrap: true,
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           sections: [
             SettingsSection(
               title: const Text('API'),
