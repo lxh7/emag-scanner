@@ -18,6 +18,8 @@ class _$EventDTO extends EventDTO {
   @override
   final String? end;
   @override
+  final int? capacity;
+  @override
   final String? question1;
   @override
   final String? question2;
@@ -35,6 +37,7 @@ class _$EventDTO extends EventDTO {
       this.name,
       this.start,
       this.end,
+      this.capacity,
       this.question1,
       this.question2,
       this.question3,
@@ -57,6 +60,7 @@ class _$EventDTO extends EventDTO {
         name == other.name &&
         start == other.start &&
         end == other.end &&
+        capacity == other.capacity &&
         question1 == other.question1 &&
         question2 == other.question2 &&
         question3 == other.question3 &&
@@ -71,6 +75,7 @@ class _$EventDTO extends EventDTO {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, start.hashCode);
     _$hash = $jc(_$hash, end.hashCode);
+    _$hash = $jc(_$hash, capacity.hashCode);
     _$hash = $jc(_$hash, question1.hashCode);
     _$hash = $jc(_$hash, question2.hashCode);
     _$hash = $jc(_$hash, question3.hashCode);
@@ -87,6 +92,7 @@ class _$EventDTO extends EventDTO {
           ..add('name', name)
           ..add('start', start)
           ..add('end', end)
+          ..add('capacity', capacity)
           ..add('question1', question1)
           ..add('question2', question2)
           ..add('question3', question3)
@@ -118,6 +124,10 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
   String? get end => _$this._end;
   set end(String? end) => _$this._end = end;
 
+  int? _capacity;
+  int? get capacity => _$this._capacity;
+  set capacity(int? capacity) => _$this._capacity = capacity;
+
   String? _question1;
   String? get question1 => _$this._question1;
   set question1(String? question1) => _$this._question1 = question1;
@@ -148,6 +158,7 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
       _name = $v.name;
       _start = $v.start;
       _end = $v.end;
+      _capacity = $v.capacity;
       _question1 = $v.question1;
       _question2 = $v.question2;
       _question3 = $v.question3;
@@ -181,6 +192,7 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
               name: name,
               start: start,
               end: end,
+              capacity: capacity,
               question1: question1,
               question2: question2,
               question3: question3,

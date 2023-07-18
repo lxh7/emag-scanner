@@ -8,8 +8,12 @@ import 'package:backoffice_api/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**no** | **int** |  | [optional] 
 **scanTime** | **String** |  | [optional] 
 **eventId** | **int** |  | [optional] 
+**type** | **int** |  | [optional] 
+**paid** | **bool** |  | [optional] 
+**in_** | **bool** |  | [optional] 
 **event** | [**EventDTO**](EventDTO.md) |  | [optional] 
 **personId** | **String** |  | [optional] 
 **person** | [**PersonDTO**](PersonDTO.md) |  | [optional] 

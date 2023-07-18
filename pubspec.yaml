@@ -53,6 +53,7 @@ dependencies:
     path: apis/backoffice_api
   badge_api:
     path: apis/badge_api
+  url_launcher: ^6.1.11
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

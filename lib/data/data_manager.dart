@@ -75,6 +75,12 @@ class DataManager extends ChangeNotifier {
           var tokenUrl = _appSettings.oauthTokenUrl;
           var clientId = _appSettings.oauthClientId;
           var clientSecret = await _appSettings.getOauthClientSecret();
+          if (Uri.tryParse(tokenUrl) == null ||
+              clientId.isEmpty ||
+              clientSecret.isEmpty ||
+              Uri.tryParse(_appSettings.apiUrl) == null) {
+            return '';
+          }
           var username = _appSettings.userId;
           var password = await _appSettings.getPassword();
           if (username == '' || password == '') {

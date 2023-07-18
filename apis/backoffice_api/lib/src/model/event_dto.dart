@@ -18,6 +18,7 @@ part 'event_dto.g.dart';
 /// * [name] 
 /// * [start] 
 /// * [end] 
+/// * [capacity] 
 /// * [question1] 
 /// * [question2] 
 /// * [question3] 
@@ -38,6 +39,9 @@ abstract class EventDTO implements Built<EventDTO, EventDTOBuilder> {
 
   @BuiltValueField(wireName: r'end')
   String? get end;
+
+  @BuiltValueField(wireName: r'capacity')
+  int? get capacity;
 
   @BuiltValueField(wireName: r'question1')
   String? get question1;
@@ -107,6 +111,13 @@ class _$EventDTOSerializer implements PrimitiveSerializer<EventDTO> {
       yield serializers.serialize(
         object.end,
         specifiedType: const FullType(String),
+      );
+    }
+    if (object.capacity != null) {
+      yield r'capacity';
+      yield serializers.serialize(
+        object.capacity,
+        specifiedType: const FullType(int),
       );
     }
     if (object.question1 != null) {
@@ -194,6 +205,13 @@ class _$EventDTOSerializer implements PrimitiveSerializer<EventDTO> {
             specifiedType: const FullType(String),
           ) as String;
           result.end = valueDes;
+          break;
+        case r'capacity':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.capacity = valueDes;
           break;
         case r'question1':
           final valueDes = serializers.deserialize(

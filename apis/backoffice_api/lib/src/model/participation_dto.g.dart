@@ -8,9 +8,17 @@ part of 'participation_dto.dart';
 
 class _$ParticipationDTO extends ParticipationDTO {
   @override
+  final int? no;
+  @override
   final String? scanTime;
   @override
   final int? eventId;
+  @override
+  final int? type;
+  @override
+  final bool? paid;
+  @override
+  final bool? in_;
   @override
   final EventDTO? event;
   @override
@@ -29,8 +37,12 @@ class _$ParticipationDTO extends ParticipationDTO {
       (new ParticipationDTOBuilder()..update(updates))._build();
 
   _$ParticipationDTO._(
-      {this.scanTime,
+      {this.no,
+      this.scanTime,
       this.eventId,
+      this.type,
+      this.paid,
+      this.in_,
       this.event,
       this.personId,
       this.person,
@@ -51,8 +63,12 @@ class _$ParticipationDTO extends ParticipationDTO {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ParticipationDTO &&
+        no == other.no &&
         scanTime == other.scanTime &&
         eventId == other.eventId &&
+        type == other.type &&
+        paid == other.paid &&
+        in_ == other.in_ &&
         event == other.event &&
         personId == other.personId &&
         person == other.person &&
@@ -64,8 +80,12 @@ class _$ParticipationDTO extends ParticipationDTO {
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, no.hashCode);
     _$hash = $jc(_$hash, scanTime.hashCode);
     _$hash = $jc(_$hash, eventId.hashCode);
+    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, paid.hashCode);
+    _$hash = $jc(_$hash, in_.hashCode);
     _$hash = $jc(_$hash, event.hashCode);
     _$hash = $jc(_$hash, personId.hashCode);
     _$hash = $jc(_$hash, person.hashCode);
@@ -79,8 +99,12 @@ class _$ParticipationDTO extends ParticipationDTO {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ParticipationDTO')
+          ..add('no', no)
           ..add('scanTime', scanTime)
           ..add('eventId', eventId)
+          ..add('type', type)
+          ..add('paid', paid)
+          ..add('in_', in_)
           ..add('event', event)
           ..add('personId', personId)
           ..add('person', person)
@@ -95,6 +119,10 @@ class ParticipationDTOBuilder
     implements Builder<ParticipationDTO, ParticipationDTOBuilder> {
   _$ParticipationDTO? _$v;
 
+  int? _no;
+  int? get no => _$this._no;
+  set no(int? no) => _$this._no = no;
+
   String? _scanTime;
   String? get scanTime => _$this._scanTime;
   set scanTime(String? scanTime) => _$this._scanTime = scanTime;
@@ -102,6 +130,18 @@ class ParticipationDTOBuilder
   int? _eventId;
   int? get eventId => _$this._eventId;
   set eventId(int? eventId) => _$this._eventId = eventId;
+
+  int? _type;
+  int? get type => _$this._type;
+  set type(int? type) => _$this._type = type;
+
+  bool? _paid;
+  bool? get paid => _$this._paid;
+  set paid(bool? paid) => _$this._paid = paid;
+
+  bool? _in_;
+  bool? get in_ => _$this._in_;
+  set in_(bool? in_) => _$this._in_ = in_;
 
   EventDTOBuilder? _event;
   EventDTOBuilder get event => _$this._event ??= new EventDTOBuilder();
@@ -134,8 +174,12 @@ class ParticipationDTOBuilder
   ParticipationDTOBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _no = $v.no;
       _scanTime = $v.scanTime;
       _eventId = $v.eventId;
+      _type = $v.type;
+      _paid = $v.paid;
+      _in_ = $v.in_;
       _event = $v.event?.toBuilder();
       _personId = $v.personId;
       _person = $v.person?.toBuilder();
@@ -166,8 +210,12 @@ class ParticipationDTOBuilder
     try {
       _$result = _$v ??
           new _$ParticipationDTO._(
+              no: no,
               scanTime: scanTime,
               eventId: eventId,
+              type: type,
+              paid: paid,
+              in_: in_,
               event: _event?.build(),
               personId: personId,
               person: _person?.build(),

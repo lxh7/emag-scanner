@@ -25,6 +25,8 @@ class DtoHelper {
       activity: x.event == null ? null : fromEventDTO(x.event!),
       person: x.person == null ? null : fromPersonDTO(x.person!),
       scanTime: null,
+      paid: x.paid == true,
+      waitlisted: x.in_ != true,
       answer1: x.answer1,
       answer2: x.answer2,
       answer3: x.answer3,

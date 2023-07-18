@@ -13,8 +13,12 @@ part 'participation_dto.g.dart';
 /// ParticipationDTO
 ///
 /// Properties:
+/// * [no] 
 /// * [scanTime] 
 /// * [eventId] 
+/// * [type] 
+/// * [paid] 
+/// * [in_] 
 /// * [event] 
 /// * [personId] 
 /// * [person] 
@@ -23,11 +27,23 @@ part 'participation_dto.g.dart';
 /// * [answer3] 
 @BuiltValue()
 abstract class ParticipationDTO implements Built<ParticipationDTO, ParticipationDTOBuilder> {
+  @BuiltValueField(wireName: r'no')
+  int? get no;
+
   @BuiltValueField(wireName: r'scanTime')
   String? get scanTime;
 
   @BuiltValueField(wireName: r'eventId')
   int? get eventId;
+
+  @BuiltValueField(wireName: r'type')
+  int? get type;
+
+  @BuiltValueField(wireName: r'paid')
+  bool? get paid;
+
+  @BuiltValueField(wireName: r'in')
+  bool? get in_;
 
   @BuiltValueField(wireName: r'event')
   EventDTO? get event;
@@ -70,6 +86,13 @@ class _$ParticipationDTOSerializer implements PrimitiveSerializer<ParticipationD
     ParticipationDTO object, {
     FullType specifiedType = FullType.unspecified,
   }) sync* {
+    if (object.no != null) {
+      yield r'no';
+      yield serializers.serialize(
+        object.no,
+        specifiedType: const FullType(int),
+      );
+    }
     if (object.scanTime != null) {
       yield r'scanTime';
       yield serializers.serialize(
@@ -82,6 +105,27 @@ class _$ParticipationDTOSerializer implements PrimitiveSerializer<ParticipationD
       yield serializers.serialize(
         object.eventId,
         specifiedType: const FullType(int),
+      );
+    }
+    if (object.type != null) {
+      yield r'type';
+      yield serializers.serialize(
+        object.type,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.paid != null) {
+      yield r'paid';
+      yield serializers.serialize(
+        object.paid,
+        specifiedType: const FullType(bool),
+      );
+    }
+    if (object.in_ != null) {
+      yield r'in';
+      yield serializers.serialize(
+        object.in_,
+        specifiedType: const FullType(bool),
       );
     }
     if (object.event != null) {
@@ -149,6 +193,13 @@ class _$ParticipationDTOSerializer implements PrimitiveSerializer<ParticipationD
       final key = serializedList[i] as String;
       final value = serializedList[i + 1];
       switch (key) {
+        case r'no':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.no = valueDes;
+          break;
         case r'scanTime':
           final valueDes = serializers.deserialize(
             value,
@@ -162,6 +213,27 @@ class _$ParticipationDTOSerializer implements PrimitiveSerializer<ParticipationD
             specifiedType: const FullType(int),
           ) as int;
           result.eventId = valueDes;
+          break;
+        case r'type':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.type = valueDes;
+          break;
+        case r'paid':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.paid = valueDes;
+          break;
+        case r'in':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.in_ = valueDes;
           break;
         case r'event':
           final valueDes = serializers.deserialize(

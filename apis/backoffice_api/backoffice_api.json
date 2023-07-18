@@ -268,6 +268,9 @@
                         "type": "string",
                         "format": "datetime"
                     },
+                    "capacity": {
+                        "type": "integer"
+                    },
                     "question1": {
                         "type": "string"
                     },
@@ -351,12 +354,24 @@
             "ParticipationDTO": {
                 "description": "ParticipationDTO",
                 "properties": {
+                    "no": {
+                        "type": "integer"
+                    },
                     "scanTime": {
                         "type": "string",
                         "format": "datetime"
                     },
                     "eventId": {
                         "type": "integer"
+                    },
+                    "type": {
+                        "type": "integer"
+                    },
+                    "paid": {
+                        "type": "boolean"
+                    },
+                    "in": {
+                        "type": "boolean"
                     },
                     "event": {
                         "$ref": "#\/components\/schemas\/EventDTO"

@@ -34,7 +34,7 @@ class _Participation {
   // @Backlink(#participations)
   late _Activity? activity;
   @Indexed()
-  late String personKey;
+  late String personId;
   // @Backlink(#participations)
   late _Person? person;
   late DateTime? scanTime;
@@ -48,7 +48,7 @@ class _Participation {
 @RealmModel()
 class _Person {
   @PrimaryKey()
-  late String key;
+  late String id;
   late String firstName;
   late String lastName;
   late String nickName;

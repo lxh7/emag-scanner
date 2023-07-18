@@ -20,9 +20,8 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
   final DateFormat _formatter = DateFormat('yyyy-MM-dd h:mm');
 
   bool _getGoodieEnabled(Participation p) {
-    // TODO: enable this when we get the info from the API
-    // if (!p.paid) return false;
-    // if (p.waitlisted) return false;
+    if (!p.paid) return false;
+    if (p.waitlisted) return false;
     return true;
   }
 
@@ -119,7 +118,7 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
       var dataManager = DataManager(context);
       var now = DateTime.now();
       for (int activityId in _selectedGoodies) {
-        var info = ScanInfo(activityId, _person!.key, now);
+        var info = ScanInfo(activityId, _person!.id, now);
         Future.wait([dataManager.checkAccess(info)]);
       }
     }

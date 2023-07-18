@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **name** | **String** |  | [optional] 
 **start** | **String** |  | [optional] 
 **end** | **String** |  | [optional] 
+**capacity** | **int** |  | [optional] 
 **question1** | **String** |  | [optional] 
 **question2** | **String** |  | [optional] 
 **question3** | **String** |  | [optional] 
