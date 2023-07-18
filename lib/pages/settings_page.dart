@@ -15,6 +15,9 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   bool passwordVisible = false;
   bool oauthClientSecretVisible = false;
+  // secrets entered. Never return stored secrets, but do provide a nice UX that the user can toggle visiblilty
+  String _oauthClientSecretEntered = '';
+  String _password = '';
 
   var titleScaleFactor = 0.8;
   @override
@@ -111,7 +114,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 textScaleFactor: titleScaleFactor,
               ),
               subtitle: TextField(
-                obscureText: oauthClientSecretVisible,
+                obscureText: !oauthClientSecretVisible,
                 autocorrect: false,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
@@ -134,8 +137,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignLabelWithHint: false,
                   filled: true,
                 ),
-                controller: TextEditingController(text: ''),
+                controller:
+                    TextEditingController(text: _oauthClientSecretEntered),
                 onChanged: (value) {
+                  _oauthClientSecretEntered = value;
                   appSettings.oauthClientSecret = value;
                 },
               ),
@@ -166,7 +171,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 textScaleFactor: titleScaleFactor,
               ),
               subtitle: TextField(
-                obscureText: passwordVisible,
+                obscureText: !passwordVisible,
                 autocorrect: false,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
@@ -189,8 +194,9 @@ class _SettingsPageState extends State<SettingsPage> {
                   alignLabelWithHint: false,
                   filled: true,
                 ),
-                controller: TextEditingController(text: ''),
+                controller: TextEditingController(text: _password),
                 onChanged: (value) {
+                  _password = value;
                   appSettings.password = value;
                 },
               ),
