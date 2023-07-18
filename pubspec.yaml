@@ -42,7 +42,6 @@ dependencies:
   shared_preferences: ^2.1.0
   flutter_secure_storage: ^8.0.0
   realm: ^1.0.3
-  settings_ui: ^2.0.2
   oauth2: ^2.0.1
   dio: ^5.1.2
   built_value: ^8.5.0 
