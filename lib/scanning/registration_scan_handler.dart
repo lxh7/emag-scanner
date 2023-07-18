@@ -22,16 +22,20 @@ class RegistrationScanHandler extends BaseScanHandler {
   }
 
   @override
-  Future handleKey(String key) async {
+  void handleKey(String key) {
     // Send to printer service
-    var token = await getTokenFunc() ?? '';
-    //var response =
-    await RegistrationService().printDocuments(token, key, printer);
-    //  if (response.data = 'OK') or whatever {
-    scanPage.setScanResult(ScanResult.pass, 'Documents are being printed');
-    // } else {
-    //    scanPage.setScanResult(ScanResult.error, '@{response.message}\nPlease refer to the information desk') ;
-    // }
+    getTokenFunc().then((token) {
+      //var response =
+      RegistrationService()
+          .printDocuments(token ?? '', key, printer)
+          .then((dummy) {
+        //  if (response.data = 'OK') or whatever {
+        scanPage.setScanResult(ScanResult.pass, 'Documents are being printed');
+        // } else {
+        //    scanPage.setScanResult(ScanResult.error, '@{response.message}\nPlease refer to the information desk') ;
+        // }
+      });
+    });
   }
 
   @override

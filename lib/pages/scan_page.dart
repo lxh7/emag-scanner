@@ -91,8 +91,12 @@ class ScanPageState extends State<ScanPage> {
     }
   }
 
-  void showResultInAPage(String routeName, dynamic result) {
-    Navigator.pushNamed(context, routeName, arguments: result);
+  void showResultInAPage(String routeName, {Object? arguments}) {
+    _stopScanning();
+    Navigator.pushNamed(context, routeName, arguments: arguments)
+        .then((Object? returnVal) {
+      _startScanning();
+    });
   }
 
   void showDialog(

@@ -64,7 +64,7 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
                     'subtitle',
                     maxLines: 2,
                   ), //second and third line of text
-                  isThreeLine: true,
+                   isThreeLine: true,
 
                   tileColor: _getParticitionColor(p),
                 ))

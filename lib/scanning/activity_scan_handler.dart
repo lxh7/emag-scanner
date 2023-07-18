@@ -19,43 +19,44 @@ class ActivityScanHandler extends BaseScanHandler {
   }
 
   @override
-  Future handleKey(String key) async {
+  void handleKey(String key) {
     var info = ScanInfo(
       dataManager.selectedActivity!.id,
       key,
       DateTime.now(),
     );
-    final result = await dataManager.checkAccess(info);
-    previousScanTime = result.prevScanTime;
-    // set message based on check
-    var message = '';
-    switch (result.scanResult) {
-      case ScanResult.none:
-      case ScanResult.pass:
-        // ok!
-        break;
-      case ScanResult.check:
-        if (previousScanTime != null) {
+    dataManager.checkAccess(info).then((result) {
+      previousScanTime = result.prevScanTime;
+      // set message based on check
+      var message = '';
+      switch (result.scanResult) {
+        case ScanResult.none:
+        case ScanResult.pass:
+          // ok!
+          break;
+        case ScanResult.check:
+          if (previousScanTime != null) {
+            message =
+                'This code has been scanned earlier for this activity,\non ${DateFormat.yMd().format(previousScanTime!)} at ${DateFormat.Hm().format(previousScanTime!)}.';
+          } else {
+            message = 'Unsure about this person: reason unknown.';
+          }
+          message = '$message Please perform additional check(s)';
+          break;
+        case ScanResult.deny:
           message =
-              'This code has been scanned earlier for this activity,\non ${DateFormat.yMd().format(previousScanTime!)} at ${DateFormat.Hm().format(previousScanTime!)}.';
-        } else {
-          message = 'Unsure about this person: reason unknown.';
-        }
-        message = '$message Please perform additional check(s)';
-        break;
-      case ScanResult.deny:
-        message =
-            'This code does not belong to any participant on this activity';
-        break;
-      case ScanResult.error:
-        if (result.message == '') {
-          message = 'An error occurred during the processing of the code';
-        } else {
-          message = result.message;
-        }
-        break;
-    }
-    scanPage.setScanResult(result.scanResult, message);
+              'This code does not belong to any participant on this activity';
+          break;
+        case ScanResult.error:
+          if (result.message == '') {
+            message = 'An error occurred during the processing of the code';
+          } else {
+            message = result.message;
+          }
+          break;
+      }
+      scanPage.setScanResult(result.scanResult, message);
+    });
   }
 
   @override

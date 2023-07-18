@@ -16,15 +16,16 @@ class GoodiesScanHandler extends BaseScanHandler {
   }
 
   @override
-  Future handleKey(String key) async {
+  void handleKey(String key) {
     //var token = await getTokenFunc() ?? '';
-    final person = await dataManager.getPerson(key);
-    if (person == null) {
-      scanPage.setScanResult(ScanResult.error,
-          'QR code not found\nPlease refer to the information desk');
-    } else {
-      scanPage.showResultInAPage(Routes.goodiesShow, person);
-    }
+    dataManager.getPerson(key).then((person) {
+      if (person == null) {
+        scanPage.setScanResult(ScanResult.error,
+            'QR code not found\nPlease refer to the information desk');
+      } else {
+        scanPage.showResultInAPage(Routes.goodiesShow, arguments: person);
+      }
+    });
   }
 
   @override

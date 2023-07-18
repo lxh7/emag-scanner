@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:realm/realm.dart';
 
@@ -100,7 +101,7 @@ class LocalDataStore {
 
   AccessCheckResult queryAccess(ScanInfo info) {
     AccessCheckResult result = AccessCheckResult(scanResult: ScanResult.error);
-    Participation participant;
+    Participation participation;
     try {
       // get the item from the store
       var realmResults = _realm.query<Participation>(
@@ -112,20 +113,32 @@ class LocalDataStore {
         result.scanResult = ScanResult.deny;
       } else {
         // found, person is participant
-        participant = realmResults.first;
-        // scheck scan time
-        if (participant.scanTime == null) {
-          // first scan
-          result.scanResult = ScanResult.pass;
-        } else {
-          // subsequent scan
-          result.scanResult = ScanResult.check;
-          result.prevScanTime = participant.scanTime;
-        }
         // update local storage
         _realm.write(() {
-          participant.scanTime = info.scanTime;
-          _realm.add<Participation>(participant, update: true);
+          participation = realmResults.first;
+          // check paid / waitlisted
+          if (!participation.paid) {
+            result.scanResult = ScanResult.deny;
+            result.message = 'Not paid';
+          } else if (participation.waitlisted) {
+            result.scanResult = ScanResult.deny;
+            result.message = 'On wait list';
+          } else {
+            // check scan time
+            if (participation.scanTime == null) {
+              // first scan
+              result.scanResult = ScanResult.pass;
+              result.message = 'OK';
+            } else {
+              // subsequent scan
+              result.scanResult = ScanResult.check;
+              result.message =
+                  'Scanned earlier: ${DateFormat('yyyy-MM-dd h:mm').format(participation.scanTime!)}';
+              result.prevScanTime = participation.scanTime;
+            }
+            participation.scanTime = info.scanTime;
+          }
+          _realm.add<Participation>(participation, update: true);
         });
       }
     } on StateError catch (ex) {

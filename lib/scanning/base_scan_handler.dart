@@ -80,8 +80,8 @@ abstract class BaseScanHandler {
   }
 
   /// Handle a key retrieved from the barcode scanned.
-  Future handleKey(String key) {
+  void handleKey(String key) {
     // no implementation here, but also not abstract
-    return Future.value(true); // dummy return
+    return;
   }
 }

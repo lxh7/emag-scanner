@@ -43,8 +43,9 @@ class _SettingsPageState extends State<SettingsPage> {
           ],
         ),
         body: SettingsList(
-          shrinkWrap: true,
-          physics: const AlwaysScrollableScrollPhysics(),
+          //shrinkWrap: true,
+          physics: const PageScrollPhysics(),
+          // applicationType: ApplicationType.both,
           sections: [
             SettingsSection(
               title: const Text('API'),
@@ -216,9 +217,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     controller: TextEditingController(text: ''),
                     onChanged: (value) {
-                      if (value != '') {
-                        appSettings.password = value;
-                      }
+                      appSettings.password = value;
                     },
                   ),
                 ),

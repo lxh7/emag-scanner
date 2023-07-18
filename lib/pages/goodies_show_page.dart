@@ -13,53 +13,115 @@ class GoodiesShowPage extends StatefulWidget {
 }
 
 class _GoodiesShowPageState extends State<GoodiesShowPage> {
-  late Person? _person;
+  late ThemeData _theme;
+  Person? _person;
   late List<Participation> _goodies;
-  late HashSet<int>? _selectedGoodies;
-  final DateFormat _formatter = DateFormat('yyyy-MM-dd');
+  late HashSet<int> _selectedGoodies;
+  final DateFormat _formatter = DateFormat('yyyy-MM-dd h:mm');
 
   bool _getGoodieEnabled(Participation p) {
-    return p.scanTime == null; // TODO: expand with paid / reserved checks
+    // TODO: enable this when we get the info from the API
+    // if (!p.paid) return false;
+    // if (p.waitlisted) return false;
+    return true;
   }
 
   bool _getGoodieSelected(Participation p) {
-    return _selectedGoodies!.contains(p.activityId);
+    return _selectedGoodies.contains(p.activityId);
   }
 
   void _setGoodieSelected(Participation p, bool? value) {
     setState(() {
       if (value == true) {
-        _selectedGoodies!.add(p.activityId);
+        _selectedGoodies.add(p.activityId);
       } else {
-        _selectedGoodies!.remove(p.activityId);
+        _selectedGoodies.remove(p.activityId);
       }
     });
   }
 
-  String _getGoodieInfo(Participation p) {
-    var buffer = StringBuffer();
-    _addGoodieOption(p.activity?.question1, p.answer1, buffer);
-    _addGoodieOption(p.activity?.question2, p.answer2, buffer);
-    _addGoodieOption(p.activity?.question3, p.answer3, buffer);
+  Widget _getGoodieInfo(Participation p) {
+    List<TableRow> rows = List<TableRow>.empty(growable: true);
+    _addOptionRow(p.activity?.question1, p.answer1, rows);
+    _addOptionRow(p.activity?.question2, p.answer2, rows);
+    _addOptionRow(p.activity?.question3, p.answer3, rows);
     if (p.scanTime != null) {
-      buffer.write('Handed out on ${_formatter.format(p.scanTime!)}');
+      rows.add(TableRow(children: [
+        Text('Handed out on ${_formatter.format(p.scanTime!)}'),
+        const Text(''),
+      ]));
     }
-    // TODO: expand with paid / reserved info
-    return buffer.toString();
+    if (!p.paid) {
+      rows.add(TableRow(children: [
+        Text(
+          'Not paid!',
+          style: TextStyle(
+            color: _theme.colorScheme.error,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        const Text(''),
+      ]));
+    }
+    if (p.waitlisted) {
+      rows.add(TableRow(children: [
+        Text(
+          'On wait list!',
+          style: TextStyle(
+            color: _theme.colorScheme.error,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        const Text(''),
+      ]));
+    }
+    return Table(
+      // border: TableBorder.(),
+      columnWidths: const <int, TableColumnWidth>{
+        0: FlexColumnWidth(3.0),
+        1: FlexColumnWidth(1.0),
+      },
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      children: rows,
+    );
   }
 
-  void _addGoodieOption(String? question, String? answer, StringBuffer buffer) {
-    if (question?.isEmpty == true) return;
-    if (answer?.isEmpty == true) return;
-    buffer.writeln('$question: $answer');
+  void _addOptionRow(String? question, String? answer, List<TableRow> rows) {
+    if (question?.isEmpty == true || answer?.isEmpty == true) return;
+    rows.add(TableRow(children: [
+      Text(
+        question!,
+        style: TextStyle(color: _theme.colorScheme.secondary),
+      ),
+      Text(
+        answer!,
+        textAlign: TextAlign.right,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: _theme.colorScheme.primary,
+        ),
+      )
+    ]));
   }
 
-  Future _saveGoodies(BuildContext context) async {
-    var dataManager = DataManager(context);
-    var now = DateTime.now();
-    for (int activityId in _selectedGoodies!) {
-      var info = ScanInfo(activityId, _person!.key, now);
-      await dataManager.checkAccess(info);
+  Color _getGoodieColor(Participation p) {
+    if (p.scanTime != null) return const Color.fromARGB(255, 90, 5, 5);
+    if (!p.paid) return const Color.fromARGB(255, 255, 0, 0);
+    if (p.waitlisted) return const Color.fromARGB(255, 255, 164, 103);
+    // all good, allow to hand out
+    return const Color.fromARGB(64, 121, 255, 197);
+  }
+
+  void _saveGoodies() {
+    if (_selectedGoodies.isNotEmpty) {
+      var dataManager = DataManager(context);
+      var now = DateTime.now();
+      for (int activityId in _selectedGoodies) {
+        var info = ScanInfo(activityId, _person!.key, now);
+        Future.wait([dataManager.checkAccess(info)]);
+      }
     }
   }
 
@@ -77,11 +139,12 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
       _selectedGoodies = HashSet<int>.from(
           _goodies.where((p) => (p.scanTime != null)).map((p) => p.activityId));
     }
+    _theme = Theme.of(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.home),
+            icon: const Icon(Icons.chevron_left),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -94,16 +157,30 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
             shrinkWrap: true,
             primary: false,
             children: [
-              Text(_person!.name),
+              Text(
+                _person!.name,
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 18, 18, 255),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+              ),
               const Text(
-                  'Check all goodies that are handed over to the participant. Don\'t forget to click the "Save and close" button below to store this!'),
-              ..._buildGoodieUI(),
+                'Check all goodies that are handed over to the participant. Don\'t forget to click the "Save and close" button below to store this!',
+                style: TextStyle(
+                  //color: Color.fromARGB(255, 18, 18, 255),
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              _buildGoodieUI(),
               ElevatedButton(
                 child: Text(
                     (_goodies.isEmpty == true) ? 'Close' : 'Save and close'),
-                onPressed: () async {
+                onPressed: () {
+                  _saveGoodies();
                   Navigator.pop(context);
-                  await _saveGoodies(context);
                 },
               ),
             ], // children
@@ -121,22 +198,38 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
     return result;
   }
 
-  _buildGoodieUI() {
+  Widget _buildGoodieUI() {
     if (_goodies.isEmpty == true) {
-      return const Text('No goodies reserved');
+      return const Text(
+        'No goodies reserved',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+        textAlign: TextAlign.center,
+      );
     }
     return ListView(
         shrinkWrap: true,
         primary: false,
         children: _goodies
-            .map((p) => CheckboxListTile(
-                  title: Text(p.activity!.name),
-                  subtitle: Text(_getGoodieInfo(p)),
-                  value: _getGoodieSelected(p),
-                  enabled: _getGoodieEnabled(p),
-                  onChanged: (bool? value) {
-                    _setGoodieSelected(p, value);
-                  },
+            .map((p) => Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                    color: _getGoodieColor(p),
+                    width: 5,
+                  )),
+                  child: CheckboxListTile(
+                    title: Text(p.activity!.name),
+                    subtitle: _getGoodieInfo(p),
+                    // selectedTileColor: Colors.amber,
+                    value: _getGoodieSelected(p),
+                    enabled: _getGoodieEnabled(p),
+                    onChanged: (bool? value) {
+                      _setGoodieSelected(p, value);
+                    },
+                  ),
                 ))
             .toList());
   }
