@@ -94,10 +94,9 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
         ),
       );
       if (p.person != null) {
-        detailRows.add(
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
+        if (p.person!.email.isNotEmpty == true) {
+          detailRows.add(
+            Row(mainAxisSize: MainAxisSize.min, children: [
               GestureDetector(
                 onTap: () => launchUrl(Uri.parse('mailto:${p.person!.email}')),
                 child: Text(
@@ -108,8 +107,13 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-              ),
-              const Text(' '),
+              )
+            ]),
+          );
+        }
+        if (p.person!.phone.isNotEmpty == true) {
+          detailRows.add(
+            Row(mainAxisSize: MainAxisSize.min, children: [
               GestureDetector(
                 onTap: () async {
                   try {
@@ -127,9 +131,9 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
                   ),
                 ),
               ),
-            ],
-          ),
-        );
+            ]),
+          );
+        }
       }
       return ListTile(
         contentPadding: EdgeInsets.zero,

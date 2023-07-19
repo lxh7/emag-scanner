@@ -32,7 +32,7 @@ class ActivityScanHandler extends BaseScanHandler {
       switch (result.scanResult) {
         case ScanResult.none:
         case ScanResult.pass:
-          // ok!
+          // no message
           break;
         case ScanResult.check:
           if (previousScanTime != null) {

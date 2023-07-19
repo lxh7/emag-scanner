@@ -21,7 +21,10 @@ class ActivityConfirmPage extends StatelessWidget {
 
   _showParticipants(BuildContext context, Activity activity) {
     _logger.i('Show particpants');
-    Navigator.pushNamed(context, Routes.activityParticipants, arguments: activity);
+    DataManager(context).getActivity(activity.id).then((refreshedActivity) {
+      Navigator.pushNamed(context, Routes.activityParticipants,
+          arguments: refreshedActivity);
+    });
   }
 
   _selectOtherActivity(BuildContext context) {
@@ -60,7 +63,8 @@ class ActivityConfirmPage extends StatelessWidget {
                   ActivityTile(
                     activity: dataManager.selectedActivity!,
                     tapAction: () => _startScanning(context),
-                    longPressAction: () => _showParticipants(context, dataManager.selectedActivity!),
+                    longPressAction: () => _showParticipants(
+                        context, dataManager.selectedActivity!),
                     /*
                     trailingWidget: const Icon(Icons.refresh, size: 50),
                     trailingAction: () => _refreshActivity(item),

@@ -269,12 +269,9 @@ class DataManager extends ChangeNotifier {
 
 //#region StoredActivities
 
-  /// An unmodifiable view of the items in the cart.
   UnmodifiableListView<Activity> get storedActivities =>
       UnmodifiableListView(_storedActivities);
 
-  /// Adds [item] to cart. This and [remove] are the only ways to modify the
-  /// cart from the outside.
   void addStoredActivity(Activity activity) {
     _local.upsertActivity(activity);
     _storedActivities.add(activity);
@@ -296,6 +293,9 @@ class DataManager extends ChangeNotifier {
       _storedActivities.remove(original);
       _storedActivities.add(replaceBy);
       notifyListeners();
+    }
+    if (_selectedActivity?.id == replaceBy.id) {
+      _selectedActivity = replaceBy;
     }
   }
 //#endregion

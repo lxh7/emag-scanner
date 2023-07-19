@@ -6,7 +6,7 @@ class DtoHelper {
   static final DateTime defaultDateTime =
       DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
   static Activity fromEventDTO(EventDTO x) {
-    return Activity(
+    var result = Activity(
         convertInt(x.id, 0),
         convertInt(x.categoryId, 0),
         convertString(x.name, ''),
@@ -16,25 +16,27 @@ class DtoHelper {
         question2: x.question2,
         question3: x.question3,
         participations: getParticipations(x.participations));
+    return result;
   }
 
   static Participation fromParticipationDTO(ParticipationDTO x) {
-    return Participation(
+    var result = Participation(
       convertInt(x.eventId, -1), // activityId
       x.personId ?? '', // personId
       activity: x.event == null ? null : fromEventDTO(x.event!),
       person: x.person == null ? null : fromPersonDTO(x.person!),
       scanTime: null,
-      paid: x.paid == true,
-      waitlisted: x.in_ != true,
+      paid: convertBool(x.paid, false),
+      waitlisted: !convertBool(x.in_, true),
       answer1: x.answer1,
       answer2: x.answer2,
       answer3: x.answer3,
     );
+    return result;
   }
 
   static Person fromPersonDTO(PersonDTO x) {
-    return Person(
+    var result = Person(
         convertString(x.personId, ''),
         convertString(x.firstName, ''),
         convertString(x.surname, ''),
@@ -42,6 +44,7 @@ class DtoHelper {
         convertString(x.mobilePhone, ''),
         convertString(x.email, ''),
         participations: getParticipations(x.participations));
+    return result;
   }
 
   static List<Participation> getParticipations(
@@ -61,6 +64,13 @@ class DtoHelper {
   }
 
   static String convertString(String? value, String def) {
+    if (value == null) {
+      return def;
+    }
+    return value;
+  }
+
+  static bool convertBool(bool? value, bool def) {
     if (value == null) {
       return def;
     }

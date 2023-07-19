@@ -71,12 +71,13 @@ class LocalDataStore {
 
   Activity? getActivity(int activityId) {
     try {
-      // var data = _realm.query<Activity>('id == \$0', [activityId]);
-      return _realm.find<Activity>(activityId);
-      // if (data.isEmpty) {
+      // var result = _realm.query<Activity>('id == \$0', [activityId]);
+      var result = _realm.find<Activity>(activityId);
+      return result;
+      // if (result.isEmpty) {
       //   return null;
       // }
-      // return data.first;
+      // return result.first;
     } on Exception catch (ex) {
       _logger.e('Exception in LocalDataStore.getActivity()', ex);
       return null;
@@ -111,33 +112,35 @@ class LocalDataStore {
       if (realmResults.isEmpty) {
         // no item in store, i.e. person is not registered on activity
         result.scanResult = ScanResult.deny;
+        result.message = 'Not registered';
       } else {
         // found, person is participant
         // update local storage
-        _realm.write(() {
-          participation = realmResults.first;
-          // check paid / waitlisted
-          if (!participation.paid) {
-            result.scanResult = ScanResult.deny;
-            result.message = 'Not paid';
-          } else if (participation.waitlisted) {
-            result.scanResult = ScanResult.deny;
-            result.message = 'On wait list';
+        participation = realmResults.first;
+        // check paid / waitlisted
+        if (!participation.paid) { 
+          result.scanResult = ScanResult.deny;
+          result.message = 'Not paid';
+        } else if (participation.waitlisted) {
+          result.scanResult = ScanResult.deny;
+          result.message = 'On wait list';
+        } else {
+          // check scan time
+          if (participation.scanTime == null) {
+            // first scan
+            result.scanResult = ScanResult.pass;
+            result.message = 'OK';
           } else {
-            // check scan time
-            if (participation.scanTime == null) {
-              // first scan
-              result.scanResult = ScanResult.pass;
-              result.message = 'OK';
-            } else {
-              // subsequent scan
-              result.scanResult = ScanResult.check;
-              result.message =
-                  'Scanned earlier: ${DateFormat('yyyy-MM-dd h:mm').format(participation.scanTime!)}';
-              result.prevScanTime = participation.scanTime;
-            }
-            participation.scanTime = info.scanTime;
+            // subsequent scan
+            result.scanResult = ScanResult.check;
+            result.message =
+                'Scanned earlier: ${DateFormat('yyyy-MM-dd h:mm').format(participation.scanTime!)}';
+            result.prevScanTime = participation.scanTime;
           }
+        }
+        // update local storage
+        _realm.write(() {
+          participation.scanTime = info.scanTime;
           _realm.add<Participation>(participation, update: true);
         });
       }

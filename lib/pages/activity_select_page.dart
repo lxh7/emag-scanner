@@ -37,7 +37,12 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
   }
 
   Future _refreshActivity(Activity activity) async {
-    await _dataManager.refreshActivityAsync(activity);
+    var freshActivity = await _dataManager.refreshActivityAsync(activity);
+    if (freshActivity != null) {
+      // ignore: use_build_context_synchronously
+      MyDialog.showInfo(
+          context, 'Refreshed activity data and participation from server');
+    }
     setState(() {});
   }
 

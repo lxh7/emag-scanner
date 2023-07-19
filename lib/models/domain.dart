@@ -38,8 +38,8 @@ class _Participation {
   // @Backlink(#participations)
   late _Person? person;
   late DateTime? scanTime;
-  bool paid = false; // most pessimistic / cautious
-  bool waitlisted = true; 
+  late bool paid;
+  late bool waitlisted;
   late String? answer1;
   late String? answer2;
   late String? answer3;
