@@ -24,9 +24,12 @@ void main() {
       // add an activity with some participants
       var activity = Activity(activityId, 1, 'test',
           DateTime(2023, 8, 2, 18, 0), DateTime(2023, 8, 2, 20, 0));
-      activity.participations.add(Participation(activityId, partId1));
-      activity.participations.add(Participation(activityId, partId2));
-      activity.participations.add(Participation(activityId, partId3));
+      activity.participations.add(
+          Participation(activityId, partId1, paid: true, waitlisted: false));
+      activity.participations.add(
+          Participation(activityId, partId2, paid: true, waitlisted: true));
+      activity.participations.add(
+          Participation(activityId, partId3, paid: false, waitlisted: false));
       local.upsertActivity(activity);
       expectCount += 4;
       count = local.objectCount();
@@ -42,8 +45,8 @@ void main() {
       local.queueScanInfo(info1);
       expectCount++;
       // second scan
-      var scanTime2 = DateTime.now();
-      var info2 = ScanInfo(activityId, partId1, scanTime2);
+      var scanTime = DateTime.now();
+      var info2 = ScanInfo(activityId, partId1, scanTime);
       result = local.queryAccess(info2);
       assert(result.scanResult == ScanResult.check);
       assert(result.prevScanTime?.millisecondsSinceEpoch ==
@@ -51,10 +54,22 @@ void main() {
       local.queueScanInfo(info2);
       expectCount++;
 
-      // unregistered person scan
-      var scanTime3 = DateTime.now();
-      var info3 = ScanInfo(activityId, nonPartId1, scanTime3);
+      // person who is on waitlist scan
+      scanTime = DateTime.now();
+      var info3 = ScanInfo(activityId, partId2, scanTime);
       result = local.queryAccess(info3);
+      assert(result.scanResult == ScanResult.deny);
+
+      // person who has not paid scan
+      scanTime = DateTime.now();
+      var info4 = ScanInfo(activityId, partId3, scanTime);
+      result = local.queryAccess(info4);
+      assert(result.scanResult == ScanResult.deny);
+
+      // unregistered person scan
+      scanTime = DateTime.now();
+      var info5 = ScanInfo(activityId, nonPartId1, scanTime);
+      result = local.queryAccess(info5);
       assert(result.scanResult == ScanResult.deny);
 
       count = local.objectCount();

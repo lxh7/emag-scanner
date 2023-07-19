@@ -138,7 +138,7 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
           size: 50,
           color: Colors.blueGrey,
         ),
-        title: Text(p.person?.name ?? p.personId),
+        title: Text(p.person?.name ?? p.personKey),
         subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start, children: detailRows),
         isThreeLine: false,

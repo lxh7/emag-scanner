@@ -118,7 +118,7 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
       var dataManager = DataManager(context);
       var now = DateTime.now();
       for (int activityId in _selectedGoodies) {
-        var info = ScanInfo(activityId, _person!.id, now);
+        var info = ScanInfo(activityId, _person!.key, now);
         Future.wait([dataManager.checkAccess(info)]);
       }
     }

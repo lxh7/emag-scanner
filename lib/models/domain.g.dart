@@ -158,7 +158,7 @@ class Participation extends _Participation
 
   Participation(
     int activityId,
-    String personId, {
+    String personKey, {
     Activity? activity,
     Person? person,
     DateTime? scanTime,
@@ -176,7 +176,7 @@ class Participation extends _Participation
     }
     RealmObjectBase.set(this, 'activityId', activityId);
     RealmObjectBase.set(this, 'activity', activity);
-    RealmObjectBase.set(this, 'personId', personId);
+    RealmObjectBase.set(this, 'personKey', personKey);
     RealmObjectBase.set(this, 'person', person);
     RealmObjectBase.set(this, 'scanTime', scanTime);
     RealmObjectBase.set(this, 'paid', paid);
@@ -201,10 +201,10 @@ class Participation extends _Participation
       RealmObjectBase.set(this, 'activity', value);
 
   @override
-  String get personId =>
-      RealmObjectBase.get<String>(this, 'personId') as String;
+  String get personKey =>
+      RealmObjectBase.get<String>(this, 'personKey') as String;
   @override
-  set personId(String value) => RealmObjectBase.set(this, 'personId', value);
+  set personKey(String value) => RealmObjectBase.set(this, 'personKey', value);
 
   @override
   Person? get person => RealmObjectBase.get<Person>(this, 'person') as Person?;
@@ -262,7 +262,7 @@ class Participation extends _Participation
       SchemaProperty('activityId', RealmPropertyType.int, indexed: true),
       SchemaProperty('activity', RealmPropertyType.object,
           optional: true, linkTarget: 'Activity'),
-      SchemaProperty('personId', RealmPropertyType.string, indexed: true),
+      SchemaProperty('personKey', RealmPropertyType.string, indexed: true),
       SchemaProperty('person', RealmPropertyType.object,
           optional: true, linkTarget: 'Person'),
       SchemaProperty('scanTime', RealmPropertyType.timestamp, optional: true),
@@ -277,7 +277,7 @@ class Participation extends _Participation
 
 class Person extends _Person with RealmEntity, RealmObjectBase, RealmObject {
   Person(
-    String id,
+    String key,
     String firstName,
     String lastName,
     String nickName,
@@ -285,7 +285,7 @@ class Person extends _Person with RealmEntity, RealmObjectBase, RealmObject {
     String email, {
     Iterable<Participation> participations = const [],
   }) {
-    RealmObjectBase.set(this, 'id', id);
+    RealmObjectBase.set(this, 'key', key);
     RealmObjectBase.set(this, 'firstName', firstName);
     RealmObjectBase.set(this, 'lastName', lastName);
     RealmObjectBase.set(this, 'nickName', nickName);
@@ -298,9 +298,9 @@ class Person extends _Person with RealmEntity, RealmObjectBase, RealmObject {
   Person._();
 
   @override
-  String get id => RealmObjectBase.get<String>(this, 'id') as String;
+  String get key => RealmObjectBase.get<String>(this, 'key') as String;
   @override
-  set id(String value) => RealmObjectBase.set(this, 'id', value);
+  set key(String value) => RealmObjectBase.set(this, 'key', value);
 
   @override
   String get firstName =>
@@ -350,7 +350,7 @@ class Person extends _Person with RealmEntity, RealmObjectBase, RealmObject {
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Person._);
     return const SchemaObject(ObjectType.realmObject, Person, 'Person', [
-      SchemaProperty('id', RealmPropertyType.string, primaryKey: true),
+      SchemaProperty('key', RealmPropertyType.string, primaryKey: true),
       SchemaProperty('firstName', RealmPropertyType.string),
       SchemaProperty('lastName', RealmPropertyType.string),
       SchemaProperty('nickName', RealmPropertyType.string),
