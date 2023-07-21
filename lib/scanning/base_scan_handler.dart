@@ -31,7 +31,7 @@ abstract class BaseScanHandler {
   }
 
   /// keep the scan time for further reference
-  DateTime scanTime = DateTime.now();
+  DateTime scanTime = DateTime.now().toUtc();
 
   /// link to the scan page we're servicing
   late ScanPageState scanPage;
@@ -54,7 +54,7 @@ abstract class BaseScanHandler {
       scanPage.setScanResult(ScanResult.error, 'Multiple codes in view');
       return;
     }
-    scanTime = DateTime.now();
+    scanTime = DateTime.now().toUtc();
     final barcode = barcodes.first;
     debugPrint('Barcode found! ${barcode.rawValue}');
     handleBarcode(barcode);

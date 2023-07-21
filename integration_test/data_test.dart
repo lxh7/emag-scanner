@@ -37,7 +37,7 @@ void main() {
 
       // check access (as if person is scanned)
       // first scan
-      var scanTime1 = DateTime.now();
+      var scanTime1 = DateTime.now().toUtc();
       var info1 = ScanInfo(activityId, partId1, scanTime1);
       var result = local.queryAccess(info1);
       assert(result.scanResult == ScanResult.pass);
@@ -45,7 +45,7 @@ void main() {
       local.queueScanInfo(info1);
       expectCount++;
       // second scan
-      var scanTime = DateTime.now();
+      var scanTime = DateTime.now().toUtc();
       var info2 = ScanInfo(activityId, partId1, scanTime);
       result = local.queryAccess(info2);
       assert(result.scanResult == ScanResult.check);
@@ -55,19 +55,19 @@ void main() {
       expectCount++;
 
       // person who is on waitlist scan
-      scanTime = DateTime.now();
+      scanTime = DateTime.now().toUtc();
       var info3 = ScanInfo(activityId, partId2, scanTime);
       result = local.queryAccess(info3);
       assert(result.scanResult == ScanResult.deny);
 
       // person who has not paid scan
-      scanTime = DateTime.now();
+      scanTime = DateTime.now().toUtc();
       var info4 = ScanInfo(activityId, partId3, scanTime);
       result = local.queryAccess(info4);
       assert(result.scanResult == ScanResult.deny);
 
       // unregistered person scan
-      scanTime = DateTime.now();
+      scanTime = DateTime.now().toUtc();
       var info5 = ScanInfo(activityId, nonPartId1, scanTime);
       result = local.queryAccess(info5);
       assert(result.scanResult == ScanResult.deny);

@@ -88,11 +88,25 @@ class BackendDataStore {
     return null;
   }
 
+  Future<Person?> getPerson(String token, String id) async {
+    var api = _getBackofficeApi(token);
+
+    var response = await api.getPersonApi().getPerson(personId: id);
+    var personDTO = response.data;
+    if (personDTO == null) {
+      return null;
+    }
+    return DtoHelper.fromPersonDTO(personDTO);
+  }
+
   Future<AccessCheckResult> queryAccessAsync(
       String token, int activityId, String personKey, DateTime scanTime) async {
     var api = _getBackofficeApi(token);
     var dto = ScanTimeDTOBuilder();
-    dto.scanTime = scanTime.toIso8601String();
+    dto.scanTime = scanTime.toLocal().toIso8601String();
+    if (dto.scanTime!.endsWith('Z')) {
+      dto.scanTime = dto.scanTime!.substring(0, dto.scanTime!.length - 1);
+    }
     var accessResponse = await api.getEventApi().patchParticipant(
           eventId: activityId,
           personId: personKey,
@@ -120,17 +134,6 @@ class BackendDataStore {
             scanResult: ScanResult.error,
             message: 'Unknown access grant value returned: ${response.grant}');
     }
-  }
-
-  Future<Person?> getPerson(String token, String id) async {
-    var api = _getBackofficeApi(token);
-
-    var response = await api.getPersonApi().getPerson(personId: id);
-    var personDTO = response.data;
-    if (personDTO == null) {
-      return null;
-    }
-    return DtoHelper.fromPersonDTO(personDTO);
   }
 
   BackofficeApi _getBackofficeApi(var token) {

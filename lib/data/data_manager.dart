@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'package:logger/logger.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:flutter/material.dart';
@@ -15,24 +14,15 @@ import '/models/domain.dart';
 import '/util/internet_connection_listener.dart';
 
 class DataManager extends ChangeNotifier {
-  ApiConnectionState _apiConnectionState = ApiConnectionState.none;
-  late Logger _logger;
-  int _apiCheckInterval =
-      1; // polling interval (seconds) trying to reach Backend. Will be increaed with every try (max 10 seconds).
-  Timer? _apiCheckTimer;
-  late InternetConnectionListener _internetConnectionListener;
-  late AppSettings _appSettings;
-  late BackendDataStore _backend;
-  late LocalDataStore _local;
-  late List<Activity> _storedActivities;
-  Activity? _selectedActivity;
-  static DateTime? _categoriesFetchTime;
+  static DataManager? _instance; // singleton with factory (because of the BuildContext needed)
 
-  oauth2.Client? _oauth2Client;
+  factory DataManager(BuildContext context) {
+    _instance ??= DataManager._(context);
+    return _instance!;
+  }
 
-  bool _authenticationStarted = false;
-
-  DataManager(BuildContext context) {
+  // private constructor
+  DataManager._(BuildContext context) {
     _logger = getLogger(runtimeType.toString());
     _backend = context.read<BackendDataStore>();
     _local = context.read<LocalDataStore>();
@@ -42,13 +32,23 @@ class DataManager extends ChangeNotifier {
 
     _appSettings = context.read<AppSettings>();
     _appSettings.addListener(_resetState);
-    _resetState(); // call after _backend has been initialized
-
-    _storedActivities = _local.getActivities();
-    if (_storedActivities.isNotEmpty) {
-      _selectedActivity = _storedActivities.first;
-    }
+    _resetState(); // initialise the backend through the reset function. Call after _backend has been initialized.
   }
+
+  ApiConnectionState _apiConnectionState = ApiConnectionState.none;
+  late Logger _logger;
+  int _apiCheckInterval =
+      1; // polling interval (seconds) trying to reach Backend. Will be increased with every try (max 10 seconds).
+  Timer? _apiCheckTimer;
+  late InternetConnectionListener _internetConnectionListener;
+  late AppSettings _appSettings;
+  late BackendDataStore _backend;
+  late LocalDataStore _local;
+  static DateTime? _categoriesFetchTime;
+
+  oauth2.Client? _oauth2Client;
+
+  bool _authenticationStarted = false;
 
   void _internetConnectionChanged() {
     if (_internetConnectionListener.connected) {
@@ -84,7 +84,7 @@ class DataManager extends ChangeNotifier {
           var username = _appSettings.userId;
           var password = await _appSettings.getPassword();
           if (username == '' || password == '') {
-            _logger.d('Getting clientCredentialsGrant token on $tokenUrl');
+            _logger.d('Getting clintCredentialsGrant token on $tokenUrl');
             // either userId or password (or both) not set, can only authenticate at "client" level
             _oauth2Client = await oauth2.clientCredentialsGrant(
               Uri.parse(tokenUrl),
@@ -210,21 +210,23 @@ class DataManager extends ChangeNotifier {
     return _apiConnectionState == ApiConnectionState.full;
   }
 
-  set selectedActivity(Activity? value) {
-    _selectedActivity = value;
-    notifyListeners();
+  Future<Activity?> getSelectedActivity() async {
+    var activityId = _appSettings.selectedActivityId;
+    if (activityId == 0) return null;
+    return await getActivity(activityId);
   }
 
-  Activity? get selectedActivity {
-    return _selectedActivity;
+  void setSelectedActivity(Activity? value) {
+    _appSettings.selectedActivityId = value?.id ?? 0;
+    notifyListeners();
   }
 
   Future<List<Category>> getCategories() async {
     List<Category>? result;
     if (isConnected) {
       if (_categoriesFetchTime == null ||
-          (DateTime.now().difference(_categoriesFetchTime!).inMinutes < 120)) {
-        _categoriesFetchTime = DateTime.now();
+          (DateTime.now().toUtc().difference(_categoriesFetchTime!).inMinutes < 120)) {
+        _categoriesFetchTime = DateTime.now().toUtc();
         result = await _backend.getCategoriesAsync(await getOauth2token());
         if (result.isNotEmpty) {
           _local.storeCategories(result);
@@ -263,42 +265,22 @@ class DataManager extends ChangeNotifier {
       return null;
     }
     _local.upsertActivity(freshActivity);
-    _replaceStoredActivity(activity, freshActivity);
     return freshActivity;
   }
 
-//#region StoredActivities
-
-  UnmodifiableListView<Activity> get storedActivities =>
-      UnmodifiableListView(_storedActivities);
+  List<Activity> getStoredActivities() {
+    return _local.getActivities();
+  }
 
   void addStoredActivity(Activity activity) {
     _local.upsertActivity(activity);
-    _storedActivities.add(activity);
     notifyListeners();
   }
 
   void removeStoredActivity(Activity activity) {
-    if (_selectedActivity?.id == activity.id) {
-      _selectedActivity = null;
-    }
     _local.deleteActivity(activity);
-    _storedActivities.remove(activity);
     notifyListeners();
   }
-
-  void _replaceStoredActivity(Activity original, Activity replaceBy) {
-    _local.upsertActivity(replaceBy);
-    if (_storedActivities.contains(original)) {
-      _storedActivities.remove(original);
-      _storedActivities.add(replaceBy);
-      notifyListeners();
-    }
-    if (_selectedActivity?.id == replaceBy.id) {
-      _selectedActivity = replaceBy;
-    }
-  }
-//#endregion
 
   Future<AccessCheckResult> checkAccess(ScanInfo info) async {
     AccessCheckResult result;
@@ -315,7 +297,7 @@ class DataManager extends ChangeNotifier {
     } else {
       // backend cannot be reached, rely on local store
       result = _local.queryAccess(info);
-      // make sure scan info is synchronised to backend when we gain connectivity again.
+      // make sure scan info will be sent to backend when we gain connectivity again.
       _local.queueScanInfo(info);
     }
     return result;

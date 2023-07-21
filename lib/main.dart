@@ -38,7 +38,9 @@ void main() async {
             create: (_) => InternetConnectionListener()),
         ChangeNotifierProvider<AppSettings>(create: (_) => AppSettings()),
         ChangeNotifierProvider<DataManager>(
-            create: (context) => DataManager(context)),
+          create: (context) => DataManager(context),
+          lazy: false,
+        ),
       ],
       child: const ScanApp(),
     ),
@@ -64,11 +66,12 @@ class ScanApp extends StatelessWidget {
       routes: {
         // '/': (context) => const HomePage(), -- redundant
         Routes.settings: (context) => const SettingsPage(),
-        Routes.scan: (context) => const ScanPage(),        
+        Routes.scan: (context) => const ScanPage(),
         Routes.activityConfirm: (context) => ActivityConfirmPage(),
         Routes.activitySelect: (context) => const ActivitySelectPage(),
         Routes.activityDownload: (context) => const ActivityLoadPage(),
-        Routes.activityParticipants: (context) => const ActivityParticipantsPage(),
+        Routes.activityParticipants: (context) =>
+            const ActivityParticipantsPage(),
         Routes.registrationSetup: (context) => const RegistrationSetupPage(),
         Routes.goodiesSetup: (context) => const GoodiesSetupPage(),
         Routes.goodiesShow: (context) => const GoodiesShowPage(),

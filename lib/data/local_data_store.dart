@@ -96,6 +96,11 @@ class LocalDataStore {
       //   [activity.id],
       // );
       _realm.deleteMany(activity.participations);
+      var parts =_realm.query<Participation>(
+        'activityId == \$0',
+        [activity.id],
+      );
+      _realm.deleteMany(parts);
       _realm.delete(activity);
     });
   }
@@ -118,7 +123,7 @@ class LocalDataStore {
         // update local storage
         participation = realmResults.first;
         // check paid / waitlisted
-        if (!participation.paid) { 
+        if (!participation.paid) {
           result.scanResult = ScanResult.deny;
           result.message = 'Not paid';
         } else if (participation.waitlisted) {
@@ -134,7 +139,7 @@ class LocalDataStore {
             // subsequent scan
             result.scanResult = ScanResult.check;
             result.message =
-                'Scanned earlier: ${DateFormat('yyyy-MM-dd h:mm').format(participation.scanTime!)}';
+                'Scanned earlier: ${DateFormat('yyyy-MM-dd hh:mm').format(participation.scanTime!.toLocal())}';
             result.prevScanTime = participation.scanTime;
           }
         }

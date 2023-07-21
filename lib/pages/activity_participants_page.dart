@@ -16,13 +16,13 @@ class ActivityParticipantsPage extends StatefulWidget {
 
 class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
   late ThemeData _theme;
-  final DateFormat _formatter = DateFormat('yyyy-MM-dd h:mm');
+  final DateFormat _formatter = DateFormat('yyyy-MM-dd hh:mm');
   // methods/functions
   Color _getParticipationColor(Participation p) {
     if (p.scanTime == null) {
       // never scanned
       return _theme.colorScheme.background;
-    } else if (p.scanTime!.difference(DateTime.now()).inMinutes < 30) {
+    } else if (p.scanTime!.difference(DateTime.now().toUtc()).inMinutes < 30) {
       // scanned recently
       return _theme.colorScheme.surface;
     } else {
@@ -89,7 +89,7 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-                'Scan time: ${p.scanTime == null ? 'never' : _formatter.format(p.scanTime!)}')
+                'Scan time: ${p.scanTime == null ? 'never' : _formatter.format(p.scanTime!.toLocal().toLocal())}')
           ],
         ),
       );

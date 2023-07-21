@@ -24,7 +24,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     var dataManager = context.read<DataManager>();
     activity = await dataManager.refreshActivityAsync(activity) ?? activity;
     dataManager.addStoredActivity(activity);
-    dataManager.selectedActivity = activity;
+    // dataManager.selectedActivity = activity;
   }
 
   Future<List<Activity>> _loadActivities() async {
@@ -140,8 +140,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
           _category = value!;
         });
       },
-      items: categories!
-          .map<DropdownMenuItem<Category>>((Category value) {
+      items: categories!.map<DropdownMenuItem<Category>>((Category value) {
         return DropdownMenuItem<Category>(
           value: value,
           child: Text(value.name),
@@ -155,9 +154,9 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     if (_activities == null || _activities!.isEmpty) {
       return const Text('No activities in this category');
     }
-    
-    var storedActivities =
-        dataManager.storedActivities.map((item) => item.id).toList();
+
+    var storedActivityIds =
+        dataManager.getStoredActivities().map((e) => e.id).toList();
     return ListView(
       primary: false,
       shrinkWrap: true,
@@ -165,7 +164,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
       children: _activities!
           .map((item) => ActivityTile(
                 activity: item,
-                enabled: !storedActivities.contains(item.id),
+                enabled: !storedActivityIds.contains(item.id),
                 tapAction: () => _downloadParticipationsAsync(item)
                     .then((value) => Navigator.pop(context)),
               ))

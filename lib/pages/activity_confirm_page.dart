@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:emag_scanner/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -14,26 +17,29 @@ class ActivityConfirmPage extends StatelessWidget {
 
   ActivityConfirmPage({super.key});
 
-  _startScanning(BuildContext context) {
+  _startScanning(BuildContext context, Activity activity) {
     _logger.i('Start scanning');
-    Navigator.pushNamed(context, Routes.scan, arguments: ActivityScanHandler());
+    Navigator.pushNamed(context, Routes.scan,
+        arguments: ActivityScanHandler(activity));
   }
 
-  _showParticipants(BuildContext context, Activity activity) {
-    _logger.i('Show particpants');
-    DataManager(context).getActivity(activity.id).then((refreshedActivity) {
+  _showParticipants(
+      BuildContext context, DataManager dataManager, int activityId) {
+    _logger.i('Show participants');
+    dataManager.getActivity(activityId).then((activity) {
       Navigator.pushNamed(context, Routes.activityParticipants,
-          arguments: refreshedActivity);
+          arguments: activity);
     });
   }
 
   _selectOtherActivity(BuildContext context) {
-    _logger.i('Select other activity');
+    _logger.i('Select another activity');
     Navigator.pushNamed(context, Routes.activitySelect);
   }
 
   @override
   Widget build(BuildContext context) {
+    _logger.d('Bulding ActivityConfirmPage');
     return SafeArea(
       child: Consumer<DataManager>(
         builder: (context, dataManager, child) => Scaffold(
@@ -48,31 +54,41 @@ class ActivityConfirmPage extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: ListView(
-              children: [
-                if (dataManager.selectedActivity == null) ...[
-                  const Center(
-                    child: Text(
-                        'No activity is selected. Please select one first'),
-                  ),
-                ] else ...[
-                  const Center(
-                    child: Text(
-                        'Tap to start scanning participants for this activity'),
-                  ),
-                  ActivityTile(
-                    activity: dataManager.selectedActivity!,
-                    tapAction: () => _startScanning(context),
-                    longPressAction: () => _showParticipants(
-                        context, dataManager.selectedActivity!),
-                    /*
-                    trailingWidget: const Icon(Icons.refresh, size: 50),
-                    trailingAction: () => _refreshActivity(item),
-                    */
-                  )
-                ]
-              ], // children
-            ),
+            child: FutureBuilder<Activity?>(
+                future: dataManager.getSelectedActivity(),
+                builder: (context, snapshot) {
+                  _logger.d('${snapshot.connectionState}');
+                  if (snapshot.connectionState != ConnectionState.done) {
+                    // while data is loading:
+                    return const Center(
+                      child: Spinner(),
+                    );
+                  } else {
+                    // data loaded:
+                    final activity = snapshot.data;
+                    return ListView(children: [
+                      if (activity == null) ...[
+                        const Center(
+                          child: Text(
+                              'No activity is selected. Please select one first'),
+                        ),
+                      ] else ...[
+                        const Center(
+                          child: Text(
+                              'Tap to start scanning participants for this activity'),
+                        ),
+                        ActivityTile(
+                          activity: activity,
+                          tapAction: () => _startScanning(context, activity),
+                          longPressAction: () =>
+                              _showParticipants(context, dataManager, activity.id),
+                          // trailingWidget: const Icon(Icons.refresh, size: 50),
+                          // trailingAction: () => _refreshActivity(item),
+                        )
+                      ]
+                    ]);
+                  } // else
+                }),
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
@@ -80,10 +96,8 @@ class ActivityConfirmPage extends StatelessWidget {
             height: 50,
             margin: const EdgeInsets.all(10),
             child: ElevatedButton(
-              child: Center(
-                child: Text(dataManager.selectedActivity == null
-                    ? 'Select activity'
-                    : 'Select another activity'),
+              child: const Center(
+                child: Text('Select another activity'),
               ),
               onPressed: () => _selectOtherActivity(context),
             ),

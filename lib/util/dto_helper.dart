@@ -10,8 +10,8 @@ class DtoHelper {
         convertInt(x.id, 0),
         convertInt(x.categoryId, 0),
         convertString(x.name, ''),
-        convertDate(x.start, defaultDateTime),
-        convertDate(x.end, defaultDateTime),
+        convertDate(x.start, defaultDateTime)!,
+        convertDate(x.end, defaultDateTime)!,
         question1: x.question1,
         question2: x.question2,
         question3: x.question3,
@@ -25,7 +25,7 @@ class DtoHelper {
       x.personId ?? '', // personId
       activity: x.event == null ? null : fromEventDTO(x.event!),
       person: x.person == null ? null : fromPersonDTO(x.person!),
-      scanTime: null,
+      scanTime: convertDate(x.scanTime, null)?.toUtc(),
       paid: convertBool(x.paid, false),
       waitlisted: !convertBool(x.in_, true),
       answer1: x.answer1,
@@ -77,7 +77,7 @@ class DtoHelper {
     return value;
   }
 
-  static DateTime convertDate(String? value, DateTime def) {
+  static DateTime? convertDate(String? value, DateTime? def) {
     if (value == null) {
       return def;
     }
@@ -87,7 +87,8 @@ class DtoHelper {
     if (plus > 0) {
       value = value.substring(0, plus);
     }
-    return DateTime.parse(value);
+    var result = DateTime.parse(value);
+    return result;
     /* if DateTime.now().Timezone (=Duration object) needs to be formatted, we can use this:
       extension DurationFormatter on Duration {
       /// Returns a day, hour, minute, second string representation of this `Duration`.

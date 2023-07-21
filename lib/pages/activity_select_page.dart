@@ -24,7 +24,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
 
   _selectActivity(Activity activity) {
     Navigator.pop(context);
-    _dataManager.selectedActivity = activity;
+    _dataManager.setSelectedActivity(activity);
   }
 
   _deleteActivity(Activity activity) async {
@@ -32,6 +32,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
         'Do you want to remove the info about \'${activity.name}\' from your device?');
     if (delete) {
       _dataManager.removeStoredActivity(activity);
+      _dataManager.setSelectedActivity(null);
       setState(() {});
     }
   }
@@ -65,11 +66,12 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
             padding: const EdgeInsets.all(20.0),
             child:
                 Consumer<DataManager>(builder: (context, dataManager, child) {
+              var storedActivities = _dataManager.getStoredActivities();
               return ListView(
                 children: [
                   ConnectionWidget.get(),
                   Text(
-                      _dataManager.storedActivities.isEmpty
+                      storedActivities.isEmpty
                           ? 'Please load activites first'
                           : 'Select activity to scan for. Long press = delete.',
                       textAlign: TextAlign.center),
@@ -78,7 +80,7 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
                         'Tap the refresh symbol to refresh the list of participants from the server to this device (for offline scanning)',
                         textAlign: TextAlign.center),
                   ],
-                  ..._dataManager.storedActivities
+                  ...storedActivities
                       .map((item) => ActivityTile(
                             activity: item,
                             tapAction: () => _selectActivity(item),

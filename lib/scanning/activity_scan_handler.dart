@@ -7,6 +7,10 @@ import 'base_scan_handler.dart';
 
 class ActivityScanHandler extends BaseScanHandler {
   DateTime? previousScanTime;
+  late Activity _selectedActivity;
+  ActivityScanHandler(Activity activity) {
+    _selectedActivity = activity;
+  }
 
   @override
   String getTitle() {
@@ -15,15 +19,15 @@ class ActivityScanHandler extends BaseScanHandler {
 
   @override
   String getSubTitle() {
-    return dataManager.selectedActivity?.name ?? '';
+    return _selectedActivity.name;
   }
 
   @override
   void handleKey(String key) {
     var info = ScanInfo(
-      dataManager.selectedActivity!.id,
+      _selectedActivity.id,
       key,
-      DateTime.now(),
+      scanTime,
     );
     dataManager.checkAccess(info).then((result) {
       previousScanTime = result.prevScanTime;

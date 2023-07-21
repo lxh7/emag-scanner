@@ -17,7 +17,7 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
   Person? _person;
   late List<Participation> _goodies;
   late HashSet<int> _selectedGoodies;
-  final DateFormat _formatter = DateFormat('yyyy-MM-dd h:mm');
+  final DateFormat _formatter = DateFormat('yyyy-MM-dd hh:mm');
 
   bool _getGoodieEnabled(Participation p) {
     if (!p.paid) return false;
@@ -46,7 +46,7 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
     _addOptionRow(p.activity?.question3, p.answer3, rows);
     if (p.scanTime != null) {
       rows.add(TableRow(children: [
-        Text('Handed out on ${_formatter.format(p.scanTime!)}'),
+        Text('Handed out on ${_formatter.format(p.scanTime!.toLocal())}'),
         const Text(''),
       ]));
     }
@@ -116,7 +116,7 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
   void _saveGoodies() {
     if (_selectedGoodies.isNotEmpty) {
       var dataManager = DataManager(context);
-      var now = DateTime.now();
+      var now = DateTime.now().toUtc();
       for (int activityId in _selectedGoodies) {
         var info = ScanInfo(activityId, _person!.key, now);
         Future.wait([dataManager.checkAccess(info)]);
