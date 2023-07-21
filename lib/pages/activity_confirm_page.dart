@@ -1,6 +1,3 @@
-import 'dart:ffi';
-
-import 'package:emag_scanner/widgets/spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +8,7 @@ import '/models/domain.dart';
 import '/scanning/activity_scan_handler.dart';
 import '/util/routes.dart';
 import '/widgets/activity_tile.dart';
+import '/widgets/spinner.dart';
 
 class ActivityConfirmPage extends StatelessWidget {
   final Logger _logger = getLogger('ActivityConfirmPage');

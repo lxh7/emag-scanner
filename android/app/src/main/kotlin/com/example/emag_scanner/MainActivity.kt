@@ -1,4 +1,4 @@
-package nl.emag23.scanner
+// package nl.emag23.scanner
 
 import io.flutter.embedding.android.FlutterActivity
 
