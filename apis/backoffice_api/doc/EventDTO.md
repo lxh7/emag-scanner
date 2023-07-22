@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] 
 **categoryId** | **int** |  | [optional] 
+**scanFunction** | **int** |  | [optional] 
 **name** | **String** |  | [optional] 
 **start** | **String** |  | [optional] 
 **end** | **String** |  | [optional] 

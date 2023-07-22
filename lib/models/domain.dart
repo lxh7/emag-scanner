@@ -11,6 +11,15 @@ class _Category {
   @PrimaryKey()
   late int id;
   late String name;
+  late int scanFunction;
+  /*
+  * 0 = No scan. This will never be returned from the API
+  * 1 = Scan - general category thing, e.g. if activities in this category are mixed
+  * 2 = Activity
+  * 3 = Registration
+  * 4 = Goodies
+  * 5 = Diet
+  */
 }
 
 @RealmModel()
@@ -25,6 +34,15 @@ class _Activity {
   late String? question2;
   late String? question3;
   late List<_Participation> participations;
+  late int? scanFunction;
+  /*
+  * 0 = No scan. This will never be returned from the API
+  * 1 = Scan - doest not really have a meaning on an activity
+  * 2 = Activity
+  * 3 = Registration
+  * 4 = Goodies
+  * 5 = Diet
+  */
 }
 
 @RealmModel()

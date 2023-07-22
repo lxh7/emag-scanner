@@ -12,6 +12,8 @@ class _$EventDTO extends EventDTO {
   @override
   final int? categoryId;
   @override
+  final int? scanFunction;
+  @override
   final String? name;
   @override
   final String? start;
@@ -34,6 +36,7 @@ class _$EventDTO extends EventDTO {
   _$EventDTO._(
       {this.id,
       this.categoryId,
+      this.scanFunction,
       this.name,
       this.start,
       this.end,
@@ -57,6 +60,7 @@ class _$EventDTO extends EventDTO {
     return other is EventDTO &&
         id == other.id &&
         categoryId == other.categoryId &&
+        scanFunction == other.scanFunction &&
         name == other.name &&
         start == other.start &&
         end == other.end &&
@@ -72,6 +76,7 @@ class _$EventDTO extends EventDTO {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, categoryId.hashCode);
+    _$hash = $jc(_$hash, scanFunction.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, start.hashCode);
     _$hash = $jc(_$hash, end.hashCode);
@@ -89,6 +94,7 @@ class _$EventDTO extends EventDTO {
     return (newBuiltValueToStringHelper(r'EventDTO')
           ..add('id', id)
           ..add('categoryId', categoryId)
+          ..add('scanFunction', scanFunction)
           ..add('name', name)
           ..add('start', start)
           ..add('end', end)
@@ -111,6 +117,10 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
   int? _categoryId;
   int? get categoryId => _$this._categoryId;
   set categoryId(int? categoryId) => _$this._categoryId = categoryId;
+
+  int? _scanFunction;
+  int? get scanFunction => _$this._scanFunction;
+  set scanFunction(int? scanFunction) => _$this._scanFunction = scanFunction;
 
   String? _name;
   String? get name => _$this._name;
@@ -155,6 +165,7 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
     if ($v != null) {
       _id = $v.id;
       _categoryId = $v.categoryId;
+      _scanFunction = $v.scanFunction;
       _name = $v.name;
       _start = $v.start;
       _end = $v.end;
@@ -189,6 +200,7 @@ class EventDTOBuilder implements Builder<EventDTO, EventDTOBuilder> {
           new _$EventDTO._(
               id: id,
               categoryId: categoryId,
+              scanFunction: scanFunction,
               name: name,
               start: start,
               end: end,

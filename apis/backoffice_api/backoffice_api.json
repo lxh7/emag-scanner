@@ -244,6 +244,9 @@
                     },
                     "name": {
                         "type": "string"
+                    },
+                    "scanFunction": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"
@@ -255,6 +258,9 @@
                         "type": "integer"
                     },
                     "categoryId": {
+                        "type": "integer"
+                    },
+                    "scanFunction": {
                         "type": "integer"
                     },
                     "name": {

@@ -7,18 +7,18 @@ class MockDataStore {
 
   MockDataStore() {
     _categories = List<Category>.from([
-      Category(8, 'Meals'),
-      Category(5, 'EMAG'),
-      Category(16, 'Activities'),
-      Category(7, 'Rotterdam'),
-      Category(6, 'Escape Rooms'),
-      Category(10, 'Fun & games'),
-      Category(9, 'Tours'),
-      Category(11, 'Art & science'),
-      Category(12, 'Family'),
-      Category(13, 'Water'),
-      Category(14, 'Lectures'),
-      Category(15, 'Workshops'),
+      Category(8, 'Meals', 0),
+      Category(5, 'EMAG', 0),
+      Category(16, 'Activities', 1),
+      Category(7, 'Rotterdam', 1),
+      Category(6, 'Escape Rooms', 1),
+      Category(10, 'Fun & games', 1),
+      Category(9, 'Tours', 1),
+      Category(11, 'Art & science', 1),
+      Category(12, 'Family', 1),
+      Category(13, 'Water', 1),
+      Category(14, 'Lectures', 1),
+      Category(15, 'Workshops', 1),
     ]);
 
     _activities = List<Activity>.empty(growable: true);
@@ -68,7 +68,8 @@ class MockDataStore {
   Future<List<Activity>> getActivities(int? categoryId) async {
     var now = DateTime.now();
     var result = _activities
-        .where((element) => element.end.isAfter(now.add(const Duration(hours: 2))))
+        .where(
+            (element) => element.end.isAfter(now.add(const Duration(hours: 2))))
         .toList();
     if (categoryId != null) {
       result =
@@ -77,5 +78,4 @@ class MockDataStore {
     result.sort((a, b) => a.start.compareTo(b.start));
     return result;
   }
-
 }

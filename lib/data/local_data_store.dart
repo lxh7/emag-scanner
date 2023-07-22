@@ -12,13 +12,17 @@ class LocalDataStore {
   static late Logger _logger;
 
   LocalDataStore() {
-    _config = Configuration.local([
-      Category.schema,
-      Activity.schema,
-      Participation.schema,
-      Person.schema,
-      ScanInfo.schema,
-    ], schemaVersion: 1);
+    _config = Configuration.local(
+      [
+        Category.schema,
+        Activity.schema,
+        Participation.schema,
+        Person.schema,
+        ScanInfo.schema,
+      ],
+      schemaVersion: 2,
+      shouldDeleteIfMigrationNeeded: true,
+    );
     _realm = Realm(_config);
     _logger = getLogger(runtimeType.toString());
   }
@@ -96,7 +100,7 @@ class LocalDataStore {
       //   [activity.id],
       // );
       _realm.deleteMany(activity.participations);
-      var parts =_realm.query<Participation>(
+      var parts = _realm.query<Participation>(
         'activityId == \$0',
         [activity.id],
       );

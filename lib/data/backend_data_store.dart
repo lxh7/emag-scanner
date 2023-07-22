@@ -46,6 +46,7 @@ class BackendDataStore {
             .map((x) => Category(
                   x.id!,
                   x.name!,
+                  x.scanFunction ?? 0,
                 ))
             .toList();
       }

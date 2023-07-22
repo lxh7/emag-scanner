@@ -2,7 +2,7 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
-// ignore_for_file: deprecated_member_use, unused_field
+// ignore_for_file: unused_field, deprecated_member_use
 
 import 'dart:async';
 

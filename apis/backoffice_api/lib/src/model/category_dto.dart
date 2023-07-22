@@ -13,6 +13,7 @@ part 'category_dto.g.dart';
 /// Properties:
 /// * [id] 
 /// * [name] 
+/// * [scanFunction] 
 @BuiltValue()
 abstract class CategoryDTO implements Built<CategoryDTO, CategoryDTOBuilder> {
   @BuiltValueField(wireName: r'id')
@@ -20,6 +21,9 @@ abstract class CategoryDTO implements Built<CategoryDTO, CategoryDTOBuilder> {
 
   @BuiltValueField(wireName: r'name')
   String? get name;
+
+  @BuiltValueField(wireName: r'scanFunction')
+  int? get scanFunction;
 
   CategoryDTO._();
 
@@ -58,6 +62,13 @@ class _$CategoryDTOSerializer implements PrimitiveSerializer<CategoryDTO> {
         specifiedType: const FullType(String),
       );
     }
+    if (object.scanFunction != null) {
+      yield r'scanFunction';
+      yield serializers.serialize(
+        object.scanFunction,
+        specifiedType: const FullType(int),
+      );
+    }
   }
 
   @override
@@ -94,6 +105,13 @@ class _$CategoryDTOSerializer implements PrimitiveSerializer<CategoryDTO> {
             specifiedType: const FullType(String),
           ) as String;
           result.name = valueDes;
+          break;
+        case r'scanFunction':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.scanFunction = valueDes;
           break;
         default:
           unhandled.add(key);

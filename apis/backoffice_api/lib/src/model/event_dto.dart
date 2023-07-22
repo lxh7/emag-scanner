@@ -15,6 +15,7 @@ part 'event_dto.g.dart';
 /// Properties:
 /// * [id] 
 /// * [categoryId] 
+/// * [scanFunction] 
 /// * [name] 
 /// * [start] 
 /// * [end] 
@@ -30,6 +31,9 @@ abstract class EventDTO implements Built<EventDTO, EventDTOBuilder> {
 
   @BuiltValueField(wireName: r'categoryId')
   int? get categoryId;
+
+  @BuiltValueField(wireName: r'scanFunction')
+  int? get scanFunction;
 
   @BuiltValueField(wireName: r'name')
   String? get name;
@@ -89,6 +93,13 @@ class _$EventDTOSerializer implements PrimitiveSerializer<EventDTO> {
       yield r'categoryId';
       yield serializers.serialize(
         object.categoryId,
+        specifiedType: const FullType(int),
+      );
+    }
+    if (object.scanFunction != null) {
+      yield r'scanFunction';
+      yield serializers.serialize(
+        object.scanFunction,
         specifiedType: const FullType(int),
       );
     }
@@ -184,6 +195,13 @@ class _$EventDTOSerializer implements PrimitiveSerializer<EventDTO> {
             specifiedType: const FullType(int),
           ) as int;
           result.categoryId = valueDes;
+          break;
+        case r'scanFunction':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(int),
+          ) as int;
+          result.scanFunction = valueDes;
           break;
         case r'name':
           final valueDes = serializers.deserialize(

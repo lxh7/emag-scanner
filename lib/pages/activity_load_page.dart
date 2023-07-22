@@ -1,3 +1,4 @@
+import 'package:emag_scanner/enums/scan_function.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -120,11 +121,17 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
   }
 
   _buildCategoryUI(List<Category>? categories) {
-    if (categories?.isEmpty == true) {
+    if (categories?.isNotEmpty == false) {
       _category = null;
       return const Text('No categories loaded from server');
     }
-    _category ??= categories!.first;
+    // filter on categories with Activities
+    var filteredList = categories!
+        .where((c) =>
+            c.scanFunction == ScanFunctionEnum.scan ||
+            c.scanFunction == ScanFunctionEnum.activity)
+        .toList();
+    _category ??= filteredList.first;
     return DropdownButton<Category>(
       value: _category,
       icon: const Icon(Icons.arrow_downward),
@@ -140,7 +147,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
           _category = value!;
         });
       },
-      items: categories!.map<DropdownMenuItem<Category>>((Category value) {
+      items: filteredList.map<DropdownMenuItem<Category>>((Category value) {
         return DropdownMenuItem<Category>(
           value: value,
           child: Text(value.name),

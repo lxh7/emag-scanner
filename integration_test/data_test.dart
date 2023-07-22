@@ -24,12 +24,12 @@ void main() {
       // add an activity with some participants
       var activity = Activity(activityId, 1, 'test',
           DateTime(2023, 8, 2, 18, 0), DateTime(2023, 8, 2, 20, 0));
-      activity.participations.add(
-          Participation(activityId, partId1, paid: true, waitlisted: false));
-      activity.participations.add(
-          Participation(activityId, partId2, paid: true, waitlisted: true));
-      activity.participations.add(
-          Participation(activityId, partId3, paid: false, waitlisted: false));
+      activity.participations
+          .add(Participation(activityId, partId1, true, false));
+      activity.participations
+          .add(Participation(activityId, partId2, true, true));
+      activity.participations
+          .add(Participation(activityId, partId3, false, false));
       local.upsertActivity(activity);
       expectCount += 4;
       count = local.objectCount();

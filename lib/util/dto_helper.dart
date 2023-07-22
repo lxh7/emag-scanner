@@ -7,27 +7,28 @@ class DtoHelper {
       DateTime.fromMillisecondsSinceEpoch(0, isUtc: true);
   static Activity fromEventDTO(EventDTO x) {
     var result = Activity(
-        convertInt(x.id, 0),
-        convertInt(x.categoryId, 0),
+        convertInt(x.id, 0)!,
+        convertInt(x.categoryId, 0)!,
         convertString(x.name, ''),
         convertDate(x.start, defaultDateTime)!,
         convertDate(x.end, defaultDateTime)!,
         question1: x.question1,
         question2: x.question2,
         question3: x.question3,
+        scanFunction: x.scanFunction,
         participations: getParticipations(x.participations));
     return result;
   }
 
   static Participation fromParticipationDTO(ParticipationDTO x) {
     var result = Participation(
-      convertInt(x.eventId, -1), // activityId
+      convertInt(x.eventId, -1)!, // activityId
       x.personId ?? '', // personId
+      convertBool(x.paid, false),
+      !convertBool(x.in_, true),
+      scanTime: convertDate(x.scanTime, null)?.toUtc(),
       activity: x.event == null ? null : fromEventDTO(x.event!),
       person: x.person == null ? null : fromPersonDTO(x.person!),
-      scanTime: convertDate(x.scanTime, null)?.toUtc(),
-      paid: convertBool(x.paid, false),
-      waitlisted: !convertBool(x.in_, true),
       answer1: x.answer1,
       answer2: x.answer2,
       answer3: x.answer3,
@@ -56,7 +57,7 @@ class DtoHelper {
     return result;
   }
 
-  static int convertInt(int? value, int def) {
+  static int? convertInt(int? value, int? def) {
     if (value == null) {
       return def;
     }

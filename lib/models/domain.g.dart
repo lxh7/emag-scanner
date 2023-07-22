@@ -11,9 +11,11 @@ class Category extends _Category
   Category(
     int id,
     String name,
+    int scanFunction,
   ) {
     RealmObjectBase.set(this, 'id', id);
     RealmObjectBase.set(this, 'name', name);
+    RealmObjectBase.set(this, 'scanFunction', scanFunction);
   }
 
   Category._();
@@ -29,6 +31,12 @@ class Category extends _Category
   set name(String value) => RealmObjectBase.set(this, 'name', value);
 
   @override
+  int get scanFunction => RealmObjectBase.get<int>(this, 'scanFunction') as int;
+  @override
+  set scanFunction(int value) =>
+      RealmObjectBase.set(this, 'scanFunction', value);
+
+  @override
   Stream<RealmObjectChanges<Category>> get changes =>
       RealmObjectBase.getChanges<Category>(this);
 
@@ -42,6 +50,7 @@ class Category extends _Category
     return const SchemaObject(ObjectType.realmObject, Category, 'Category', [
       SchemaProperty('id', RealmPropertyType.int, primaryKey: true),
       SchemaProperty('name', RealmPropertyType.string),
+      SchemaProperty('scanFunction', RealmPropertyType.int),
     ]);
   }
 }
@@ -57,6 +66,7 @@ class Activity extends _Activity
     String? question1,
     String? question2,
     String? question3,
+    int? scanFunction,
     Iterable<Participation> participations = const [],
   }) {
     RealmObjectBase.set(this, 'id', id);
@@ -67,6 +77,7 @@ class Activity extends _Activity
     RealmObjectBase.set(this, 'question1', question1);
     RealmObjectBase.set(this, 'question2', question2);
     RealmObjectBase.set(this, 'question3', question3);
+    RealmObjectBase.set(this, 'scanFunction', scanFunction);
     RealmObjectBase.set<RealmList<Participation>>(
         this, 'participations', RealmList<Participation>(participations));
   }
@@ -126,6 +137,13 @@ class Activity extends _Activity
       throw RealmUnsupportedSetError();
 
   @override
+  int? get scanFunction =>
+      RealmObjectBase.get<int>(this, 'scanFunction') as int?;
+  @override
+  set scanFunction(int? value) =>
+      RealmObjectBase.set(this, 'scanFunction', value);
+
+  @override
   Stream<RealmObjectChanges<Activity>> get changes =>
       RealmObjectBase.getChanges<Activity>(this);
 
@@ -148,32 +166,25 @@ class Activity extends _Activity
       SchemaProperty('participations', RealmPropertyType.object,
           linkTarget: 'Participation',
           collectionType: RealmCollectionType.list),
+      SchemaProperty('scanFunction', RealmPropertyType.int, optional: true),
     ]);
   }
 }
 
 class Participation extends _Participation
     with RealmEntity, RealmObjectBase, RealmObject {
-  static var _defaultsSet = false;
-
   Participation(
     int activityId,
-    String personKey, {
+    String personKey,
+    bool paid,
+    bool waitlisted, {
     Activity? activity,
     Person? person,
     DateTime? scanTime,
-    bool paid = false,
-    bool waitlisted = true,
     String? answer1,
     String? answer2,
     String? answer3,
   }) {
-    if (!_defaultsSet) {
-      _defaultsSet = RealmObjectBase.setDefaults<Participation>({
-        'paid': false,
-        'waitlisted': true,
-      });
-    }
     RealmObjectBase.set(this, 'activityId', activityId);
     RealmObjectBase.set(this, 'activity', activity);
     RealmObjectBase.set(this, 'personKey', personKey);
