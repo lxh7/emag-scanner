@@ -49,6 +49,8 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
   @override
   Widget build(BuildContext context) {
     var dataManager = context.read<DataManager>();
+    final storedActivityIds =
+        dataManager.getStoredActivities().map((e) => e.id).toList();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -86,36 +88,17 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.done) {
-                            _activities = snapshot.data;
-                            _activities!.removeWhere((a) => a.end.isBefore(
-                                DateTime.now().add(const Duration(hours: -8))));
-                            _activities!
-                                .sort((a, b) => _compareActivities(a, b));
-                            return _buildActivitiesUI(dataManager);
+                            _activities = _filterActivities(snapshot.data);
+                            return _buildActivitiesUI(storedActivityIds);
                           } else {
                             return const Spinner();
                           }
                         })
-                    : _buildActivitiesUI(dataManager)
+                    : _buildActivitiesUI(storedActivityIds)
               ],
             ], // children
           ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        // floatingActionButton: Container(
-        //   height: 50,
-        //   margin: const EdgeInsets.all(10),
-        //   child: ElevatedButton(
-        //       child: Center(child: Text('Load diet buffet access')),
-        //       onPressed: () {
-        //         Navigator.push(
-        //             context,
-        //             MaterialPageRoute<void>(
-        //                 builder: (context) => ActivityLoadPage(),
-        //                 settings: RouteSettings(
-        //                     name: (ActivityLoadPage).toString())));
-        //       }),
-        // ),
       ),
     );
   }
@@ -157,13 +140,22 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     );
   }
 
-  Widget _buildActivitiesUI(DataManager dataManager) {
+  List<Activity> _filterActivities(List<Activity>? data) {
+    // don't show old activities, older than 8 hours
+    var cutOffDate = DateTime.now().add(const Duration(hours: -8));
+    var result = data;
+    result!.removeWhere((a) =>
+        (a.end.isBefore(cutOffDate)) ||
+        (a.scanFunction != ScanFunctionEnum.activity &&
+            a.category?.scanFunction != ScanFunctionEnum.activity));
+    result.sort((a, b) => _compareActivities(a, b));
+    return result;
+  }
+
+  Widget _buildActivitiesUI(List<int> storedActivityIds) {
     if (_activities == null || _activities!.isEmpty) {
       return const Text('No activities in this category');
     }
-
-    var storedActivityIds =
-        dataManager.getStoredActivities().map((e) => e.id).toList();
     return ListView(
       primary: false,
       shrinkWrap: true,

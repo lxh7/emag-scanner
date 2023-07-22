@@ -63,6 +63,7 @@ class Activity extends _Activity
     String name,
     DateTime start,
     DateTime end, {
+    Category? category,
     String? question1,
     String? question2,
     String? question3,
@@ -71,6 +72,7 @@ class Activity extends _Activity
   }) {
     RealmObjectBase.set(this, 'id', id);
     RealmObjectBase.set(this, 'categoryId', categoryId);
+    RealmObjectBase.set(this, 'category', category);
     RealmObjectBase.set(this, 'name', name);
     RealmObjectBase.set(this, 'start', start);
     RealmObjectBase.set(this, 'end', end);
@@ -93,6 +95,13 @@ class Activity extends _Activity
   int get categoryId => RealmObjectBase.get<int>(this, 'categoryId') as int;
   @override
   set categoryId(int value) => RealmObjectBase.set(this, 'categoryId', value);
+
+  @override
+  Category? get category =>
+      RealmObjectBase.get<Category>(this, 'category') as Category?;
+  @override
+  set category(covariant Category? value) =>
+      RealmObjectBase.set(this, 'category', value);
 
   @override
   String get name => RealmObjectBase.get<String>(this, 'name') as String;
@@ -157,6 +166,8 @@ class Activity extends _Activity
     return const SchemaObject(ObjectType.realmObject, Activity, 'Activity', [
       SchemaProperty('id', RealmPropertyType.int, primaryKey: true),
       SchemaProperty('categoryId', RealmPropertyType.int),
+      SchemaProperty('category', RealmPropertyType.object,
+          optional: true, linkTarget: 'Category'),
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('start', RealmPropertyType.timestamp),
       SchemaProperty('end', RealmPropertyType.timestamp),

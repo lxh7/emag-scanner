@@ -105,6 +105,7 @@ class BackendDataStore {
     var api = _getBackofficeApi(token);
     var dto = ScanTimeDTOBuilder();
     dto.scanTime = scanTime.toLocal().toIso8601String();
+    // strip 'Z'
     if (dto.scanTime!.endsWith('Z')) {
       dto.scanTime = dto.scanTime!.substring(0, dto.scanTime!.length - 1);
     }
@@ -124,10 +125,7 @@ class BackendDataStore {
       case 'check':
         return AccessCheckResult(
             scanResult: ScanResult.check,
-            prevScanTime: DtoHelper.convertDate(
-              response.prevScanTime,
-              DateTime(2000, 1, 1),
-            ));
+            prevScanTime: DtoHelper.convertDate(response.prevScanTime, null));
       case 'deny':
         return AccessCheckResult(scanResult: ScanResult.deny);
       default:

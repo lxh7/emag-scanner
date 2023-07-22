@@ -1,9 +1,10 @@
 import 'dart:collection';
+import 'package:emag_scanner/enums/scan_function.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '/data/data_manager.dart';
 import '/models/domain.dart';
+import '../util/my_formats.dart';
 
 class GoodiesShowPage extends StatefulWidget {
   const GoodiesShowPage({super.key});
@@ -17,11 +18,11 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
   Person? _person;
   late List<Participation> _goodies;
   late HashSet<int> _selectedGoodies;
-  final DateFormat _formatter = DateFormat('yyyy-MM-dd hh:mm');
-
+ 
   bool _getGoodieEnabled(Participation p) {
     if (!p.paid) return false;
     if (p.waitlisted) return false;
+    if (p.scanTime != null) return false;
     return true;
   }
 
@@ -46,7 +47,7 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
     _addOptionRow(p.activity?.question3, p.answer3, rows);
     if (p.scanTime != null) {
       rows.add(TableRow(children: [
-        Text('Handed out on ${_formatter.format(p.scanTime!.toLocal())}'),
+        Text('Handed out on ${MyFormats.dateTime.format(p.scanTime!.toLocal())}'),
         const Text(''),
       ]));
     }
@@ -130,9 +131,10 @@ class _GoodiesShowPageState extends State<GoodiesShowPage> {
     if (_person == null) {
       // Extract the person from the current ModalRoute.
       _person = ModalRoute.of(context)!.settings.arguments as Person;
-      final filterCategories = DataManager(context).getGoodieCategories();
       _goodies = _person!.participations
-          .where((c) => filterCategories.contains(c.activity?.categoryId))
+          .where((p) =>
+              p.activity?.scanFunction == ScanFunctionEnum.goodies ||
+              p.activity?.category?.scanFunction == ScanFunctionEnum.goodies)
           .toList();
       _goodies.sort(_compareGoodies);
       _selectedGoodies = HashSet<int>.from(

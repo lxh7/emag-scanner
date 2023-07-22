@@ -1,9 +1,9 @@
-import 'package:emag_scanner/util/my_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '/models/domain.dart';
+import '/util/my_dialog.dart';
+import '/util/my_formats.dart';
 import '/widgets/connection_widget.dart';
 
 class ActivityParticipantsPage extends StatefulWidget {
@@ -16,7 +16,6 @@ class ActivityParticipantsPage extends StatefulWidget {
 
 class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
   late ThemeData _theme;
-  final DateFormat _formatter = DateFormat('yyyy-MM-dd hh:mm');
   // methods/functions
   Color _getParticipationColor(Participation p) {
     if (p.scanTime == null) {
@@ -89,7 +88,7 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-                'Scan time: ${p.scanTime == null ? 'never' : _formatter.format(p.scanTime!.toLocal().toLocal())}')
+                'Scan time: ${p.scanTime == null ? 'never' : MyFormats.dateTime.format(p.scanTime!.toLocal().toLocal())}')
           ],
         ),
       );

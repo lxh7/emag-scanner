@@ -1,7 +1,7 @@
-import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:realm/realm.dart';
 
+import '/util/my_formats.dart';
 import '/enums/scan_result.dart';
 import '/logging/logging.dart';
 import '/models/domain.dart';
@@ -20,8 +20,8 @@ class LocalDataStore {
         Person.schema,
         ScanInfo.schema,
       ],
-      schemaVersion: 2,
-      shouldDeleteIfMigrationNeeded: true,
+      schemaVersion: 3,
+      // shouldDeleteIfMigrationNeeded: true,
     );
     _realm = Realm(_config);
     _logger = getLogger(runtimeType.toString());
@@ -143,7 +143,7 @@ class LocalDataStore {
             // subsequent scan
             result.scanResult = ScanResult.check;
             result.message =
-                'Scanned earlier: ${DateFormat('yyyy-MM-dd hh:mm').format(participation.scanTime!.toLocal())}';
+                'Scanned earlier: ${MyFormats.dateTime.format(participation.scanTime!.toLocal())}';
             result.prevScanTime = participation.scanTime;
           }
         }

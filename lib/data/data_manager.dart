@@ -238,14 +238,6 @@ class DataManager extends ChangeNotifier {
     return result;
   }
 
-  List<int> getGoodieCategories() {
-    return _appSettings.goodieCategories;
-  }
-
-  void setGoodieCategories(List<int> values) {
-    _appSettings.goodieCategories = values;
-  }
-
   Future<List<Activity>> getActivities(Category category) async {
     List<Activity>? result;
     if (isConnected) {

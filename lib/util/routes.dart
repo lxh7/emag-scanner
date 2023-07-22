@@ -8,6 +8,5 @@ class Routes {
   static const activityParticipants = '/activity/participants';
 
   static const registrationSetup = '/registration/setup';
-  static const goodiesSetup = '/goodies/setup';
   static const goodiesShow = '/goodies/show';
 }

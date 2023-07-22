@@ -1,6 +1,8 @@
+import 'package:emag_scanner/data/data_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '/scanning/goodies_scan_handler.dart';
 import '/util/routes.dart';
 import '/widgets/connection_widget.dart';
 
@@ -44,7 +46,11 @@ class HomePage extends StatelessWidget {
               ElevatedButton(
                 child: const Text('Scan for goodies'),
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.goodiesSetup);
+                  // ensure categories are fetched from the server
+                  DataManager(context).getCategories().then((value) {
+                    Navigator.pushNamed(context, Routes.scan,
+                        arguments: GoodiesScanHandler());
+                  });
                 },
               ),
             ],

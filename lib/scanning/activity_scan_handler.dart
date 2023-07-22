@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import 'base_scan_handler.dart';
 import '/enums/scan_result.dart';
 import '/models/domain.dart';
-import 'base_scan_handler.dart';
+import '/util/my_formats.dart';
 
 class ActivityScanHandler extends BaseScanHandler {
   DateTime? previousScanTime;
@@ -41,11 +41,11 @@ class ActivityScanHandler extends BaseScanHandler {
         case ScanResult.check:
           if (previousScanTime != null) {
             message =
-                'This code has been scanned earlier for this activity,\non ${DateFormat.yMd().format(previousScanTime!)} at ${DateFormat.Hm().format(previousScanTime!)}.';
+                'This code has been scanned earlier for this activity \n(on ${MyFormats.dateTime.format(previousScanTime!.toLocal())}).';
           } else {
             message = 'Unsure about this person: reason unknown.';
           }
-          message = '$message Please perform additional check(s)';
+          message = '$message\n Please perform additional check(s)';
           break;
         case ScanResult.deny:
           message =

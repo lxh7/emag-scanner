@@ -15,7 +15,6 @@ import 'pages/activity_select_page.dart';
 import 'pages/activity_confirm_page.dart';
 import 'pages/activity_participants_page.dart';
 import 'pages/registration_setup_page.dart';
-import 'pages/goodies_setup_page.dart';
 import 'pages/goodies_show_page.dart';
 import 'pages/settings_page.dart';
 import 'pages/scan_page.dart';
@@ -73,7 +72,7 @@ class ScanApp extends StatelessWidget {
         Routes.activityParticipants: (context) =>
             const ActivityParticipantsPage(),
         Routes.registrationSetup: (context) => const RegistrationSetupPage(),
-        Routes.goodiesSetup: (context) => const GoodiesSetupPage(),
+        // Routes.goodiesSetup: (context) => const GoodiesSetupPage(),
         Routes.goodiesShow: (context) => const GoodiesShowPage(),
       },
       theme: ThemeData(

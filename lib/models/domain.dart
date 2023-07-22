@@ -27,6 +27,7 @@ class _Activity {
   @PrimaryKey()
   late int id;
   late int categoryId;
+  late _Category? category;
   late String name;
   late DateTime start;
   late DateTime end;

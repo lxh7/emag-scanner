@@ -85,7 +85,11 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
                             activity: item,
                             tapAction: () => _selectActivity(item),
                             longPressAction: () => _deleteActivity(item),
-                            trailingWidget: const Icon(Icons.refresh, size: 50),
+                            trailingWidget: Icon(
+                              Icons.refresh,
+                              size: 50,
+                              color: Colors.teal[200],
+                            ),
                             trailingAction: () => _refreshActivity(item),
                           ))
                       .toList(),
