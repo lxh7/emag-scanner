@@ -28,13 +28,7 @@ class SettingsScanHandler extends BaseScanHandler {
       return;
     }
     var settingsInfo = json.decode(barcode.displayValue!);
-    /* var totalSet =*/ appSettings.setValues(settingsInfo);
-    // MyDialog.showInfo(scanPage.context, '$totalSet, values set');
+    appSettings.setValues(settingsInfo);
     Navigator.pop(scanPage.context);
   }
-
-  // @override
-  // Widget buildBottomSheet(BuildContext context) {
-  //   return const Text('Nothing special to show');
-  // }
 }
