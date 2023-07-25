@@ -226,7 +226,7 @@ class DataManager extends ChangeNotifier {
     List<Category>? result;
     if (isConnected) {
       if (_categoriesFetchTime == null ||
-          (DateTime.now().toUtc().difference(_categoriesFetchTime!).inMinutes <
+          (DateTime.now().toUtc().difference(_categoriesFetchTime!).inMinutes >
               120)) {
         _categoriesFetchTime = DateTime.now().toUtc();
         result = await _backend.getCategoriesAsync(await getOauth2token());

@@ -15,24 +15,23 @@ class ActivityParticipantsPage extends StatefulWidget {
 }
 
 class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
-  late ThemeData _theme;
-  // methods/functions
+  static final DateTime _longAgo = DateTime.utc(2000, 1, 1);
+
   Color _getParticipationColor(Participation p) {
     if (p.scanTime == null) {
       // never scanned
-      return _theme.colorScheme.background;
-    } else if (p.scanTime!.difference(DateTime.now().toUtc()).inMinutes < 30) {
+      return Colors.red.shade100;
+    } else if (DateTime.now().toUtc().difference(p.scanTime!).inMinutes < 30) {
       // scanned recently
-      return _theme.colorScheme.surface;
+      return Colors.green.shade100;
     } else {
       // scanned a while ago
-      return _theme.colorScheme.surfaceVariant;
+      return Colors.orange.shade100;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _theme = Theme.of(context);
     var activity = ModalRoute.of(context)!.settings.arguments as Activity;
     return SafeArea(
       child: Scaffold(
@@ -79,16 +78,18 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
       return [const Text('No participants found')];
     }
     var participations = List<Participation>.from(
-        activity.participations.where((p) => p.paid && !p.waitlisted));
+      activity.participations.where((p) => p.paid && !p.waitlisted),
+      growable: true,
+    );
     participations.sort(_compareScanTimes);
-    return activity.participations.map((p) {
+    return participations.map((p) {
       var detailRows = List<Row>.empty(growable: true);
       detailRows.add(
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-                'Scan time: ${p.scanTime == null ? 'never' : MyFormats.dateTime.format(p.scanTime!.toLocal().toLocal())}')
+                'Scan time: ${p.scanTime == null ? 'never' : MyFormats.dateTimeSec.format(p.scanTime!.toLocal().toLocal())}')
           ],
         ),
       );
@@ -152,9 +153,20 @@ class _ActivityParticipantsPageState extends State<ActivityParticipantsPage> {
   }
 
   int _compareScanTimes(Participation p1, Participation p2) {
-    // sort so that the oldest times (or not scanned at all) are on top
-    if (p1.scanTime == null) return -1; // never scanned - bring to top
-    if (p2.scanTime == null) return 0; // never scanned - same as p1
-    return p1.scanTime!.compareTo(p2.scanTime!); // p1 is before p2
+    var t1 = p1.scanTime ?? _longAgo;
+    var t2 = p2.scanTime ?? _longAgo;
+    var result = t1.compareTo(t2);
+    return result;
+    //   // sort so that the oldest times (or not scanned at all) are on top
+    //   if (p1.scanTime == null && p2.scanTime == null) {
+    //     return 0; // both never scanned
+    //   }
+    //   if (p1.scanTime == null) {
+    //     return -1; // never scanned - bring to top
+    //   }
+    //   if (p2.scanTime == null) {
+    //     return 1; // p1 scanned, p2 never - sink to bottom
+    //   }
+    //   return p1.scanTime!.compareTo(p2.scanTime!); // negative: p1 is before p2
   }
 }
