@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
 import '../enums/scan_result.dart';
 import '../util/registration_service.dart';
-import '../util/vibrator.dart';
+// import '../util/vibrator.dart';
 import 'base_scan_handler.dart';
 
 class RegistrationScanHandler extends BaseScanHandler {
@@ -22,7 +22,8 @@ class RegistrationScanHandler extends BaseScanHandler {
   }
 
   @override
-  void handleKey(String key) {
+  Future handleKey(String key) async {
+    logger.d('RegistrationScanHandler.handleKey()');
     // Send to printer service
     getTokenFunc().then((token) {
       //var response =
@@ -36,11 +37,5 @@ class RegistrationScanHandler extends BaseScanHandler {
         // }
       });
     });
-  }
-
-  @override
-  Widget buildBottomSheet(BuildContext context) {
-    Vibrator.stopBuzzer();
-    return const Text('Nothing special to show');
   }
 }

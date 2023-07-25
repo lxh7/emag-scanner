@@ -12,8 +12,9 @@ class SettingsScanHandler extends BaseScanHandler {
   }
 
   @override
-  void handleBarcode(Barcode barcode) {
-    if (barcode.rawValue == null) {       
+  Future handleBarcode(Barcode barcode) async {
+    logger.d('SettingsScanHandler.handleBarcode()');
+    if (barcode.rawValue == null) {
       MyDialog.showError(scanPage.context, 'No data in barcode');
       return;
     }
@@ -22,17 +23,18 @@ class SettingsScanHandler extends BaseScanHandler {
       return;
     }
     if (barcode.displayValue == null) {
-      MyDialog.showError(scanPage.context, 'Barcode does not contain proper data');
+      MyDialog.showError(
+          scanPage.context, 'Barcode does not contain proper data');
       return;
     }
     var settingsInfo = json.decode(barcode.displayValue!);
-    var totalSet = appSettings.setValues(settingsInfo);
-    MyDialog.showInfo(scanPage.context, '$totalSet, values set');
+    /* var totalSet =*/ appSettings.setValues(settingsInfo);
+    // MyDialog.showInfo(scanPage.context, '$totalSet, values set');
     Navigator.pop(scanPage.context);
   }
 
-  @override
-  Widget buildBottomSheet(BuildContext context) {
-    return const Text('Nothing special to show');
-  }
+  // @override
+  // Widget buildBottomSheet(BuildContext context) {
+  //   return const Text('Nothing special to show');
+  // }
 }

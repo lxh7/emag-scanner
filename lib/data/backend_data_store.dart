@@ -109,10 +109,12 @@ class BackendDataStore {
     if (dto.scanTime!.endsWith('Z')) {
       dto.scanTime = dto.scanTime!.substring(0, dto.scanTime!.length - 1);
     }
+    var scanTimeDTO = dto.build();
+    _logger.d('Scan time sent to API ${scanTimeDTO.scanTime}');
     var accessResponse = await api.getEventApi().patchParticipant(
           eventId: activityId,
           personId: personKey,
-          scanTimeDTO: dto.build(),
+          scanTimeDTO: scanTimeDTO,
         );
     var response = accessResponse.data;
     if (response == null) {
@@ -123,6 +125,7 @@ class BackendDataStore {
       case 'pass':
         return AccessCheckResult(scanResult: ScanResult.pass);
       case 'check':
+        _logger.d('Scan time returned from API ${response.prevScanTime}');
         return AccessCheckResult(
             scanResult: ScanResult.check,
             prevScanTime: DtoHelper.convertDate(response.prevScanTime, null));

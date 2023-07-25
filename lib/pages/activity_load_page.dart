@@ -1,3 +1,4 @@
+import 'package:emag_scanner/enums/api_connection_state.dart';
 import 'package:emag_scanner/enums/scan_function.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,6 @@ import '/widgets/spinner.dart';
 import '/data/data_manager.dart';
 import '/models/domain.dart';
 import '/widgets/activity_tile.dart';
-import '/widgets/connection_widget.dart';
 
 class ActivityLoadPage extends StatefulWidget {
   const ActivityLoadPage({super.key});
@@ -48,11 +48,10 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
 
   @override
   Widget build(BuildContext context) {
-    var dataManager = context.read<DataManager>();
-    final storedActivityIds =
-        dataManager.getStoredActivities().map((e) => e.id).toList();
-    return SafeArea(
-      child: Scaffold(
+    return Consumer<DataManager>(builder: (context, dataManager, child) {
+      final storedActivityIds =
+          dataManager.getStoredActivities().map((e) => e.id).toList();
+      return Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.keyboard_arrow_left_rounded),
@@ -64,43 +63,45 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: ListView(
-            children: [
-              ConnectionWidget.get(),
-              const Text('Load activities', textAlign: TextAlign.center),
-              const Text('Filter by category'),
-              FutureBuilder(
-                future: dataManager.getCategories(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    List<Category>? categories = snapshot.data;
-                    return _buildCategoryUI(categories);
-                  } else {
-                    return const Spinner();
-                  }
-                },
-              ),
-              if (_category != null) ...[
-                const Text('Tap to load activity & participants'),
-                _activities == null
-                    ? FutureBuilder(
-                        future: _loadActivities(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            _activities = _filterActivities(snapshot.data);
-                            return _buildActivitiesUI(storedActivityIds);
-                          } else {
-                            return const Spinner();
-                          }
-                        })
-                    : _buildActivitiesUI(storedActivityIds)
-              ],
-            ], // children
-          ),
+          child: (dataManager.apiConnectionState != ApiConnectionState.full)
+              ? const Text('No connection to the data store')
+              : ListView(
+                  children: [
+                    const Text('Load activities', textAlign: TextAlign.center),
+                    const Text('Filter by category'),
+                    FutureBuilder(
+                      future: dataManager.getCategories(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          List<Category>? categories = snapshot.data;
+                          return _buildCategoryUI(categories);
+                        } else {
+                          return const Spinner();
+                        }
+                      },
+                    ),
+                    if (_category != null) ...[
+                      const Text('Tap to load activity & participants'),
+                      _activities == null
+                          ? FutureBuilder(
+                              future: _loadActivities(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  _activities =
+                                      _filterActivities(snapshot.data);
+                                  return _buildActivitiesUI(storedActivityIds);
+                                } else {
+                                  return const Spinner();
+                                }
+                              })
+                          : _buildActivitiesUI(storedActivityIds)
+                    ],
+                  ], // children
+                ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   _buildCategoryUI(List<Category>? categories) {

@@ -14,7 +14,8 @@ import '/models/domain.dart';
 import '/util/internet_connection_listener.dart';
 
 class DataManager extends ChangeNotifier {
-  static DataManager? _instance; // singleton with factory (because of the BuildContext needed)
+  static DataManager?
+      _instance; // singleton with factory (because of the BuildContext needed)
 
   factory DataManager(BuildContext context) {
     _instance ??= DataManager._(context);
@@ -225,7 +226,8 @@ class DataManager extends ChangeNotifier {
     List<Category>? result;
     if (isConnected) {
       if (_categoriesFetchTime == null ||
-          (DateTime.now().toUtc().difference(_categoriesFetchTime!).inMinutes < 120)) {
+          (DateTime.now().toUtc().difference(_categoriesFetchTime!).inMinutes <
+              120)) {
         _categoriesFetchTime = DateTime.now().toUtc();
         result = await _backend.getCategoriesAsync(await getOauth2token());
         if (result.isNotEmpty) {
@@ -284,6 +286,9 @@ class DataManager extends ChangeNotifier {
         info.personKey,
         info.scanTime,
       );
+      if (result.prevScanTime != null) {
+        _logger.d(result.prevScanTime!.toString());
+      }
       // update local store
       _local.queryAccess(info);
     } else {

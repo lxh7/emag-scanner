@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:logger/logger.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:logger/logger.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import '/logging/logging.dart';
@@ -27,6 +27,11 @@ class ScanPageState extends State<ScanPage> {
   late String scanMessage = '';
   Timer? _timer;
   static bool _torchEnabled = false;
+  /*
+    Note: do not start/stop the camera too often, this may result in crashes/inresponsive bar code scanner on iOS and (older) Android devices.
+    In stead, maintain a flag to process the (stream of) barcodes from the scanner or not (e.g. during the display of dialogs)
+  */
+  bool _pauzeBarcodes = false;
 
   ScanPageState() {
     _logger = getLogger(runtimeType.toString());
@@ -47,6 +52,7 @@ class ScanPageState extends State<ScanPage> {
       scanResult = newResult;
       scanMessage = message;
     });
+    _logger.d('setScanResult(): $newResult');
     switch (newResult) {
       case ScanResult.none:
         // quiet and peaceful ...
@@ -56,10 +62,8 @@ class ScanPageState extends State<ScanPage> {
         Vibrator.okBuzzer();
         if (scanMessage == '') {
           // auto reset status after a short while
-          _timer = Timer(
-            const Duration(milliseconds: 1500),
-            () => setScanResult(ScanResult.none, ''),
-          );
+          _timer =
+              Timer(const Duration(milliseconds: 1500), () => _startScanning());
         } else {
           showDialog(
             'Scan OK',
@@ -74,7 +78,6 @@ class ScanPageState extends State<ScanPage> {
         showDialog(
           'Additional check needed',
           message,
-          // backgroundColor: Colors.orange,
           icon: Icons.question_mark,
         );
         break;
@@ -84,7 +87,6 @@ class ScanPageState extends State<ScanPage> {
         showDialog(
           'Not allowed',
           message,
-          //backgroundColor: Colors.red,
           icon: Icons.block,
         );
         break;
@@ -95,6 +97,7 @@ class ScanPageState extends State<ScanPage> {
     _stopScanning();
     Navigator.pushNamed(context, routeName, arguments: arguments)
         .then((Object? returnVal) {
+      _logger.d('showResultInAPage returned');
       _startScanning();
     });
   }
@@ -116,105 +119,102 @@ class ScanPageState extends State<ScanPage> {
         color: Colors.black,
         size: 48.0,
       ),
-      onClose: _startScanning,
+      onClose: () {
+        _logger.d('dialog closed');
+        _startScanning();
+      },
     );
   }
 
   void _stopScanning() {
+    _logger.d('_stopScanning()');
     _torchEnabled = _cameraController.torchEnabled;
-    _cameraController.stop();
+    _logger.d('pauzing reception of barcodes');
+    _pauzeBarcodes = true;
   }
 
   void _startScanning() {
+    _logger.d('_startScanning()');
+    _timer?.cancel();
+    _timer = null;
     setScanResult(ScanResult.none, '');
-    _cameraController.start();
-    if (_torchEnabled ^ _cameraController.torchEnabled) {
-      _cameraController.toggleTorch();
-    }
+    _logger.d('starting reception of barcodes');
+    _pauzeBarcodes = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    late BaseScanHandler handler =
+    BaseScanHandler handler =
         ModalRoute.of(context)!.settings.arguments as BaseScanHandler;
     handler.page = this;
     _theme = Theme.of(context);
     var dataManager = context.watch<DataManager>();
     var subTitle = handler.getSubTitle();
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text(handler.getTitle()),
-          centerTitle: subTitle != '',
-          toolbarHeight: 80,
-          flexibleSpace: FlexibleSpaceBar(
-            stretchModes: const <StretchMode>[
-              StretchMode.zoomBackground,
-              StretchMode.blurBackground,
-              StretchMode.fadeTitle,
-            ],
-            centerTitle: true,
-            title: Text(
-              dataManager.apiConnectionState.displayMessage,
-              textScaleFactor: 0.6,
-            ),
-          ),
-          bottom: subTitle != ''
-              ? PreferredSize(
-                  preferredSize: Size.zero,
-                  child: Text(
-                    subTitle,
-                    style: TextStyle(color: _theme.secondaryHeaderColor),
-                  ),
-                )
-              : null,
-          actions: [
-            Icon(
-              Icons.network_wifi,
-              color: dataManager.apiConnectionState.color,
-            ),
-            IconButton(
-              // color: Colors.white,
-              icon: ValueListenableBuilder(
-                valueListenable: _cameraController.torchState,
-                builder: (context, state, child) {
-                  switch (state) {
-                    case TorchState.off:
-                      return const Icon(Icons.lightbulb, color: Colors.grey);
-                    case TorchState.on:
-                      return const Icon(Icons.lightbulb,
-                          color: Colors.yellowAccent);
-                  }
-                },
-              ),
-              iconSize: 32.0,
-              onPressed: () => _cameraController.toggleTorch(),
-            ),
-          ],
+        child: Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () => Navigator.pop(context),
         ),
-        /*
-        Note: DO NOT put anything else as the body, otherwise the preview window does not appear!
-        */
-        body: MobileScanner(
-          controller: _cameraController,
-          fit: BoxFit.contain,
-          onDetect: (capture) => handler.handleBarcodes(capture.barcodes),
-          onScannerStarted: _scannerStarted,
+        title: Text(
+          handler.getTitle(),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
         ),
-        backgroundColor: scanResult.getColor(_theme.colorScheme.background),
-        /*
-        Note: DO NOT add a bottomNavigationBar, otherwise the preview window does not appear!
-        */
-        // bottomNavigationBar
+        centerTitle: subTitle != '',
+        toolbarHeight: 80,
+        bottom: subTitle != ''
+            ? PreferredSize(
+                preferredSize: Size.zero,
+                child: Text(
+                  subTitle,
+                  style: TextStyle(color: _theme.secondaryHeaderColor),
+                ),
+              )
+            : null,
+        actions: [
+          Icon(
+            Icons.network_wifi,
+            color: dataManager.apiConnectionState.color,
+          ),
+          IconButton(
+            icon: ValueListenableBuilder(
+              valueListenable: _cameraController.torchState,
+              builder: (context, state, child) {
+                switch (state) {
+                  case TorchState.off:
+                    return const Icon(Icons.lightbulb, color: Colors.grey);
+                  case TorchState.on:
+                    return const Icon(Icons.lightbulb, color: Colors.yellow);
+                }
+              },
+            ),
+            iconSize: 32.0,
+            onPressed: _cameraController.toggleTorch,
+          ),
+        ],
+        backgroundColor: scanResult.getColor(_theme.colorScheme.primary),
       ),
-    );
+      // Note: DO NOT put any container or such as the body, otherwise the preview window does not appear!
+      body: MobileScanner(
+        controller: _cameraController,
+        fit: BoxFit.cover,
+        onDetect: (capture) async {
+          if (!_pauzeBarcodes) {
+            _pauzeBarcodes = true;
+            await _barcodeDetected(handler, capture.barcodes);
+          }
+        },
+      ),
+      // Note: DO NOT add a bottomNavigationBar, otherwise the preview window does not appear!
+      backgroundColor: scanResult.getColor(_theme.colorScheme.background),
+    ));
   }
 
-  void _scannerStarted(MobileScannerArguments? arguments) {
-    _logger.i('Scanner started: $arguments');
+  Future _barcodeDetected(
+      BaseScanHandler handler, List<Barcode> barcodes) async {
+    _stopScanning();
+    await handler.handleBarcodes(barcodes);
   }
 }
