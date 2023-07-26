@@ -30,43 +30,42 @@ class ActivityScanHandler extends BaseScanHandler {
       key,
       scanTime,
     );
-    late AccessCheckResult result;
     try {
-      result = await dataManager.checkAccess(info);
+      var result = await dataManager.checkAccess(info);
+      previousScanTime = result.prevScanTime;
+      // set message based on check
+      var message = '';
+      switch (result.scanResult) {
+        case ScanResult.none:
+        case ScanResult.pass:
+          // no message
+          break;
+        case ScanResult.check:
+          if (previousScanTime != null) {
+            logger.d('Previous scan time UTC ${previousScanTime!.toString()}');
+            message =
+                'This code has been scanned earlier for this activity \n(on ${MyFormats.dateTime.format(previousScanTime!.toLocal())}).';
+          } else {
+            message = 'Unsure about this person: reason unknown.';
+          }
+          message = '$message\n Please perform additional check(s)';
+          break;
+        case ScanResult.deny:
+          message =
+              'This code does not belong to any participant on this activity';
+          break;
+        case ScanResult.error:
+          if (result.message == '') {
+            message = 'An error occurred during the processing of the code';
+          } else {
+            message = result.message;
+          }
+          break;
+      }
+      scanPage.setScanResult(result.scanResult, message);
     } catch (e) {
       scanPage.setScanResult(ScanResult.error, e.toString());
       return;
     }
-    previousScanTime = result.prevScanTime;
-    // set message based on check
-    var message = '';
-    switch (result.scanResult) {
-      case ScanResult.none:
-      case ScanResult.pass:
-        // no message
-        break;
-      case ScanResult.check:
-        if (previousScanTime != null) {
-          logger.d('Previous scan time UTC ${previousScanTime!.toString()}');
-          message =
-              'This code has been scanned earlier for this activity \n(on ${MyFormats.dateTime.format(previousScanTime!.toLocal())}).';
-        } else {
-          message = 'Unsure about this person: reason unknown.';
-        }
-        message = '$message\n Please perform additional check(s)';
-        break;
-      case ScanResult.deny:
-        message =
-            'This code does not belong to any participant on this activity';
-        break;
-      case ScanResult.error:
-        if (result.message == '') {
-          message = 'An error occurred during the processing of the code';
-        } else {
-          message = result.message;
-        }
-        break;
-    }
-    scanPage.setScanResult(result.scanResult, message);
   }
 }
