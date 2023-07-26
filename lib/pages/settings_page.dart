@@ -62,6 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   filled: true,
                 ),
                 autocorrect: false,
+                
                 onChanged: (value) {
                   appSettings.apiUrl = value;
                 },
@@ -102,6 +103,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   filled: true,
                 ),
                 autocorrect: false,
+                enableIMEPersonalizedLearning: false,
                 onChanged: (value) {
                   appSettings.oauthClientId = value;
                 },
@@ -116,6 +118,7 @@ class _SettingsPageState extends State<SettingsPage> {
               subtitle: TextField(
                 obscureText: !oauthClientSecretVisible,
                 autocorrect: false,
+                enableIMEPersonalizedLearning: false,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
@@ -159,6 +162,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   filled: true,
                 ),
                 autocorrect: false,
+                enableIMEPersonalizedLearning: false,
                 onChanged: (value) {
                   appSettings.userId = value;
                 },
@@ -173,6 +177,7 @@ class _SettingsPageState extends State<SettingsPage> {
               subtitle: TextField(
                 obscureText: !passwordVisible,
                 autocorrect: false,
+                enableIMEPersonalizedLearning: false,
                 keyboardType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 decoration: InputDecoration(

@@ -144,11 +144,12 @@ class LocalDataStore {
             result.scanResult = ScanResult.check;
             result.message =
                 'Scanned earlier: ${MyFormats.dateTime.format(participation.scanTime!.toLocal())}';
-            if (DateTime.now()
-                    .toUtc()
-                    .difference(result.prevScanTime!)
-                    .inMinutes >=
-                15) {
+            if (result.prevScanTime == null ||
+                DateTime.now()
+                        .toUtc()
+                        .difference(result.prevScanTime!)
+                        .inMinutes >=
+                    15) {
               result.prevScanTime = participation.scanTime;
             }
           }

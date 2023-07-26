@@ -30,7 +30,13 @@ class ActivityScanHandler extends BaseScanHandler {
       key,
       scanTime,
     );
-    var result = await dataManager.checkAccess(info);
+    late AccessCheckResult result;
+    try {
+      result = await dataManager.checkAccess(info);
+    } catch (e) {
+      scanPage.setScanResult(ScanResult.error, e.toString());
+      return;
+    }
     previousScanTime = result.prevScanTime;
     // set message based on check
     var message = '';

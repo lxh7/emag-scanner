@@ -26,7 +26,7 @@ jobs:
         uses: maierj/fastlane-action@v2.3.0
         with:
           lane: ios release
-          subdirectory: ios
+          subdirectory: fastlane
         env: 
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           APPSTORECONNECT_PRIVATE_KEY: ${{ secrets.APPSTORECONNECT_PRIVATE_KEY }}

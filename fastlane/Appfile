@@ -2,7 +2,7 @@
 package_name("nl.emag23.scanner") # e.g. com.krausefx.app
 
 #iOS
-app_identifier("nl.emag23.scanner.beta") # The bundle identifier of your app
+app_identifier("nl.emag23.scanner") # The bundle identifier of your app
 apple_id("develop@qthink.nl") # Your Apple Developer Portal username
 
 itc_team_id("<todo>") # App Store Connect Team ID

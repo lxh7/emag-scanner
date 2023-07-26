@@ -200,11 +200,8 @@ class ScanPageState extends State<ScanPage> {
       body: MobileScanner(
         controller: _cameraController,
         fit: BoxFit.cover,
-        onDetect: (capture) async {
-          if (!_pauzeBarcodes) {
-            _pauzeBarcodes = true;
-            await _barcodeDetected(handler, capture.barcodes);
-          }
+        onDetect: (BarcodeCapture capture) async {
+          await _barcodeDetected(capture, handler);
         },
       ),
       // Note: DO NOT add a bottomNavigationBar, otherwise the preview window does not appear!
@@ -213,8 +210,10 @@ class ScanPageState extends State<ScanPage> {
   }
 
   Future _barcodeDetected(
-      BaseScanHandler handler, List<Barcode> barcodes) async {
-    _stopScanning();
-    await handler.handleBarcodes(barcodes);
+      BarcodeCapture capture, BaseScanHandler handler) async {
+    if (!_pauzeBarcodes) {
+      _stopScanning();
+      await handler.handleBarcodes(capture.barcodes);
+    }
   }
 }
