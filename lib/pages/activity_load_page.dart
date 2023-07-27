@@ -89,7 +89,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
                                 if (snapshot.connectionState ==
                                     ConnectionState.done) {
                                   _activities =
-                                      _filterActivities(snapshot.data);
+                                      _filterAndSortActivities(snapshot.data);
                                   return _buildActivitiesUI(storedActivityIds);
                                 } else {
                                   return const Spinner();
@@ -141,7 +141,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     );
   }
 
-  List<Activity> _filterActivities(List<Activity>? data) {
+  List<Activity> _filterAndSortActivities(List<Activity>? data) {
     // don't show old activities, older than 8 hours
     var cutOffDate = DateTime.now().add(const Duration(hours: -8));
     var result = data;
@@ -177,7 +177,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     if (result != 0) {
       return result;
     }
-    result = a.end.compareTo(b.end);
+    result = a.name.compareTo(b.name);
 
     return result;
   }
