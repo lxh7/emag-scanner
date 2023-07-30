@@ -9,6 +9,7 @@ import '/data/data_manager.dart';
 import '/enums/api_connection_state.dart';
 import '/enums/scan_result.dart';
 import '/scanning/base_scan_handler.dart';
+import '/util/routes.dart';
 import '/util/my_dialog.dart';
 import '/util/vibrator.dart';
 
@@ -193,6 +194,13 @@ class ScanPageState extends State<ScanPage> {
             iconSize: 32.0,
             onPressed: _cameraController.toggleTorch,
           ),
+          IconButton(
+            icon: const Icon(Icons.help),
+            tooltip: 'Help',
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.help);
+            },
+          )
         ],
         backgroundColor: scanResult.getColor(_theme.colorScheme.primary),
       ),

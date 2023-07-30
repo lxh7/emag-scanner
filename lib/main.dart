@@ -1,3 +1,4 @@
+import 'package:emag_scanner/pages/help_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -64,6 +65,7 @@ class ScanApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // '/': (context) => const HomePage(), -- redundant
+        Routes.help: (context) => const HelpPage(),
         Routes.settings: (context) => const SettingsPage(),
         Routes.scan: (context) => const ScanPage(),
         Routes.activityConfirm: (context) => ActivityConfirmPage(),

@@ -23,7 +23,6 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     var appSettings = Provider.of<AppSettings>(context, listen: false);
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -40,7 +39,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 tooltip: 'Scan settings',
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.scan,
-                      arguments: SettingsScanHandler());
+                          arguments: SettingsScanHandler())
+                      .then((value) => setState(() {}));
                 }),
           ],
         ),
@@ -62,7 +62,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   filled: true,
                 ),
                 autocorrect: false,
-                
                 onChanged: (value) {
                   appSettings.apiUrl = value;
                 },

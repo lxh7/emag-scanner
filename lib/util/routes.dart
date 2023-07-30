@@ -1,4 +1,5 @@
 class Routes {
+  static const help = '/help';
   static const settings = '/settings';
   static const scan = '/scan';
 

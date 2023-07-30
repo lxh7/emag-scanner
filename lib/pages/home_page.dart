@@ -17,6 +17,12 @@ class HomePage extends StatelessWidget {
           title: const Text('EMAG \'23 Scanner'),
           actions: <Widget>[
             IconButton(
+              icon: const Icon(Icons.help),
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.help);
+              },
+            ),
+            IconButton(
               icon: const Icon(Icons.settings),
               tooltip: 'Settings',
               onPressed: () {
