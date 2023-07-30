@@ -6,7 +6,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   flutter_secure_storage_windows
   network_info_plus
-  permission_handler_windows
   realm
   url_launcher_windows
 )

@@ -54,10 +54,13 @@ android {
         applicationId "nl.emag23.scanner"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21 // flutter.minSdkVersion
-        targetSdkVersion 31 //flutter.targetSdkVersion
+        minSdkVersion 21 // flutter.minSdkVersion does not work because of the package flutter_secure_storage
+        targetSdkVersion 33 //flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        ndk {
+          abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"
+       }
     }
     signingConfigs {
         release {
