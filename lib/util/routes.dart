@@ -2,6 +2,7 @@ class Routes {
   static const help = '/help';
   static const settings = '/settings';
   static const scan = '/scan';
+  static const programme = '/programme';
 
   static const activityConfirm = '/activity/confirm';
   static const activitySelect = '/activity/select';

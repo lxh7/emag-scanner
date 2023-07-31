@@ -38,6 +38,16 @@ class HomePage extends StatelessWidget {
               ConnectionWidget.get(),
               SvgPicture.asset('./assets/images/logo.svg'),
               ElevatedButton(
+                child: const Text('Show programme'),
+                onPressed: () {
+                  // ensure categories are fetched from the server
+                  DataManager(context).getCategories().then((value) {
+                    Navigator.pushNamed(context, Routes.programme
+                        );
+                  });
+                },
+              ),
+              ElevatedButton(
                 child: const Text('Scan for access'),
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.activityConfirm);

@@ -1,4 +1,3 @@
-import 'package:emag_scanner/pages/help_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -15,10 +14,12 @@ import 'pages/activity_load_page.dart';
 import 'pages/activity_select_page.dart';
 import 'pages/activity_confirm_page.dart';
 import 'pages/activity_participants_page.dart';
-import 'pages/registration_setup_page.dart';
 import 'pages/goodies_show_page.dart';
-import 'pages/settings_page.dart';
+import 'pages/help_page.dart';
+import 'pages/programme_page.dart';
+import 'pages/registration_setup_page.dart';
 import 'pages/scan_page.dart';
+import 'pages/settings_page.dart';
 
 void main() async {
   Intl.defaultLocale = 'en';
@@ -68,6 +69,7 @@ class ScanApp extends StatelessWidget {
         Routes.help: (context) => const HelpPage(),
         Routes.settings: (context) => const SettingsPage(),
         Routes.scan: (context) => const ScanPage(),
+        Routes.programme: (context)=> const ProgrammePage(),
         Routes.activityConfirm: (context) => ActivityConfirmPage(),
         Routes.activitySelect: (context) => const ActivitySelectPage(),
         Routes.activityDownload: (context) => const ActivityLoadPage(),
