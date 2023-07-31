@@ -130,9 +130,7 @@ class _ProgrammePageState extends State<ProgrammePage> {
                     // ignore: prefer_interpolation_to_compose_strings
                     ? activity.title.substring(0, maxTitleLen) + '...'
                     : activity.title),
-                subtitle: Text(activity.location! +'\n'+
-                    DateFormat('dd-MM-yyyy HH:mm - ').format(activity.start) +
-                        DateFormat('HH:mm').format(activity.end)),
+                subtitle: Text('${activity.location}\n${DateFormat('dd-MM-yyyy HH:mm - ').format(activity.start)}${DateFormat('HH:mm').format(activity.end)}'),
                 isThreeLine: true,
                 shape: RoundedRectangleBorder(
                   side: const BorderSide(color: Colors.black, width: 1),
