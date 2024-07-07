@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/util/routes.dart';
 import '/data/data_manager.dart';
-import 'scan_page.dart';
 import '/scanning/registration_scan_handler.dart';
 import '/util/registration_service.dart';
 import '/widgets/connection_widget.dart';
@@ -14,20 +14,7 @@ class RegistrationSetupPage extends StatelessWidget {
 
   void _startScanning(BuildContext context,
       Future<String> Function() getTokenFunc, String printer) {
-    Navigator.push(
-      context,
-      MaterialPageRoute<void>(
-        builder: (context) => ScanPage(
-          handler: RegistrationScanHandler(
-            getTokenFunc: getTokenFunc,
-            printer: printer,
-          ),
-        ),
-        settings: RouteSettings(
-          name: (ScanPage).toString() + (RegistrationScanHandler).toString(),
-        ),
-      ),
-    );
+    Navigator.pushNamed(context, Routes.scan, arguments:  RegistrationScanHandler(getTokenFunc, printer));
   }
 
   @override

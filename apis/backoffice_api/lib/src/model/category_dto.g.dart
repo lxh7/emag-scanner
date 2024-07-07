@@ -11,11 +11,13 @@ class _$CategoryDTO extends CategoryDTO {
   final int? id;
   @override
   final String? name;
+  @override
+  final int? scanFunction;
 
   factory _$CategoryDTO([void Function(CategoryDTOBuilder)? updates]) =>
       (new CategoryDTOBuilder()..update(updates))._build();
 
-  _$CategoryDTO._({this.id, this.name}) : super._();
+  _$CategoryDTO._({this.id, this.name, this.scanFunction}) : super._();
 
   @override
   CategoryDTO rebuild(void Function(CategoryDTOBuilder) updates) =>
@@ -27,7 +29,10 @@ class _$CategoryDTO extends CategoryDTO {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CategoryDTO && id == other.id && name == other.name;
+    return other is CategoryDTO &&
+        id == other.id &&
+        name == other.name &&
+        scanFunction == other.scanFunction;
   }
 
   @override
@@ -35,6 +40,7 @@ class _$CategoryDTO extends CategoryDTO {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, scanFunction.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -43,7 +49,8 @@ class _$CategoryDTO extends CategoryDTO {
   String toString() {
     return (newBuiltValueToStringHelper(r'CategoryDTO')
           ..add('id', id)
-          ..add('name', name))
+          ..add('name', name)
+          ..add('scanFunction', scanFunction))
         .toString();
   }
 }
@@ -59,6 +66,10 @@ class CategoryDTOBuilder implements Builder<CategoryDTO, CategoryDTOBuilder> {
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
+  int? _scanFunction;
+  int? get scanFunction => _$this._scanFunction;
+  set scanFunction(int? scanFunction) => _$this._scanFunction = scanFunction;
+
   CategoryDTOBuilder() {
     CategoryDTO._defaults(this);
   }
@@ -68,6 +79,7 @@ class CategoryDTOBuilder implements Builder<CategoryDTO, CategoryDTOBuilder> {
     if ($v != null) {
       _id = $v.id;
       _name = $v.name;
+      _scanFunction = $v.scanFunction;
       _$v = null;
     }
     return this;
@@ -88,7 +100,8 @@ class CategoryDTOBuilder implements Builder<CategoryDTO, CategoryDTOBuilder> {
   CategoryDTO build() => _build();
 
   _$CategoryDTO _build() {
-    final _$result = _$v ?? new _$CategoryDTO._(id: id, name: name);
+    final _$result = _$v ??
+        new _$CategoryDTO._(id: id, name: name, scanFunction: scanFunction);
     replace(_$result);
     return _$result;
   }

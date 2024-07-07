@@ -1,0 +1,1818 @@
+[
+  {
+    "category": "EMAG main",
+    "title": "Registration",
+    "datum": "2023-08-01 14:00:00",
+    "datum_end": "2023-08-01 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": ""
+  },
+  {
+    "category": "Explore the city",
+    "title": "Iconic highlights Rotterdam (city walk)",
+    "datum": "2023-08-02 09:30:00",
+    "datum_end": "2023-08-02 11:30:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Visit to the floating cowfarm",
+    "datum": "2023-08-02 10:00:00",
+    "datum_end": "2023-08-02 12:00:00",
+    "place": "Gustoweg 10, 3029 AS Rotterdam",
+    "meet_gps": "51.912793, 4.4136855"
+  },
+  {
+    "category": "Tours",
+    "title": "Natural island and green oasis Tiengemeten (day trip boat)",
+    "datum": "2023-08-02 10:00:00",
+    "datum_end": "2023-08-02 18:30:00",
+    "place": "Tiengemeten",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Book of Mystery (4 players)",
+    "datum": "2023-08-02 10:20:00",
+    "datum_end": "2023-08-02 11:50:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Enigma (4 players)",
+    "datum": "2023-08-02 12:00:00",
+    "datum_end": "2023-08-02 13:30:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "EMAG main",
+    "title": "Registration",
+    "datum": "2023-08-02 13:00:00",
+    "datum_end": "2023-08-02 17:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": ""
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-02 13:30:00",
+    "datum_end": "2023-08-02 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "The unique landmark architecture of Rotterdam (city walk)",
+    "datum": "2023-08-02 14:00:00",
+    "datum_end": "2023-08-02 16:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Discover the green gems in the concrete jungle (bike tour)",
+    "datum": "2023-08-02 14:00:00",
+    "datum_end": "2023-08-02 16:30:00",
+    "place": "Rent a bike (included)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Guided tour Feyenoord stadium",
+    "datum": "2023-08-02 14:00:00",
+    "datum_end": "2023-08-02 16:00:00",
+    "place": "De Kuip, Van Zandvlietplein 1, 3077 AA Rotterdam",
+    "meet_gps": "51.893861, 4.523185"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Enigma (6 players)",
+    "datum": "2023-08-02 14:00:00",
+    "datum_end": "2023-08-02 15:30:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Art & science",
+    "title": "De Kunsthal (guided tour)",
+    "datum": "2023-08-02 14:00:00",
+    "datum_end": "2023-08-02 16:00:00",
+    "place": "Kunsthal Rotterdam, Westzeedijk 341, 3015 AA Rotterdam",
+    "meet_gps": "51.910859, 4.4739555"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Discover the green gems in the concrete jungle (bike tour, own bike)",
+    "datum": "2023-08-02 14:00:00",
+    "datum_end": "2023-08-02 16:30:00",
+    "place": "Bring your own bike",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-02 14:00:00",
+    "datum_end": "2023-08-02 16:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Historical tram ride",
+    "datum": "2023-08-02 14:30:00",
+    "datum_end": "2023-08-02 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Enigma (4 players)",
+    "datum": "2023-08-02 16:00:00",
+    "datum_end": "2023-08-02 17:30:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "EMAG main",
+    "title": "Ice breaker",
+    "datum": "2023-08-02 17:00:00",
+    "datum_end": "2023-08-02 23:59:00",
+    "place": "Bird, Raampoortstraat 24, 3032 AH Rotterdam",
+    "meet_gps": "51.92724708316N, 4.478970736772E"
+  },
+  {
+    "category": "EMAG main",
+    "title": "Registration (only collect badge)",
+    "datum": "2023-08-02 17:30:00",
+    "datum_end": "2023-08-02 19:30:00",
+    "place": "Bird, Raampoortstraat 24, 3032 AH Rotterdam",
+    "meet_gps": "51.92724708316N, 4.478970736772E"
+  },
+  {
+    "category": "Art & science",
+    "title": "Plunge in the world of microscopy - Camille Bail",
+    "datum": "2023-08-03 08:30:00",
+    "datum_end": "2023-08-03 17:45:00",
+    "place": "Thermo Fisher Scientific, Eindhoven, Nanoport: Achtseweg Noord 5, 5651 GG Eindhoven",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Tours",
+    "title": "Cheese making (workshop)",
+    "datum": "2023-08-03 08:45:00",
+    "datum_end": "2023-08-03 14:15:00",
+    "place": "Booerderij 't Geertje, Geerweg 7, 2381 LT Zoeterwoude",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "EMAG main",
+    "title": "Registration",
+    "datum": "2023-08-03 09:00:00",
+    "datum_end": "2023-08-03 12:30:00",
+    "place": "",
+    "meet_gps": ""
+  },
+  {
+    "category": "Art & science",
+    "title": "Fossil hunt Maasvlakte",
+    "datum": "2023-08-03 09:30:00",
+    "datum_end": "2023-08-03 11:30:00",
+    "place": "2e Maasvlakte",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Iconic highlights Rotterdam (city walk)",
+    "datum": "2023-08-03 09:30:00",
+    "datum_end": "2023-08-03 11:30:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "The authentic and colourful Old North (City walk)",
+    "datum": "2023-08-03 09:30:00",
+    "datum_end": "2023-08-03 11:30:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Cybersecurity: Improving online security - perianwyr",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Disrupting Education: The Future of Learning with AI and Technology - Joaquim Virgili",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Upgrade your communication: talk smarter to get what you want - Mia Liljeberg",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "How to create a fulfilling career for exceptional talents? - Frans Corten",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "Two top exhibitions: M.C. Escher & Henry Moore (The Hague)",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 18:30:00",
+    "place": "The Hague",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Tours",
+    "title": "Daytrip to Kinderdijk",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 17:00:00",
+    "place": "Kinderdijk",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "I Draw R'dam",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:30:00",
+    "place": "Cube houses, Overblaak 85-87, Rotterdam",
+    "meet_gps": "51.92006, 4.490574"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Historical tram ride",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 11:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Workshops",
+    "title": "Meet and greet LGBTIQ+ mensans - Yvonne Veltmaat",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Safehouse (4 players)",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 11:30:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Lectures",
+    "title": "Green Aviation - Oasis or Mirage - Judson Rollins",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Dealing with future challenges in water management - Chris Zevenbergen",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Jigsaw competition",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Art & science",
+    "title": "Het Nieuwe Instituut: architecture, design & digital culture",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 13:30:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "Huis Sonneveld: modernism anno 1930 (guided tour 18+)",
+    "datum": "2023-08-03 10:00:00",
+    "datum_end": "2023-08-03 11:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Tours",
+    "title": "Daytour with sightseeing Dordrecht (Thursday)",
+    "datum": "2023-08-03 10:30:00",
+    "datum_end": "2023-08-03 17:00:00",
+    "place": "Dordrecht",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Euromast, Euroscope (guided tour)",
+    "datum": "2023-08-03 10:30:00",
+    "datum_end": "2023-08-03 11:30:00",
+    "place": "Euromast, Parkhaven 20, 3016 GM Rotterdam",
+    "meet_gps": "51.9053909, 4.4668090"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Midgetgolf Euromast",
+    "datum": "2023-08-03 11:00:00",
+    "datum_end": "2023-08-03 12:15:00",
+    "place": "Parkhaven 22, 3016 GM Rotterdam",
+    "meet_gps": "51.903813, 4.467594"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Splashtour amphibian bus: harbour cruise + city tour",
+    "datum": "2023-08-03 11:30:00",
+    "datum_end": "2023-08-03 12:30:00",
+    "place": "Splashtours Rotterdam, Parkhaven 11, 3016 GM Rotterdam",
+    "meet_gps": "51.90529, 4.4657586"
+  },
+  {
+    "category": "Lectures",
+    "title": "Evolutionary psychology: the 'why' in psychology - Mark Van Peteghem",
+    "datum": "2023-08-03 12:00:00",
+    "datum_end": "2023-08-03 14:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Smartphone photography - workshop & walk - Else Kramer",
+    "datum": "2023-08-03 12:30:00",
+    "datum_end": "2023-08-03 14:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "European Mensa's Soccer Championship",
+    "datum": "2023-08-03 12:30:00",
+    "datum_end": "2023-08-03 14:30:00",
+    "place": "Sportcomplex Olympia, Buitendijk 100, 3078 XC Rotterdam",
+    "meet_gps": "51.8895444, 4.5302123"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Harbour cruise Pancake Boat",
+    "datum": "2023-08-03 12:30:00",
+    "datum_end": "2023-08-03 13:45:00",
+    "place": "Parkhaven 13, 3016 GM Rotterdam",
+    "meet_gps": "51.904745, 4.4661040"
+  },
+  {
+    "category": "Art & science",
+    "title": "Guided tour Depot Boijmans van Beuningen",
+    "datum": "2023-08-03 13:30:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "Depot Boijmans van Beuningen, Museumpark 24, 3015 CX Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "Combined tour: ESTEC & Space Expo",
+    "datum": "2023-08-03 13:30:00",
+    "datum_end": "2023-08-03 18:15:00",
+    "place": "Space Expo, Keplerlaan 3, 2201 AZ Noordwijk",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Ballroom Dancing Quick step, Chacha - Marja van Ingen Schenau-Roovers",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "1000 days, 1000 pictures - Corinna Kunze",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "The Van Nellefabriek: pinnacle of 'het Nieuwe Bouwen' (city tour)",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 15:30:00",
+    "place": "Van Nelle Fabriek,Van Nelleweg 1, 3044 BC Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "The unique landmark architecture of Rotterdam (city walk)",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "History of Rotterdam: Progressive thinkers & prosperous traders (City walk)",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Delfshaven: historic port & Pilgrim Fathers (City walk)",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "Delfshaven",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Decorate a wooden shoe - Charlotte Hoyng & Stefanie den Adel",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Visit to the floating cow farm",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "Gustoweg 10, 3029 AS Rotterdam",
+    "meet_gps": "51.912793, 4.4136855"
+  },
+  {
+    "category": "Lectures",
+    "title": "World of data intro - Peter & Daria Huszar",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 15:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Intellectually <s>dis<\/s>abled?!",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Theatersports (Theater improvisation) - Iris Bijl",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Bodies in water, diagnostics per exclusionem - Pathologist Anatomist Frank van de Goot",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Thinktank session",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-03 14:00:00",
+    "datum_end": "2023-08-03 16:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "General introduction to the world of data - Peter & Daria Huszar",
+    "datum": "2023-08-03 15:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Bachata - Ignacio Blanco",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "1421, The flood that profoundly changed the geography - Sietse Altena",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Informal and Incomplete - Sven Storms",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "A different view on climate change - Kurt Fuchs",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "From Risks to Resilience: Rotterdam's Resilience Strategy - Maarten Nijpels en Kinga Feenstra",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Enigma (6 players)",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 17:30:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Lectures",
+    "title": "An introduction to transformative fanworks - Laura Liems",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "La Residence (4 players)",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 17:30:00",
+    "place": "Doctor Watsons, Museumpark 5, 3015 CB Rotterdam",
+    "meet_gps": "51.914783, 4.47343823"
+  },
+  {
+    "category": "Lectures",
+    "title": "Extreme IoT - Pushing the limits of the Internet of Things - Suryansh Sharma, TU Delft",
+    "datum": "2023-08-03 16:00:00",
+    "datum_end": "2023-08-03 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Book of Mystery (4 players)",
+    "datum": "2023-08-03 16:20:00",
+    "datum_end": "2023-08-03 17:50:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Safehouse (6 players)",
+    "datum": "2023-08-03 17:30:00",
+    "datum_end": "2023-08-03 19:00:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Lab 13 (4 players)",
+    "datum": "2023-08-03 17:45:00",
+    "datum_end": "2023-08-03 19:15:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Visit to the Dutch Pinball Museum",
+    "datum": "2023-08-03 19:00:00",
+    "datum_end": "2023-08-03 21:00:00",
+    "place": "Dutch Pinball Museum, Voorhaven 12, 3024 RM Rotterdam",
+    "meet_gps": "51.908057, 4.4487984"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Shooting 101 - Arjen van der Lely",
+    "datum": "2023-08-03 19:00:00",
+    "datum_end": "2023-08-03 21:00:00",
+    "place": "Brielse Schietsportvereniging, Maarland Noordzijde 104, 3231 CH Brielle",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Boiler Room (4 players)",
+    "datum": "2023-08-03 19:30:00",
+    "datum_end": "2023-08-03 21:00:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Room 1409 (6 players)",
+    "datum": "2023-08-03 19:45:00",
+    "datum_end": "2023-08-03 21:15:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Lectures",
+    "title": "Hypnosis and erotic play - Herman Umans",
+    "datum": "2023-08-03 20:00:00",
+    "datum_end": "2023-08-03 22:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Oude Haven (city walk)",
+    "datum": "2023-08-03 20:00:00",
+    "datum_end": "2023-08-03 22:00:00",
+    "place": "Het Witte Huis, Geldersekade 1C, 3011 WB Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "History meets modern architecture, next to the coolest neighbourhood (city walk)",
+    "datum": "2023-08-03 20:00:00",
+    "datum_end": "2023-08-03 22:00:00",
+    "place": "Hotel New York, Koninginnenhoofd 1, 3072 AD Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Karaokebar Fame",
+    "datum": "2023-08-03 20:00:00",
+    "datum_end": "2023-08-03 22:00:00",
+    "place": "Karaoke Bar Fame, Nieuwe Binnenweg 99-B, 3014 GG Rotterdam",
+    "meet_gps": "51.916015, 4.4679863"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Segway tour",
+    "datum": "2023-08-03 20:30:00",
+    "datum_end": "2023-08-03 21:45:00",
+    "place": "Segway Rotterdam, Parkhaven 9, 3016 GM Rotterdam",
+    "meet_gps": "51.90543, 4.46566"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Book of Mystery (6 players)",
+    "datum": "2023-08-03 22:20:00",
+    "datum_end": "2023-08-03 23:50:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Guided tour of Rotterdam City Hall",
+    "datum": "2023-08-04 09:00:00",
+    "datum_end": "2023-08-04 10:00:00",
+    "place": "Coolsingel 40, 3011 AD Rotterdam",
+    "meet_gps": "51.92282, 4.479517"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Blijdorp Zoo",
+    "datum": "2023-08-04 09:00:00",
+    "datum_end": "2023-08-04 21:00:00",
+    "place": "Blijdorp Rotterdam",
+    "meet_gps": "51.928282, 4.4436461"
+  },
+  {
+    "category": "Tours",
+    "title": "Delft, a walk through history",
+    "datum": "2023-08-04 09:30:00",
+    "datum_end": "2023-08-04 12:15:00",
+    "place": "Delft",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rotterdam in WWII; the bombing and rebuilding of the city (city walk)",
+    "datum": "2023-08-04 09:30:00",
+    "datum_end": "2023-08-04 11:30:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Architecture city centre & Zuid (Bike tour)",
+    "datum": "2023-08-04 09:30:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "Rent a bike (included)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Segway tour",
+    "datum": "2023-08-04 09:30:00",
+    "datum_end": "2023-08-04 10:45:00",
+    "place": "Segway Rotterdam, Parkhaven 9, 3016 GM Rotterdam",
+    "meet_gps": "51.90543, 4.46566"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Architecture city centre & Zuid (Bike tour, own bike)",
+    "datum": "2023-08-04 09:30:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "Bring your own bike",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Age related hearing loss, hearing aids and keeping IQ at high level - Cora Guse",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Creating waterfigurines for children ages 6+ and adults - Lydia van Rookhuijzen",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Pension systems for dummies: how to deal with longevity risk? - Fieke van der Lecq",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "HIQ and procrastination for adults - Else Kramer",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Cybersecurity; Be Afraid, Be Very Afraid - Rick Trilling (Wentworth Institute of Technology)",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Historical tramride through Rotterdam with guide",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 11:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen forest climbing experience",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 13:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Workshops",
+    "title": "Introduction to traditional Shotokan Karate - Karen Guethler",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Academic Acceleration to Maximize Talent Development - Keri Guilbault (Johns Hopkins University)",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Do I tell it at work ...(and how)!? - Grethe van Geffen & Angela Riddering",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Safehouse (6 players)",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 11:30:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "L'Architecte (6 players)",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 11:30:00",
+    "place": "Doctor Watsons, Museumpark 5, 3015 CB Rotterdam",
+    "meet_gps": "51.914783, 4.47343823"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen forest Archery Tag",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 11:30:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen Lake SUP experience",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 11:30:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen Lake canoe experience",
+    "datum": "2023-08-04 10:00:00",
+    "datum_end": "2023-08-04 12:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Lab 13 (4 players)",
+    "datum": "2023-08-04 10:15:00",
+    "datum_end": "2023-08-04 11:45:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Art & science",
+    "title": "Space Expo",
+    "datum": "2023-08-04 10:30:00",
+    "datum_end": "2023-08-04 15:00:00",
+    "place": "Space Expo, Keplerlaan 3, 2201 AZ Noordwijk",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen forest climbing experience",
+    "datum": "2023-08-04 10:30:00",
+    "datum_end": "2023-08-04 13:30:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Art & science",
+    "title": "ESTEC",
+    "datum": "2023-08-04 10:30:00",
+    "datum_end": "2023-08-04 15:00:00",
+    "place": "ESTEC, Keplerlaan 1, 2201 AZ Noordwijk",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen Lake SUP experience",
+    "datum": "2023-08-04 11:30:00",
+    "datum_end": "2023-08-04 13:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Boiler Room (4 players)",
+    "datum": "2023-08-04 12:00:00",
+    "datum_end": "2023-08-04 13:30:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen forest climbing experience",
+    "datum": "2023-08-04 12:00:00",
+    "datum_end": "2023-08-04 15:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen Lake canoe experience",
+    "datum": "2023-08-04 12:00:00",
+    "datum_end": "2023-08-04 14:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Lectures",
+    "title": "Decision-making in The Nederlands: The Polder Model - Paul Boogaard",
+    "datum": "2023-08-04 12:00:00",
+    "datum_end": "2023-08-04 14:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Making Mensa about more than drinking together - the Nordic Mensa Fund - Monika Orski and Janne Sylvest",
+    "datum": "2023-08-04 12:00:00",
+    "datum_end": "2023-08-04 14:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Travel the world with SIGHT - Henkhenk Broekhuizen and Andrea Schwelm",
+    "datum": "2023-08-04 13:00:00",
+    "datum_end": "2023-08-04 13:45:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen forest climbing experience",
+    "datum": "2023-08-04 13:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Guided tour of Rotterdam City Hall",
+    "datum": "2023-08-04 13:30:00",
+    "datum_end": "2023-08-04 14:30:00",
+    "place": "Coolsingel 40, 3011 AD Rotterdam",
+    "meet_gps": "51.92282, 4.479517"
+  },
+  {
+    "category": "Art & science",
+    "title": "Guided tour Depot Boijmans van Beuningen",
+    "datum": "2023-08-04 13:30:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Depot Boijmans van Beuningen, Museumpark 24, 3015 CX Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen forest climbing experience",
+    "datum": "2023-08-04 13:30:00",
+    "datum_end": "2023-08-04 16:30:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-04 13:30:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Ballroom Dancing Slow Waltz, Jive - Marja van Ingen Schenau-Roovers",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Patents: one idea can make you rich (or poor) - Markus Schauler",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Expedition Mundus (for adults) - Charlotte Hoyng",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Card set for coaching, therapy and self-coaching of gifted adults - Noks Nauta & Alma Dreković",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Street & Art (city walk)",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "History meets modern architecture, next to the coolest neighbourhood (city walk)",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Hotel New York, Koninginnenhoofd 1, 3072 AD Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Visit to the floating cow farm",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Gustoweg 10, 3029 AS Rotterdam",
+    "meet_gps": "51.912793, 4.4136855"
+  },
+  {
+    "category": "Lectures",
+    "title": "Giftedness in practice. Strengthening personal leadership in gifted adults - Rianne van de Ven",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Creative Candles - Ilona Boeren & Elisabeth Brandsma",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Beer & Brewery (bike tour)",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 17:00:00",
+    "place": "Rent a bike (included)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "How Nightly Dreams May Add Rich Flavors to the Dish of Daily Life - by Barbara Koning",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "The Rotterdam bicycling infrastructure: “Cycling-Mekka” or still need for improvement? (with bike rent)",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "The Rotterdam bicycling infrastructure: “Cycling-Mekka” or still need for improvement? (own bike)",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Nationaal Videogame Museum in Zoetermeer",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "Nationaal Videogame Museum, Theaterplein 11, 2711 EK Zoetermeer",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "Space Expo",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 18:30:00",
+    "place": "Space Expo, Keplerlaan 3, 2201 AZ Noordwijk",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "ESTEC",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 18:30:00",
+    "place": "ESTEC, Keplerlaan 1, 2201 AZ Noordwijk",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen Lake canoe experience",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Art & science",
+    "title": "De Kunsthal (guided tour)",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Kunsthal Rotterdam, Westzeedijk 341, 3015 AA Rotterdam",
+    "meet_gps": "51.910859, 4.4739555"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 16:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Beer & Brewery (bike tour, own bike)",
+    "datum": "2023-08-04 14:00:00",
+    "datum_end": "2023-08-04 17:00:00",
+    "place": "Bring your own bike",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Splashtour amphibian bus: harbour cruise + city tour",
+    "datum": "2023-08-04 14:30:00",
+    "datum_end": "2023-08-04 15:30:00",
+    "place": "Splashtours Rotterdam, Parkhaven 11, 3016 GM Rotterdam",
+    "meet_gps": "51.90529, 4.4657586"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen Lake SUP experience",
+    "datum": "2023-08-04 14:30:00",
+    "datum_end": "2023-08-04 16:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Fun & games",
+    "title": "RIB-boat tour",
+    "datum": "2023-08-04 15:00:00",
+    "datum_end": "2023-08-04 15:30:00",
+    "place": "RIB boat, Parkhaven 13, 3016 GM Rotterdam",
+    "meet_gps": "51.904547, 4.4662277"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen forest climbing experience",
+    "datum": "2023-08-04 15:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Workshops",
+    "title": "Merengue - Ignacio Blanco",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Consent starts in the body, not the head - Magali Rozec",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Bangladesh - Uwe Michael Neumann",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "I want this - Maaike Rekers",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Creative Candles - Ilona Boeren & Elisabeth Brandsma",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "If it were my dream… (adults) - Barbara Koning",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "L'Architecte (4 players)",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 17:30:00",
+    "place": "Doctor Watsons, Museumpark 5, 3015 CB Rotterdam",
+    "meet_gps": "51.914783, 4.47343823"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Kralingen Lake canoe experience",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "Fun forest, Langepad 71, 3062 CJ Rotterdam",
+    "meet_gps": "51.9404453, 4.5080154"
+  },
+  {
+    "category": "Lectures",
+    "title": "IBD Perth, not everything is trying to kill you - Kymberley Wilson",
+    "datum": "2023-08-04 16:00:00",
+    "datum_end": "2023-08-04 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Room 1409 (4 players)",
+    "datum": "2023-08-04 16:45:00",
+    "datum_end": "2023-08-04 18:15:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Enigma (6 players)",
+    "datum": "2023-08-04 18:00:00",
+    "datum_end": "2023-08-04 19:30:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "La Residence (4 players)",
+    "datum": "2023-08-04 18:00:00",
+    "datum_end": "2023-08-04 19:30:00",
+    "place": "Doctor Watsons, Museumpark 5, 3015 CB Rotterdam",
+    "meet_gps": "51.914783, 4.47343823"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Book of Mystery (4 players)",
+    "datum": "2023-08-04 18:20:00",
+    "datum_end": "2023-08-04 19:50:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Workshops",
+    "title": "Silent Disco Children (14-)",
+    "datum": "2023-08-04 19:00:00",
+    "datum_end": "2023-08-04 20:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Cuddle Party - by Magali Rozec",
+    "datum": "2023-08-04 19:30:00",
+    "datum_end": "2023-08-04 22:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Oude Haven (City walk)",
+    "datum": "2023-08-04 20:00:00",
+    "datum_end": "2023-08-04 22:00:00",
+    "place": "Het Witte Huis, Geldersekade 1C, 3011 WB Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Iconic highlights Rotterdam (city walk)",
+    "datum": "2023-08-04 20:00:00",
+    "datum_end": "2023-08-04 22:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Harpsong concert - Marja de Jong",
+    "datum": "2023-08-04 20:00:00",
+    "datum_end": "2023-08-04 21:00:00",
+    "place": "Citykerk Het Steiger, Hang 18, 3011 GG Rotterdam",
+    "meet_gps": "51.919921, 4.4844603"
+  },
+  {
+    "category": "Lectures",
+    "title": "Hypnosis and erotic play - Herman Umans",
+    "datum": "2023-08-04 20:00:00",
+    "datum_end": "2023-08-04 22:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Safehouse (4 players)",
+    "datum": "2023-08-04 20:30:00",
+    "datum_end": "2023-08-04 22:00:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Workshops",
+    "title": "Silent Disco 12+",
+    "datum": "2023-08-04 20:30:00",
+    "datum_end": "2023-08-04 23:59:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Room 1409 (4 players)",
+    "datum": "2023-08-04 22:45:00",
+    "datum_end": "2023-08-04 23:59:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Parkrun Kralingen Forest",
+    "datum": "2023-08-05 09:00:00",
+    "datum_end": "2023-08-05 12:00:00",
+    "place": "Kralingse Bos, Plaszoom, 3062 CL, Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-05 09:30:00",
+    "datum_end": "2023-08-05 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Guided tour Botanical garden & Arborethum",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Abseil down the Euromast",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 19:00:00",
+    "place": "Euromast, Parkhaven 20, 3016 GM Rotterdam",
+    "meet_gps": "51.9053909, 4.4668090"
+  },
+  {
+    "category": "EMAG main",
+    "title": "EMAG-panel for interested persons",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 11:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Lectures",
+    "title": "Mensa Foundation in the Netherlands (presentation) - Grethe van Geffen & Willem Bouwens",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Interactive talk: Systemic question techniques - the right question at the right time - Markus Gyger",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "The Climate Fresk - Alina Neitzert and Dr. Thomas Bremer (Mensans for Sustainability)",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 13:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Enigma (4 players)",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 11:30:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Workshops",
+    "title": "Dreams: travelling through dream space by dream shuttle -Barbara Koning (for children)",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 12:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "Voorlinden museum & gardens",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "Museum Voorlinden, Buurtweg 90, 2244 AG Wassenaar",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "La Residence (6 players)",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 11:30:00",
+    "place": "Doctor Watsons, Museumpark 5, 3015 CB Rotterdam",
+    "meet_gps": "51.914783, 4.47343823"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 12:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Amsterdam Pride Canal Parade visit",
+    "datum": "2023-08-05 10:00:00",
+    "datum_end": "2023-08-05 17:00:00",
+    "place": "Amsterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Tours",
+    "title": "Half daytour with sightseeing Dordrecht (Saturday morning)",
+    "datum": "2023-08-05 10:30:00",
+    "datum_end": "2023-08-05 15:00:00",
+    "place": "Dordrecht",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-05 10:30:00",
+    "datum_end": "2023-08-05 13:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Laser game Black Swan",
+    "datum": "2023-08-05 11:00:00",
+    "datum_end": "2023-08-05 12:20:00",
+    "place": "Lasergame Rotterdam, Parkhaven 9, 3016 GM Rotterdam",
+    "meet_gps": "51.905560, 4.4655977"
+  },
+  {
+    "category": "EMAG main",
+    "title": "EMAG-panel, closed meeting",
+    "datum": "2023-08-05 11:00:00",
+    "datum_end": "2023-08-05 13:45:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-05 11:00:00",
+    "datum_end": "2023-08-05 13:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Shooting 101 - Arjen van der Lely",
+    "datum": "2023-08-05 11:00:00",
+    "datum_end": "2023-08-05 13:00:00",
+    "place": "Brielse Schietsportvereniging, Maarland Noordzijde 104, 3231 CH Brielle",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "RIB-boat tour",
+    "datum": "2023-08-05 11:00:00",
+    "datum_end": "2023-08-05 11:30:00",
+    "place": "RIB boat, Parkhaven 13, 3016 GM Rotterdam",
+    "meet_gps": "51.904547, 4.4662277"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Safehouse (6 players)",
+    "datum": "2023-08-05 11:30:00",
+    "datum_end": "2023-08-05 13:00:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Lab 13 (4 players)",
+    "datum": "2023-08-05 11:45:00",
+    "datum_end": "2023-08-05 13:15:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Tower ascent Laurens-church (guided tour)",
+    "datum": "2023-08-05 12:00:00",
+    "datum_end": "2023-08-05 13:00:00",
+    "place": "Laurenskerk, Grotekerkplein 27, 3011 GC Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Laser game Black Swan",
+    "datum": "2023-08-05 12:20:00",
+    "datum_end": "2023-08-05 13:40:00",
+    "place": "Lasergame Rotterdam, Parkhaven 9, 3016 GM Rotterdam",
+    "meet_gps": "51.905560, 4.4655977"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Harbour cruise Pancake Boat",
+    "datum": "2023-08-05 12:30:00",
+    "datum_end": "2023-08-05 13:45:00",
+    "place": "Parkhaven 13, 3016 GM Rotterdam",
+    "meet_gps": "51.904745, 4.4661040"
+  },
+  {
+    "category": "Workshops",
+    "title": "Workshop Nail Art - Vanessa",
+    "datum": "2023-08-05 13:00:00",
+    "datum_end": "2023-08-05 15:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "SIGHT Coordinators meeting - Henkhenk Broekhuizen and Andrea Schwelm",
+    "datum": "2023-08-05 13:00:00",
+    "datum_end": "2023-08-05 14:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "RIB-boat tour",
+    "datum": "2023-08-05 13:00:00",
+    "datum_end": "2023-08-05 13:30:00",
+    "place": "RIB boat, Parkhaven 13, 3016 GM Rotterdam",
+    "meet_gps": "51.904547, 4.4662277"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Boiler Room (4 players)",
+    "datum": "2023-08-05 13:30:00",
+    "datum_end": "2023-08-05 15:00:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Art & science",
+    "title": "Guided tour Depot Boijmans van Beuningen",
+    "datum": "2023-08-05 13:30:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "Depot Boijmans van Beuningen, Museumpark 24, 3015 CX Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Tower ascent Laurens-church (guided tour)",
+    "datum": "2023-08-05 13:30:00",
+    "datum_end": "2023-08-05 14:30:00",
+    "place": "Laurenskerk, Grotekerkplein 27, 3011 GC Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "Room 1409 (6 players)",
+    "datum": "2023-08-05 13:45:00",
+    "datum_end": "2023-08-05 15:15:00",
+    "place": "Live Escape, Westblaak 13, 3012 KC Rotterdam",
+    "meet_gps": "51.91777, 4.47917"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Smartphone Photography Photowalk - Else Kramer",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Lectures",
+    "title": "The State of Global Cybersecurity Threat in 2023: Malicious Actors, Intelligence, and Tools - Hubert Chenut",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "Improvisational Theater for beginners and advanced improvisors - Markus Gyger",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Workshops",
+    "title": "The Water Puzzle Workshop - Sophie Rapenne and Eva Golek (Mensans for Sustainability)",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 17:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Lectures",
+    "title": "Exploring the connecting power of water to shape our future - Caroline Figueres, Strategic water advisor",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Shooting 101 - Arjen van der Lely",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "Brielse Schietsportvereniging, Maarland Noordzijde 104, 3231 CH Brielle",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "L'Architecte (4 players)",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 15:30:00",
+    "place": "Doctor Watsons, Museumpark 5, 3015 CB Rotterdam",
+    "meet_gps": "51.914783, 4.47343823"
+  },
+  {
+    "category": "EMAG main",
+    "title": "Mensa Fund Award 2023 - Ceremony",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 18:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "Huis Sonneveld: modernism anno 1930 (guided tour)",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 15:00:00",
+    "place": "Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Art & science",
+    "title": "De Kunsthal (guided tour)",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 16:00:00",
+    "place": "Kunsthal Rotterdam, Westzeedijk 341, 3015 AA Rotterdam",
+    "meet_gps": "51.910859, 4.4739555"
+  },
+  {
+    "category": "Fun & games",
+    "title": "Pubquiz?! - Menno Spek",
+    "datum": "2023-08-05 14:00:00",
+    "datum_end": "2023-08-05 17:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Explore the city",
+    "title": "Rooftop tour",
+    "datum": "2023-08-05 14:30:00",
+    "datum_end": "2023-08-05 17:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Fun & games",
+    "title": "RIB-boat tour",
+    "datum": "2023-08-05 15:00:00",
+    "datum_end": "2023-08-05 15:30:00",
+    "place": "RIB boat, Parkhaven 13, 3016 GM Rotterdam",
+    "meet_gps": "51.904547, 4.4662277"
+  },
+  {
+    "category": "Lectures",
+    "title": "How to create a fulfilling career for exceptional talents? - Frans Corten",
+    "datum": "2023-08-05 16:00:00",
+    "datum_end": "2023-08-05 17:30:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "La Residence (4 players)",
+    "datum": "2023-08-05 16:00:00",
+    "datum_end": "2023-08-05 17:30:00",
+    "place": "Doctor Watsons, Museumpark 5, 3015 CB Rotterdam",
+    "meet_gps": "51.914783, 4.47343823"
+  },
+  {
+    "category": "Lectures",
+    "title": "Planetary boundaries - Julien Weyer",
+    "datum": "2023-08-05 16:15:00",
+    "datum_end": "2023-08-05 17:45:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Book of Mystery (4 players)",
+    "datum": "2023-08-05 16:20:00",
+    "datum_end": "2023-08-05 17:50:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "EMAG main",
+    "title": "Gala dinner",
+    "datum": "2023-08-05 18:45:00",
+    "datum_end": "2023-08-05 23:59:00",
+    "place": "Laurenskerk, Grotekerkplein 27, 3011 GC Rotterdam",
+    "meet_gps": "51.92159256419N, 4.48550319851E"
+  },
+  {
+    "category": "EMAG main",
+    "title": "Farewell brunch",
+    "datum": "2023-08-06 10:00:00",
+    "datum_end": "2023-08-06 14:00:00",
+    "place": "WTC (Main Venue)",
+    "meet_gps": "51.92081096,4.4810503554"
+  },
+  {
+    "category": "Tours",
+    "title": "High tec port: Maasvlakte 2 & Futureland (day trip boat)",
+    "datum": "2023-08-06 10:00:00",
+    "datum_end": "2023-08-06 17:30:00",
+    "place": "2e Maasvlakte",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Rotterdam",
+    "title": "Guided tour Botanical garden & Arborethum",
+    "datum": "2023-08-06 14:00:00",
+    "datum_end": "2023-08-06 17:00:00",
+    "place": "Trompenburg, Honingerdijk 86 (down), 3062 NX, Rotterdam",
+    "meet_gps": "51.920290, 4.48043482"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Book of Mystery (4 players)",
+    "datum": "2023-08-06 14:20:00",
+    "datum_end": "2023-08-06 15:50:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  },
+  {
+    "category": "Escape Rooms",
+    "title": "The Book of Mystery (6 players)",
+    "datum": "2023-08-06 18:20:00",
+    "datum_end": "2023-08-06 19:50:00",
+    "place": "Escape 010, Diergaardesingel 67a, 3014 AD Rotterdam",
+    "meet_gps": "51.9216167, 4.46816678"
+  }
+]

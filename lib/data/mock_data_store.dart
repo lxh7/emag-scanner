@@ -1,25 +1,24 @@
 // mock some data for the UI
-import 'package:emag_scanner/models/activity_category.dart';
-import 'package:emag_scanner/models/activity.dart';
+import 'package:emag_scanner/models/domain.dart';
 
 class MockDataStore {
-  late List<ActivityCategory> _categories;
+  late List<Category> _categories;
   late List<Activity> _activities;
 
   MockDataStore() {
-    _categories = List<ActivityCategory>.from([
-      ActivityCategory(8, 'Meals'),
-      ActivityCategory(5, 'EMAG'),
-      ActivityCategory(16, 'Activities'),
-      ActivityCategory(7, 'Rotterdam'),
-      ActivityCategory(6, 'Escape Rooms'),
-      ActivityCategory(10, 'Fun & games'),
-      ActivityCategory(9, 'Tours'),
-      ActivityCategory(11, 'Art & science'),
-      ActivityCategory(12, 'Family'),
-      ActivityCategory(13, 'Water'),
-      ActivityCategory(14, 'Lectures'),
-      ActivityCategory(15, 'Workshops'),
+    _categories = List<Category>.from([
+      Category(8, 'Meals', 0),
+      Category(5, 'EMAG', 0),
+      Category(16, 'Activities', 1),
+      Category(7, 'Rotterdam', 1),
+      Category(6, 'Escape Rooms', 1),
+      Category(10, 'Fun & games', 1),
+      Category(9, 'Tours', 1),
+      Category(11, 'Art & science', 1),
+      Category(12, 'Family', 1),
+      Category(13, 'Water', 1),
+      Category(14, 'Lectures', 1),
+      Category(15, 'Workshops', 1),
     ]);
 
     _activities = List<Activity>.empty(growable: true);
@@ -62,14 +61,15 @@ class MockDataStore {
     ));
   }
 
-  Future<List<ActivityCategory>> getCategories() async {
+  Future<List<Category>> getCategories() async {
     return _categories;
   }
 
   Future<List<Activity>> getActivities(int? categoryId) async {
     var now = DateTime.now();
     var result = _activities
-        .where((element) => element.end.isAfter(now.add(const Duration(hours: 2))))
+        .where(
+            (element) => element.end.isAfter(now.add(const Duration(hours: 2))))
         .toList();
     if (categoryId != null) {
       result =
@@ -78,5 +78,4 @@ class MockDataStore {
     result.sort((a, b) => a.start.compareTo(b.start));
     return result;
   }
-
 }

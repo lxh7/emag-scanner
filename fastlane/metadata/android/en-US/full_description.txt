@@ -1,0 +1,8 @@
+EMAG Scanner offers a secure and easy way to help by registration and access control for the EMAG conference. 
+For all volunteers you can now easily provide access to paying participants.
+
+____________________________
+
+
+Why does EMAG Scanner need access to my camera?
+The camera is used for scanning QR-codes.

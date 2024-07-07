@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/util/my_dialog.dart';
+import '/util/routes.dart';
 import '/data/data_manager.dart';
-import '/models/activity.dart';
-import 'activity_load_page.dart';
+import '/models/domain.dart';
 import '/widgets/activity_tile.dart';
 import '/widgets/connection_widget.dart';
 
@@ -18,26 +19,31 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
   late DataManager _dataManager;
 
   _addActivity() {
-    Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (context) => const ActivityLoadPage(),
-          settings: RouteSettings(name: (ActivityLoadPage).toString()),
-        ));
+    Navigator.pushNamed(context, Routes.activityDownload);
   }
 
   _selectActivity(Activity activity) {
     Navigator.pop(context);
-    _dataManager.selectedActivity = activity;
+    _dataManager.setSelectedActivity(activity);
   }
 
-  _deleteActivity(Activity activity) {
-    _dataManager.removeStoredActivity(activity);
-    setState(() {});
+  _deleteActivity(Activity activity) async {
+    var delete = await MyDialog.confirmAsync(context,
+        'Do you want to remove the info about \'${activity.name}\' from your device?');
+    if (delete) {
+      _dataManager.removeStoredActivity(activity);
+      _dataManager.setSelectedActivity(null);
+      setState(() {});
+    }
   }
 
   Future _refreshActivity(Activity activity) async {
-    await _dataManager.refreshActivityAsync(activity);
+    var freshActivity = await _dataManager.refreshActivityAsync(activity);
+    if (freshActivity != null) {
+      // ignore: use_build_context_synchronously
+      MyDialog.showInfo(
+          context, 'Refreshed activity data and participation from server');
+    }
     setState(() {});
   }
 
@@ -58,23 +64,32 @@ class _ActivitySelectPageState extends State<ActivitySelectPage> {
         ),
         body: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Consumer<DataManager>(builder: (context, dataManager, child) {
+            child:
+                Consumer<DataManager>(builder: (context, dataManager, child) {
+              var storedActivities = _dataManager.getStoredActivities();
               return ListView(
                 children: [
                   ConnectionWidget.get(),
-                  const Text('Select activity to scan for. Long press = delete.',
+                  Text(
+                      storedActivities.isEmpty
+                          ? 'Please load activites first'
+                          : 'Select activity to scan for. Long press = delete.',
                       textAlign: TextAlign.center),
                   if (dataManager.isConnected) ...[
                     const Text(
                         'Tap the refresh symbol to refresh the list of participants from the server to this device (for offline scanning)',
                         textAlign: TextAlign.center),
                   ],
-                  ..._dataManager.storedActivities
+                  ...storedActivities
                       .map((item) => ActivityTile(
                             activity: item,
                             tapAction: () => _selectActivity(item),
                             longPressAction: () => _deleteActivity(item),
-                            trailingWidget: const Icon(Icons.refresh, size: 50),
+                            trailingWidget: Icon(
+                              Icons.refresh,
+                              size: 50,
+                              color: Colors.teal[200],
+                            ),
                             trailingAction: () => _refreshActivity(item),
                           ))
                       .toList(),

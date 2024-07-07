@@ -1,12 +1,13 @@
 import 'package:intl/intl.dart'; // for date format
 // import 'package:intl/date_symbol_data_local.dart'; // for other locales
 import 'package:flutter/material.dart';
-import '../models/activity.dart';
+import '/models/domain.dart';
 
 class ActivityTile extends StatelessWidget {
   const ActivityTile({
     super.key,
     required this.activity,
+    this.enabled = true,
     this.tapAction,
     this.longPressAction,
     this.trailingWidget,
@@ -15,6 +16,7 @@ class ActivityTile extends StatelessWidget {
 
   static const int maxTitleLen = 60;
   final Activity activity;
+  final bool enabled;
   final void Function()? tapAction;
   final void Function()? longPressAction;
   final Widget? trailingWidget;
@@ -45,7 +47,9 @@ class ActivityTile extends StatelessWidget {
         leading: Icon(
           Icons.qr_code_scanner,
           size: 50,
-          color: theme.colorScheme.onPrimary,
+          color: enabled
+              ? theme.colorScheme.onPrimary
+              : theme.colorScheme.inversePrimary,
         ),
         title: Text(activity.name.length > maxTitleLen
             // ignore: prefer_interpolation_to_compose_strings
@@ -61,6 +65,7 @@ class ActivityTile extends StatelessWidget {
           side: const BorderSide(color: Colors.black, width: 1),
           borderRadius: BorderRadius.circular(2),
         ),
+        enabled: enabled,
         onTap: tapAction,
         onLongPress: longPressAction,
       ),

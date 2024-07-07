@@ -1,16 +1,11 @@
-# scan
+# emag-scanner
 
-A new Flutter project.
+Scan for registration and access control during EMAG in a secure and easy way.
 
-## Getting Started
+## Overview
+EMAG Scanner offers a secure and easy way to help by registration and access control for 
+the EMAG conference. There is no other use for this app, so unless you are a volunteer
+at EMAG, this will be of no use.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* Why does EMAG Scanner need access to my camera?
+    * The camera is used for scanning QR-codes.

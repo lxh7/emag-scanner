@@ -1,12 +1,12 @@
+import 'package:emag_scanner/enums/api_connection_state.dart';
+import 'package:emag_scanner/enums/scan_function.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/spinner.dart';
+import '/widgets/spinner.dart';
 import '/data/data_manager.dart';
-import '/models/activity.dart';
-import '/models/activity_category.dart';
+import '/models/domain.dart';
 import '/widgets/activity_tile.dart';
-import '/widgets/connection_widget.dart';
 
 class ActivityLoadPage extends StatefulWidget {
   const ActivityLoadPage({super.key});
@@ -16,16 +16,16 @@ class ActivityLoadPage extends StatefulWidget {
 }
 
 class _ActivityLoadPageState extends State<ActivityLoadPage> {
-  ActivityCategory? _category;
+  Category? _category;
   List<Activity>? _activities;
 
   // methods/functions
 
-  Future _downloadActivityParticipantsAsync(Activity activity) async {
+  Future _downloadParticipationsAsync(Activity activity) async {
     var dataManager = context.read<DataManager>();
     activity = await dataManager.refreshActivityAsync(activity) ?? activity;
     dataManager.addStoredActivity(activity);
-    dataManager.selectedActivity = activity;
+    // dataManager.selectedActivity = activity;
   }
 
   Future<List<Activity>> _loadActivities() async {
@@ -37,7 +37,7 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
   }
 
   // UI event handlers
-  void _setFilterCategory(ActivityCategory value) {
+  void _setFilterCategory(Category value) {
     if (_category != value) {
       setState(() {
         _category = value;
@@ -48,9 +48,10 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
 
   @override
   Widget build(BuildContext context) {
-    var dataManager = context.read<DataManager>(); 
-    return SafeArea(
-      child: Scaffold(
+    return Consumer<DataManager>(builder: (context, dataManager, child) {
+      final storedActivityIds =
+          dataManager.getStoredActivities().map((e) => e.id).toList();
+      return Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.keyboard_arrow_left_rounded),
@@ -62,71 +63,60 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: ListView(
-            children: [
-              ConnectionWidget.get(),
-              const Text('Load activities', textAlign: TextAlign.center),
-              const Text('Filter by category'),
-              FutureBuilder(
-                future: dataManager.getCategories(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    List<ActivityCategory>? categories = snapshot.data;
-                    return _buildCategoryUI(categories);
-                  } else {
-                    return const Spinner();
-                  }
-                },
-              ),
-              if (_category != null) ...[
-                const Text('Tap to load activity & participants'),
-                _activities == null
-                    ? FutureBuilder(
-                        future: _loadActivities(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            _activities = snapshot.data;
-                            _activities!.removeWhere((a) => a.end.isBefore(
-                                DateTime.now().add(const Duration(hours: -8))));
-                            _activities!
-                                .sort((a, b) => _compareActivities(a, b));
-                            return _buildActivitiesUI();
-                          } else {
-                            return const Spinner();
-                          }
-                        })
-                    : _buildActivitiesUI()
-              ],
-            ], // children
-          ),
+          child: (dataManager.apiConnectionState != ApiConnectionState.full)
+              ? const Text('No connection to the data store')
+              : ListView(
+                  children: [
+                    const Text('Load activities', textAlign: TextAlign.center),
+                    const Text('Filter by category'),
+                    FutureBuilder(
+                      future: dataManager.getCategories(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          List<Category>? categories = snapshot.data;
+                          return _buildCategoryUI(categories);
+                        } else {
+                          return const Spinner();
+                        }
+                      },
+                    ),
+                    if (_category != null) ...[
+                      const Text('Tap to load activity & participants'),
+                      _activities == null
+                          ? FutureBuilder(
+                              future: _loadActivities(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  _activities =
+                                      _filterAndSortActivities(snapshot.data);
+                                  return _buildActivitiesUI(storedActivityIds);
+                                } else {
+                                  return const Spinner();
+                                }
+                              })
+                          : _buildActivitiesUI(storedActivityIds)
+                    ],
+                  ], // children
+                ),
         ),
-        // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        // floatingActionButton: Container(
-        //   height: 50,
-        //   margin: const EdgeInsets.all(10),
-        //   child: ElevatedButton(
-        //       child: Center(child: Text('Load diet buffet access')),
-        //       onPressed: () {
-        //         Navigator.push(
-        //             context,
-        //             MaterialPageRoute<void>(
-        //                 builder: (context) => ActivityLoadPage(),
-        //                 settings: RouteSettings(
-        //                     name: (ActivityLoadPage).toString())));
-        //       }),
-        // ),
-      ),
-    );
+      );
+    });
   }
 
-  _buildCategoryUI(List<ActivityCategory>? categories) {
-    if (categories?.isEmpty == true) {
+  _buildCategoryUI(List<Category>? categories) {
+    if (categories?.isNotEmpty == false) {
       _category = null;
       return const Text('No categories loaded from server');
     }
-    _category ??= categories!.first;
-    return DropdownButton<ActivityCategory>(
+    // filter on categories with Activities
+    var filteredList = categories!
+        .where((c) =>
+            c.scanFunction == ScanFunctionEnum.scan ||
+            c.scanFunction == ScanFunctionEnum.activity)
+        .toList();
+    _category ??= filteredList.first;
+    return DropdownButton<Category>(
       value: _category,
       icon: const Icon(Icons.arrow_downward),
       elevation: 16,
@@ -135,15 +125,14 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
         height: 2,
         color: Colors.deepPurpleAccent,
       ),
-      onChanged: (ActivityCategory? value) {
+      onChanged: (Category? value) {
         // This is called when the user selects an item.
         setState(() {
           _category = value!;
         });
       },
-      items: categories!
-          .map<DropdownMenuItem<ActivityCategory>>((ActivityCategory value) {
-        return DropdownMenuItem<ActivityCategory>(
+      items: filteredList.map<DropdownMenuItem<Category>>((Category value) {
+        return DropdownMenuItem<Category>(
           value: value,
           child: Text(value.name),
           onTap: () => _setFilterCategory(value),
@@ -152,29 +141,43 @@ class _ActivityLoadPageState extends State<ActivityLoadPage> {
     );
   }
 
-  Widget _buildActivitiesUI() {
+  List<Activity> _filterAndSortActivities(List<Activity>? data) {
+    // don't show old activities, older than 8 hours
+    var cutOffDate = DateTime.now().add(const Duration(hours: -8));
+    var result = data;
+    result!.removeWhere((a) =>
+        (a.end.isBefore(cutOffDate)) ||
+        (a.scanFunction != ScanFunctionEnum.activity &&
+            a.category?.scanFunction != ScanFunctionEnum.activity));
+    result.sort((a, b) => _compareActivities(a, b));
+    return result;
+  }
+
+  Widget _buildActivitiesUI(List<int> storedActivityIds) {
     if (_activities == null || _activities!.isEmpty) {
       return const Text('No activities in this category');
     }
     return ListView(
+      primary: false,
       shrinkWrap: true,
+      scrollDirection: Axis.vertical,
       children: _activities!
           .map((item) => ActivityTile(
                 activity: item,
-                tapAction: () => _downloadActivityParticipantsAsync(item)
+                enabled: !storedActivityIds.contains(item.id),
+                tapAction: () => _downloadParticipationsAsync(item)
                     .then((value) => Navigator.pop(context)),
               ))
           .toList(),
     );
   }
 
-
   int _compareActivities(Activity a, Activity b) {
     int result = a.start.compareTo(b.start);
     if (result != 0) {
       return result;
     }
-    result = a.end.compareTo(b.end);
+    result = a.name.compareTo(b.name);
 
     return result;
   }

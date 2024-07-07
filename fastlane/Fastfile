@@ -1,0 +1,105 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+#default_platform(:android)
+
+platform :android do
+  desc "Generate keystore"
+  lane :keystore do
+    match_keystore(git_url: "https://github.com/lxh7/lxh7.apps.codesigning.git", package_name: "nl.emag23.scanner", override_keystore: true)
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Deploy a new version to the Google Play"
+  lane :build_and_deploy do
+    if git_branch == "main"
+      package_name = "nl.emag23.scanner"
+      flavor = "production"
+    else
+      package_name = "nl.emag23.scanner.beta"
+      flavor = "test"
+    end
+    build_number = google_play_track_version_codes(package_name: package_name, track: "internal", json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'])[0] + 1
+    Dir.chdir "../.." do
+        sh("flutter", "packages", "get")
+        sh("flutter", "clean")
+        sh("flutter", "build", "appbundle", "--flavor", flavor, "--target", "lib/main_#{flavor}.dart", "--build-number=#{build_number}")
+    end
+    signed_aab_path = match_keystore(git_url: "https://github.com/lxh7/lxh7.apps.codesigning.git", 
+                    package_name: "nl.emag23.scanner.beta",
+                    aab_path: "../build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab",
+                    match_secret: ENV["MATCH_KEYSTORE_PASSWORD"],
+                    override_keystore: false)
+    upload_to_play_store(package_name: package_name,
+                        json_key_data: ENV['GOOGLE_PLAY_JSON_KEY_DATA'], 
+                        aab: signed_aab_path,
+                        release_status: "completed",
+                        track: "internal")
+  end
+end
+
+platform :ios do
+  git_url = "https://github.com/lxh7/lxh7.apps.codesigning.git"
+  lane :certificates do
+    match(type: "appstore", app_identifier: "nl.emag23.scanner", git_url: git_url)
+  end
+
+  desc "Push a new build to Testflight"
+  lane :release do
+    if git_branch == "main"
+      app_identifier = "nl.emag23.scanner"
+      flavor = "production"
+    else
+      app_identifier = "nl.emag23.scanner.beta"
+      flavor = "development"
+    end
+    setup_ci
+    sync_code_signing(type: "appstore", readonly: true, app_identifier: app_identifier, git_url: git_url)
+    api_key = app_store_connect_api_key(
+        key_id: "<todo>",
+        issuer_id: "<todo>",
+        key_content: ENV['APPSTORECONNECT_PRIVATE_KEY']
+    )
+    build_number = latest_testflight_build_number(api_key: api_key, app_identifier: app_identifier) + 1
+    Dir.chdir "../.." do
+        sh("flutter", "packages", "get")
+        sh("flutter", "clean")
+        sh("flutter", "build", "ipa", "--flavor", flavor, "--target", "lib/main_#{flavor}.dart", "--build-number=#{build_number}")
+    end
+    build_app(
+      scheme: flavor, 
+      skip_build_archive: true, 
+      include_symbols: true, 
+      archive_path: "../build/ios/archive/Runner.xcarchive"
+    )
+    # set_github_release(
+    #   repository_name: "lxh7/emag-scanner",
+    #   api_token: ENV['GITHUB_API_TOKEN'], 
+    #   name: "ios.ipa",
+    #   tag_name: flutter_version(should_omit_version_code: true)["version_name"],
+    #   upload_assets:[lane_context[SharedValues::IPA_OUTPUT_PATH]]
+    # )
+    dsym_zip
+    upload_to_testflight(
+      app_identifier: app_identifier,
+      api_key: api_key,
+      skip_waiting_for_build_processing: true
+    )
+  end
+end

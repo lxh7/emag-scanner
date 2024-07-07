@@ -2,6 +2,8 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 
 import 'package:built_value/serializer.dart';
@@ -9,7 +11,6 @@ import 'package:dio/dio.dart';
 
 import 'package:backoffice_api/src/api_util.dart';
 import 'package:backoffice_api/src/model/event_dto.dart';
-import 'package:backoffice_api/src/model/participant_dto.dart';
 import 'package:backoffice_api/src/model/scan_time_dto.dart';
 import 'package:backoffice_api/src/model/scan_time_response_dto.dart';
 import 'package:built_collection/built_collection.dart';
@@ -54,6 +55,9 @@ class EventApi {
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
+            'type': 'oauth2',
+            'name': 'OAuth2',
+          },{
             'type': 'oauth2',
             'name': 'OAuth2',
           },
@@ -114,9 +118,9 @@ class EventApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [BuiltList<ParticipantDTO>] as data
+  /// Returns a [Future] containing a [Response] with a [EventDTO] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<BuiltList<ParticipantDTO>>> getParticipants({ 
+  Future<Response<EventDTO>> getParticipants({ 
     required int eventId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -136,6 +140,9 @@ class EventApi {
           {
             'type': 'oauth2',
             'name': 'OAuth2',
+          },{
+            'type': 'oauth2',
+            'name': 'OAuth2',
           },
         ],
         ...?extra,
@@ -151,14 +158,14 @@ class EventApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BuiltList<ParticipantDTO> _responseData;
+    EventDTO _responseData;
 
     try {
-      const _responseType = FullType(BuiltList, [FullType(ParticipantDTO)]);
+      const _responseType = FullType(EventDTO);
       _responseData = _serializers.deserialize(
         _response.data!,
         specifiedType: _responseType,
-      ) as BuiltList<ParticipantDTO>;
+      ) as EventDTO;
 
     } catch (error, stackTrace) {
       throw DioError(
@@ -170,7 +177,7 @@ class EventApi {
       );
     }
 
-    return Response<BuiltList<ParticipantDTO>>(
+    return Response<EventDTO>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -214,6 +221,9 @@ class EventApi {
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
+            'type': 'oauth2',
+            'name': 'OAuth2',
+          },{
             'type': 'oauth2',
             'name': 'OAuth2',
           },
@@ -272,7 +282,7 @@ class EventApi {
   ///
   /// Parameters:
   /// * [eventId] 
-  /// * [participantId] 
+  /// * [personId] 
   /// * [scanTimeDTO] 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -285,7 +295,7 @@ class EventApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ScanTimeResponseDTO>> patchParticipant({ 
     required int eventId,
-    required String participantId,
+    required String personId,
     required ScanTimeDTO scanTimeDTO,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -294,7 +304,7 @@ class EventApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/api/event/{eventId}/participant/{participantId}'.replaceAll('{' r'eventId' '}', eventId.toString()).replaceAll('{' r'participantId' '}', participantId.toString());
+    final _path = r'/api/event/{eventId}/participant/{personId}'.replaceAll('{' r'eventId' '}', eventId.toString()).replaceAll('{' r'personId' '}', personId.toString());
     final _options = Options(
       method: r'PATCH',
       headers: <String, dynamic>{
@@ -303,6 +313,9 @@ class EventApi {
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
+            'type': 'oauth2',
+            'name': 'OAuth2',
+          },{
             'type': 'oauth2',
             'name': 'OAuth2',
           },

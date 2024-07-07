@@ -1,12 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:flutter/material.dart';
 
-import '/enums/scan_result.dart';
-import '/models/scan_info.dart';
 import 'base_scan_handler.dart';
+import '/enums/scan_result.dart';
+import '/models/domain.dart';
+import '/util/my_formats.dart';
 
 class ActivityScanHandler extends BaseScanHandler {
   DateTime? previousScanTime;
+  late Activity _selectedActivity;
+  ActivityScanHandler(Activity activity) {
+    _selectedActivity = activity;
+  }
 
   @override
   String getTitle() {
@@ -15,69 +19,53 @@ class ActivityScanHandler extends BaseScanHandler {
 
   @override
   String getSubTitle() {
-    return dataManager.selectedActivity?.name ?? '';
+    return _selectedActivity.name;
   }
 
   @override
   Future handleKey(String key) async {
+    logger.d('ActivityScanhandler.handleKey()');
     var info = ScanInfo(
-      dataManager.selectedActivity!.id,
+      _selectedActivity.id,
       key,
-      DateTime.now(),
+      scanTime,
     );
-    final result = await dataManager.checkAccess(info);
-    previousScanTime = result.prevScanTime;
-    // set message based on check
-    var message = '';
-    switch (result.scanResult) {
-      case ScanResult.none:
-      case ScanResult.pass:
-        // ok!
-        break;
-      case ScanResult.check:
-        if (previousScanTime != null) {
+    try {
+      var result = await dataManager.checkAccess(info);
+      previousScanTime = result.prevScanTime;
+      // set message based on check
+      var message = '';
+      switch (result.scanResult) {
+        case ScanResult.none:
+        case ScanResult.pass:
+          // no message
+          break;
+        case ScanResult.check:
+          if (previousScanTime != null) {
+            logger.d('Previous scan time UTC ${previousScanTime!.toString()}');
+            message =
+                'This code has been scanned earlier for this activity \n(on ${MyFormats.dateTime.format(previousScanTime!.toLocal())}).';
+          } else {
+            message = 'Unsure about this person: reason unknown.';
+          }
+          message = '$message\n Please perform additional check(s)';
+          break;
+        case ScanResult.deny:
           message =
-              'This code has been scanned earlier for this activity,\non ${DateFormat.yMd().format(previousScanTime!)} at ${DateFormat.Hm().format(previousScanTime!)}.';
-        } else {
-          message = 'Unsure about this person: reason unknown.';
-        }
-        message = '$message Please perform additional check(s)';
-        break;
-      case ScanResult.deny:
-        message =
-            'This code does not belong to any participant on this activity';
-        break;
-      case ScanResult.error:
-        if (result.message == '') {
-          message = 'An error occurred during the processing of the code';
-        } else {
-          message = result.message;
-        }
-        break;
+              'This code does not belong to any participant on this activity';
+          break;
+        case ScanResult.error:
+          if (result.message == '') {
+            message = 'An error occurred during the processing of the code';
+          } else {
+            message = result.message;
+          }
+          break;
+      }
+      scanPage.setScanResult(result.scanResult, message);
+    } catch (e) {
+      scanPage.setScanResult(ScanResult.error, e.toString());
+      return;
     }
-    scanPage.setScanResult(result.scanResult, message);
-  }
-
-  @override
-  Widget buildBottomSheet(BuildContext context) {
-    var theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.all(10),
-      color: scanPage.scanResult.getColor(
-          theme.bottomSheetTheme.backgroundColor ?? Colors.blueAccent),
-      height: 100,
-      child: Column(children: [
-        Center(child: Text(scanPage.scanMessage)),
-        ElevatedButton(
-          child: const Center(
-            child: Text('Dismiss'),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-            scanPage.setScanResult(ScanResult.none, '');
-          },
-        ),
-      ]),
-    );
   }
 }

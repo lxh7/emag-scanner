@@ -7,7 +7,9 @@ class MyDialog {
     String message, {
     Color? backgroundColor,
     Icon? icon,
-    Color? iconColor, Function()? onClose,
+    Color? iconColor,
+    List<Widget>? actions,
+    Function()? onClose,
   }) {
     return AlertDialog(
       title: Text(
@@ -21,14 +23,15 @@ class MyDialog {
       backgroundColor: backgroundColor,
       icon: icon,
       iconColor: iconColor,
-      actions: [
-        TextButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-              onClose?.call();
-            }),
-      ],
+      actions: actions ??
+          [
+            TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  onClose?.call();
+                }),
+          ],
     );
   }
 
@@ -59,8 +62,32 @@ class MyDialog {
     );
   }
 
+  static Future<bool> confirmAsync(BuildContext context, String message) async {
+    bool? result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return _dialog(context, 'Confirm', message, actions: [
+          TextButton(
+              child: const Text('Yes'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              }),
+          TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              }),
+        ]);
+      },
+    );
+    return result == true;
+  }
+
   static void showPopup(BuildContext context, String caption, String message,
-      {Color? backgroundColor, Color? iconColor, Icon? icon, Function()? onClose}) {
+      {Color? backgroundColor,
+      Color? iconColor,
+      Icon? icon,
+      Function()? onClose}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

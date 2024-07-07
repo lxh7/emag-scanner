@@ -9,9 +9,16 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CategoryDTO.serializer)
       ..add(EventDTO.serializer)
-      ..add(ParticipantDTO.serializer)
+      ..add(ParticipationDTO.serializer)
+      ..add(PersonDTO.serializer)
       ..add(ScanTimeDTO.serializer)
-      ..add(ScanTimeResponseDTO.serializer))
+      ..add(ScanTimeResponseDTO.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ParticipationDTO)]),
+          () => new ListBuilder<ParticipationDTO>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ParticipationDTO)]),
+          () => new ListBuilder<ParticipationDTO>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

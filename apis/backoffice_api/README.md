@@ -68,21 +68,32 @@ Class | Method | HTTP request | Description
 [*EventApi*](doc\EventApi.md) | [**getEvent**](doc\EventApi.md#getevent) | **GET** /api/event/{eventId} | 
 [*EventApi*](doc\EventApi.md) | [**getParticipants**](doc\EventApi.md#getparticipants) | **GET** /api/event/{eventId}/participant | 
 [*EventApi*](doc\EventApi.md) | [**listEvents**](doc\EventApi.md#listevents) | **GET** /api/event | 
-[*EventApi*](doc\EventApi.md) | [**patchParticipant**](doc\EventApi.md#patchparticipant) | **PATCH** /api/event/{eventId}/participant/{participantId} | 
+[*EventApi*](doc\EventApi.md) | [**patchParticipant**](doc\EventApi.md#patchparticipant) | **PATCH** /api/event/{eventId}/participant/{personId} | 
 [*HealthApi*](doc\HealthApi.md) | [**health**](doc\HealthApi.md#health) | **GET** /api/health | 
+[*PersonApi*](doc\PersonApi.md) | [**getPerson**](doc\PersonApi.md#getperson) | **GET** /api/person/{personId} | 
+[*PersonApi*](doc\PersonApi.md) | [**refreshPersonId**](doc\PersonApi.md#refreshpersonid) | **PUT** /api/person/id/refresh | 
+[*TestApi*](doc\TestApi.md) | [**test**](doc\TestApi.md#test) | **GET** /api/test | 
 
 
 ## Documentation For Models
 
  - [CategoryDTO](doc\CategoryDTO.md)
  - [EventDTO](doc\EventDTO.md)
- - [ParticipantDTO](doc\ParticipantDTO.md)
+ - [ParticipationDTO](doc\ParticipationDTO.md)
+ - [PersonDTO](doc\PersonDTO.md)
  - [ScanTimeDTO](doc\ScanTimeDTO.md)
  - [ScanTimeResponseDTO](doc\ScanTimeResponseDTO.md)
 
 
 ## Documentation For Authorization
 
+
+## OAuth2
+
+- **Type**: OAuth
+- **Flow**: password
+- **Authorization URL**: 
+- **Scopes**: N/A
 
 ## OAuth2
 

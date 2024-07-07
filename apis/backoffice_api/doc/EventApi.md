@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**getEvent**](EventApi.md#getevent) | **GET** /api/event/{eventId} | 
 [**getParticipants**](EventApi.md#getparticipants) | **GET** /api/event/{eventId}/participant | 
 [**listEvents**](EventApi.md#listevents) | **GET** /api/event | 
-[**patchParticipant**](EventApi.md#patchparticipant) | **PATCH** /api/event/{eventId}/participant/{participantId} | 
+[**patchParticipant**](EventApi.md#patchparticipant) | **PATCH** /api/event/{eventId}/participant/{personId} | 
 
 
 # **getEvent**
@@ -23,6 +23,8 @@ Method | HTTP request | Description
 ### Example
 ```dart
 import 'package:backoffice_api/api.dart';
+// TODO Configure OAuth2 access token for authorization: OAuth2
+//defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure OAuth2 access token for authorization: OAuth2
 //defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
 
@@ -49,7 +51,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -59,13 +61,15 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getParticipants**
-> BuiltList<ParticipantDTO> getParticipants(eventId)
+> EventDTO getParticipants(eventId)
 
 
 
 ### Example
 ```dart
 import 'package:backoffice_api/api.dart';
+// TODO Configure OAuth2 access token for authorization: OAuth2
+//defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure OAuth2 access token for authorization: OAuth2
 //defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
 
@@ -88,11 +92,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BuiltList&lt;ParticipantDTO&gt;**](ParticipantDTO.md)
+[**EventDTO**](EventDTO.md)
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -109,6 +113,8 @@ Name | Type | Description  | Notes
 ### Example
 ```dart
 import 'package:backoffice_api/api.dart';
+// TODO Configure OAuth2 access token for authorization: OAuth2
+//defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure OAuth2 access token for authorization: OAuth2
 //defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
 
@@ -135,7 +141,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 
@@ -145,7 +151,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchParticipant**
-> ScanTimeResponseDTO patchParticipant(eventId, participantId, scanTimeDTO)
+> ScanTimeResponseDTO patchParticipant(eventId, personId, scanTimeDTO)
 
 
 
@@ -154,14 +160,16 @@ Name | Type | Description  | Notes
 import 'package:backoffice_api/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2
 //defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
+// TODO Configure OAuth2 access token for authorization: OAuth2
+//defaultApiClient.getAuthentication<OAuth>('OAuth2').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api = BackofficeApi().getEventApi();
 final int eventId = 56; // int | 
-final String participantId = participantId_example; // String | 
+final String personId = personId_example; // String | 
 final ScanTimeDTO scanTimeDTO = ; // ScanTimeDTO | 
 
 try {
-    final response = api.patchParticipant(eventId, participantId, scanTimeDTO);
+    final response = api.patchParticipant(eventId, personId, scanTimeDTO);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling EventApi->patchParticipant: $e\n');
@@ -173,7 +181,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **eventId** | **int**|  | 
- **participantId** | **String**|  | 
+ **personId** | **String**|  | 
  **scanTimeDTO** | [**ScanTimeDTO**](ScanTimeDTO.md)|  | 
 
 ### Return type
@@ -182,7 +190,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[OAuth2](../README.md#OAuth2), [OAuth2](../README.md#OAuth2)
 
 ### HTTP request headers
 

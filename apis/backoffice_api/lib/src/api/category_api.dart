@@ -2,6 +2,8 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 
 import 'package:built_value/serializer.dart';
@@ -48,6 +50,9 @@ class CategoryApi {
       extra: <String, dynamic>{
         'secure': <Map<String, String>>[
           {
+            'type': 'oauth2',
+            'name': 'OAuth2',
+          },{
             'type': 'oauth2',
             'name': 'OAuth2',
           },

@@ -8,7 +8,7 @@
 PRODUCT_NAME = emag_scanner
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = nl.emag23.emagScanner
+PRODUCT_BUNDLE_IDENTIFIER = nl.emag23.scanner
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 emag23.nl All rights reserved.

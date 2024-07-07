@@ -7,8 +7,19 @@ import '/app_settings.dart';
 import '/data/backend_data_store.dart';
 import '/data/data_manager.dart';
 import '/data/local_data_store.dart';
-import 'pages/home_page.dart';
+import '/util/routes.dart';
 import '/util/internet_connection_listener.dart';
+import 'pages/home_page.dart';
+import 'pages/activity_load_page.dart';
+import 'pages/activity_select_page.dart';
+import 'pages/activity_confirm_page.dart';
+import 'pages/activity_participants_page.dart';
+import 'pages/goodies_show_page.dart';
+import 'pages/help_page.dart';
+import 'pages/programme_page.dart';
+import 'pages/registration_setup_page.dart';
+import 'pages/scan_page.dart';
+import 'pages/settings_page.dart';
 
 void main() async {
   Intl.defaultLocale = 'en';
@@ -28,7 +39,9 @@ void main() async {
             create: (_) => InternetConnectionListener()),
         ChangeNotifierProvider<AppSettings>(create: (_) => AppSettings()),
         ChangeNotifierProvider<DataManager>(
-            create: (context) => DataManager(context)),
+          create: (context) => DataManager(context),
+          lazy: false,
+        ),
       ],
       child: const ScanApp(),
     ),
@@ -49,7 +62,23 @@ class ScanApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      title: 'EMAG\'23 scan app',
+      title: 'EMAG scan app',
+      initialRoute: '/',
+      routes: {
+        // '/': (context) => const HomePage(), -- redundant
+        Routes.help: (context) => const HelpPage(),
+        Routes.settings: (context) => const SettingsPage(),
+        Routes.scan: (context) => const ScanPage(),
+        Routes.programme: (context)=> const ProgrammePage(),
+        Routes.activityConfirm: (context) => ActivityConfirmPage(),
+        Routes.activitySelect: (context) => const ActivitySelectPage(),
+        Routes.activityDownload: (context) => const ActivityLoadPage(),
+        Routes.activityParticipants: (context) =>
+            const ActivityParticipantsPage(),
+        Routes.registrationSetup: (context) => const RegistrationSetupPage(),
+        // Routes.goodiesSetup: (context) => const GoodiesSetupPage(),
+        Routes.goodiesShow: (context) => const GoodiesShowPage(),
+      },
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
