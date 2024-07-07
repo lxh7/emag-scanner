@@ -1,1 +1,1 @@
-EMAG '23 Scanner
+EMAG Scanner

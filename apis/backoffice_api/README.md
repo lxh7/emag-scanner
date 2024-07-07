@@ -71,6 +71,7 @@ Class | Method | HTTP request | Description
 [*EventApi*](doc\EventApi.md) | [**patchParticipant**](doc\EventApi.md#patchparticipant) | **PATCH** /api/event/{eventId}/participant/{personId} | 
 [*HealthApi*](doc\HealthApi.md) | [**health**](doc\HealthApi.md#health) | **GET** /api/health | 
 [*PersonApi*](doc\PersonApi.md) | [**getPerson**](doc\PersonApi.md#getperson) | **GET** /api/person/{personId} | 
+[*PersonApi*](doc\PersonApi.md) | [**refreshPersonId**](doc\PersonApi.md#refreshpersonid) | **PUT** /api/person/id/refresh | 
 [*TestApi*](doc\TestApi.md) | [**test**](doc\TestApi.md#test) | **GET** /api/test | 
 
 

@@ -1,4 +1,4 @@
-# EMAG '23 scanner developer tips and stuff
+# EMAG scanner developer tips and stuff
 
 ## Getting started
 How should i build this application?
@@ -57,3 +57,13 @@ adb tcpip 5555
 adb connect <device_ip_address>
 ```
 - select device from list of available devices
+
+## Build
+### Build Android app bundle
+```
+flutter build appbundle --release 
+```
+
+### Build iOS thingy
+
+Must be done on MacOs.

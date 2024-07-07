@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('EMAG \'23 Scanner'),
+          title: const Text('EMAG Scanner'),
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.help),

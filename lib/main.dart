@@ -62,7 +62,7 @@ class ScanApp extends StatelessWidget {
     );
 
     return MaterialApp(
-      title: 'EMAG\'23 scan app',
+      title: 'EMAG scan app',
       initialRoute: '/',
       routes: {
         // '/': (context) => const HomePage(), -- redundant
