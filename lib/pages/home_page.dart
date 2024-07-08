@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
           child: ListView(
             children: [
               ConnectionWidget.get(),
-              SvgPicture.asset('./assets/images/logo.svg'),
+              SvgPicture.asset('./assets/images/logo.svg', width: 300, height: 300),
               ElevatedButton(
                 child: const Text('Show programme'),
                 onPressed: () {
