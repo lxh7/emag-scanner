@@ -222,8 +222,8 @@ class ScanPageState extends State<ScanPage> {
     if (!_pauzeBarcodes) {
       _stopScanning();
       await handler
-          .handleBarcodes(capture.barcodes)
-          .then((value) => _startScanning());
+          .handleBarcodes(capture.barcodes);
+          // .then((value) => _startScanning());
     }
   }
 }
